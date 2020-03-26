@@ -1,0 +1,50 @@
+.share-btns {
+	&__list {
+		.hentry & {
+		}
+		.single-post & {
+			// float: left;
+			h4 {
+				@include font-size(1.5);
+				display: inline-block;
+				margin: 15px 18px 15px 0;
+			}
+		}
+
+		.format-quote & {
+			margin-top: 20px;
+		}
+	}
+	&__item {
+		display: inline-block;
+		vertical-align: top;
+		.single-post & {
+			vertical-align: inherit;
+		}
+	}
+	&__link {
+
+		.single-post & {
+			@include font-awesome-icon();
+			@include font-size(1);
+			display: block;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			margin: auto;
+			border-radius: 50%;
+		}
+
+		display: block;
+		text-align: center;
+		text-decoration: none;
+		@include font-size(1);
+	}
+
+	&__item + &__item {
+		margin-left: 28px;
+		.single-post & {
+			margin-left: 8px;
+		}
+	}
+}

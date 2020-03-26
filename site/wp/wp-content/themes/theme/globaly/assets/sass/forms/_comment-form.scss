@@ -1,0 +1,43 @@
+.comment {
+	&-respond {
+
+	}
+	&-reply-title {
+		@include font-size(1.375);
+		@include media-breakpoint-up(lg) {
+			@include font-size(1.625);
+			margin-bottom: 15px;
+		}
+	}
+	&-form {
+		&-comment,
+		&-author,
+		&-email,
+		&-url {
+			margin: 1.1875em 0 0 0;
+		}
+		.form-submit {
+			margin: 1.5em 0 0 0;
+			@include media-breakpoint-up(md) {
+				margin: 2.5em 0 0 0;
+			}
+		}
+		&__field {
+			width: 100%;
+			vertical-align: top;
+			.comment-list & {
+				background-color: #fff;
+			}
+		}
+		.logged-in-as,
+		.comment-notes {
+			margin: 1em 0;
+		}
+		.comment-list & {
+			padding-bottom: 2em;
+		}
+	}
+}
+#cancel-comment-reply-link {
+	@include font-size(0.75);
+}

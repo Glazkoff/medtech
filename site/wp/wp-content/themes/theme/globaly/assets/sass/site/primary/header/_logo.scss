@@ -1,0 +1,9 @@
+.site-logo {
+	margin: 0;
+	&__link {
+		text-decoration: none;
+		&:focus {
+			outline: none;
+		}
+	}
+}

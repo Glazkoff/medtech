@@ -1,0 +1,31 @@
+.alignleft {
+	float: left;
+	margin-right: 30px;
+	margin-bottom: 30px;
+
+	@include media-breakpoint-up(lg) {
+		margin-right: 58px;
+		margin-bottom: 58px;
+	}
+}
+
+.alignright {
+	float: right;
+	margin-left: 30px;
+	margin-bottom: 30px;
+
+	@include media-breakpoint-up(lg) {
+		margin-bottom: 58px;
+		margin-left: 58px;
+	}
+}
+
+.aligncenter {
+	clear: both;
+	@include center-block;
+	margin-bottom: 15px;
+}
+
+.align-center {
+	@include justify-content(center);
+}

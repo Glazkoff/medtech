@@ -1,0 +1,22 @@
+.tm_pb_builder #tm_builder_outer_content {
+  .tm_pb_number_counter {
+    .percent {
+      position: relative;
+      width: 195px;
+      height: 195px;
+      border-width: 3px;
+      border-style: solid;
+      margin: 0 auto;
+      border-radius: 50%;
+      overflow: hidden;
+      &-value {
+        line-height: 180px;
+        font-size: inherit;
+      }
+    }
+
+    h3 {
+      padding-top: 0;
+    }
+  }
+}

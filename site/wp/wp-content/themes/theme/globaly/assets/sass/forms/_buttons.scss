@@ -1,0 +1,34 @@
+button,
+input[type='button'],
+input[type='reset'],
+input[type='submit'] {
+	@include btn;
+}
+
+// General styles
+.btn {
+	text-decoration: none;
+	text-transform: uppercase;
+	padding: 18px 39px;
+	@include font-size(1);
+	@include letter-spacing(40);
+	@include btn;
+	border-radius: 29px;
+
+	&:hover {
+		text-decoration: none;
+	}
+	&:focus {
+		outline: none;
+		box-shadow: 0 0 10px;
+	}
+	&-fullwidth {
+		width: 100%;
+	}
+}
+.btn, #tm_builder_outer_content a.tm_pb_button, 
+#tm_builder_outer_content a.tm_pb_button:hover, 
+#tm_builder_outer_content button.tm_pb_button, 
+#tm_builder_outer_content button.tm_pb_button:hover {
+	padding: 19px 38px
+}

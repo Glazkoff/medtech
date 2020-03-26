@@ -1,0 +1,17 @@
+.site-footer.centered {
+	text-align: center;
+	.footer-container {
+		@include media-breakpoint-up(md) {
+			padding-top: 40px;
+			padding-bottom: 30px;
+		}
+	}
+
+	.footer-logo {
+		margin-bottom: 0;
+	}
+
+	.social-list {
+		margin-bottom: 42px;
+	}
+}

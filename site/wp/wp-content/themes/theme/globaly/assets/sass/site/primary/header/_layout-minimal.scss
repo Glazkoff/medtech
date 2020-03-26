@@ -1,0 +1,96 @@
+.site-header.minimal {
+	.header-container {
+		padding-top: 1.2em;
+		text-align: center;
+
+		@include media-breakpoint-up(md) {
+			text-align: left;
+		}
+
+		@include media-breakpoint-up(xl) {
+			padding-top: 0;
+		}
+	}
+	.site-branding {
+		padding: 10px 0 2px;
+		text-align: center;
+		display: inline-block;
+		order: 2;
+		flex: 0 0 100%;
+		@include media-breakpoint-up(md) {
+			padding: 19px 0 10px;
+			flex: 0 0 auto;
+			text-align: left;
+			order: 0;
+		}
+		& img {
+			max-width: 90%;
+		}
+	}
+
+	.header__message {
+		flex: 0 0 auto;
+		text-align: center;
+		@include media-breakpoint-down(sm) {
+			margin-bottom: 10px;
+			.info-block {
+				text-align: center;
+				+ .info-block {
+					margin-top: 5px;
+				}
+			}
+		}
+	}
+	.main-navigation {
+		position: relative;
+		text-align: left;
+
+		@include media-breakpoint-up(md) {
+			&::before {
+				content: "";
+				position: absolute;
+				top: .375em;
+				left: -100%;
+				right: -100%;
+				border-top: 1px solid #efefef;
+			}
+		}
+
+		@include media-breakpoint-up(xl) {
+			&::before {
+				display: none;
+			}
+		}
+
+		@include media-breakpoint-down(lg) {
+			padding-top: .375em;
+			@include order(3);
+			@include flex(0 0 100%);
+			.menu {
+				@include justify-content(flex-start);
+				&-item a {
+					padding: 1em;
+				}
+			}
+		}
+		@include media-breakpoint-down(sm) {
+			padding-top: 0;
+		}
+	}
+}
+
+.header-container {
+	&__flex {
+		@include flexbox;
+		@include justify-content(center);
+		@include align-content(center);
+		@include align-items(center);
+		@include flex-wrap(wrap);
+		@include media-breakpoint-up(md) {
+			@include justify-content(space-between);
+		}
+		@include media-breakpoint-up(xl) {
+			@include flex-wrap(nowrap);
+		}
+	}
+}

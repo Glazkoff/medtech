@@ -1,0 +1,31 @@
+.tm_pb_builder  {
+  #tm_builder_outer_content {
+    .tm_pb_team_member {
+      .tm_pb_team_member_name {
+        margin-top: 13px;
+      }
+      .tm_pb_team_member_description {
+        text-align: center;
+      }
+      .tm_pb_member_social_links {
+        li a.tm_pb_font_icon {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          transition: .3s all ease;
+          line-height: 32px;
+          .tm-pb-icon {
+            font-size: 13px;
+          }
+        }
+        li {
+          margin-right: 6px;
+          margin-top: 10px;
+          @include media-breakpoint-up(md) {
+            margin-top: 27px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+/* #Carousel */
+.swiper-slide:hover {
+	background-color: @alpha( $regular_accent_color_1, 10 );
+}
+.swiper-pagination-bullet {
+	background-color: $regular_accent_color_1;
+}
+.swiper-button-next,
+.swiper-button-prev {
+	color: $invert_link_color;
+	background-color: $regular_accent_color_1;
+}
+.swiper-button-next:not(.swiper-button-disabled):hover {
+	color: $invert_link_color;
+	background-color: $regular_accent_color_2;
+}
+.swiper-button-prev:not(.swiper-button-disabled):hover {
+	color: $invert_link_color;
+	background-color: $regular_accent_color_2;
+}

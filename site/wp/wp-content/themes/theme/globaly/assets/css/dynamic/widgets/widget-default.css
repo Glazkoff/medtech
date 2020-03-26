@@ -1,0 +1,246 @@
+/* #Widgets (defaults) */
+.widget li {
+	color: $regular_link_color;
+}
+.invert .widget li {
+	color: $invert_link_color;
+}
+.invert .widget select {
+	color: $regular_text_color;
+}
+
+/* #Widget Calendar */
+.widget_calendar caption {
+	color: $invert_text_color;
+	background-color: $regular_accent_color_1;
+}
+
+.widget_calendar caption {
+	font-style: $h6_font_style;
+	font-weight: $h6_font_weight;
+	font-family: @font_family( $h6_font_family );
+}
+
+.widget_calendar thead tr th {
+	font-style: $h4_font_style;
+	font-weight: $h4_font_weight;
+	font-family: @font_family( $h4_font_family );
+}
+
+.widget_calendar thead tr th,
+.widget_calendar tbody tr td {
+	color: $regular_h4_color;
+}
+
+.widget_calendar tbody tr td a {
+	border-color: $regular_text_color;
+	color: $regular_h4_color;
+}
+
+.widget_calendar tbody tr td a:hover {
+	background: $regular_accent_color_2;
+	border-color: $regular_accent_color_2;
+	color: $invert_text_color;
+}
+
+.widget_calendar tfoot tr td a {
+	font-style: $h6_font_style;
+	font-weight: $h6_font_weight;
+	font-family: @font_family( $h6_font_family );
+	color: $regular_text_color;
+}
+.widget_calendar tfoot tr td a:hover {
+	color: $regular_link_hover_color;
+}
+
+.widget_calendar th {
+	color: $regular_accent_color_1;
+}
+
+.invert .widget_calendar th,
+.invert .widget_calendar tbody tr td {
+	color: $invert_h4_color;
+}
+
+.invert .widget_calendar tfoot tr td a {
+	color: $invert_link_color;
+}
+
+.invert .widget_calendar tfoot tr td a:hover {
+	color: $invert_link_hover_color;
+}
+
+.invert .widget_calendar tbody tr td a {
+	border-color: $invert_text_color;
+	color: $invert_h4_color;
+}
+
+.invert .widget_calendar tbody tr td a:hover {
+	background: $invert_link_color;
+	border-color: $invert_link_color;
+	color: $invert_text_color;
+}
+
+/* #Widget Recent Posts */
+.widget_recent_entries .post-date {
+	color: $regular_text_color;
+}
+.invert .widget_recent_entries .post-date {
+	color: @alpha($invert_text_color, 70);
+}
+
+.widget_recent_entries a,
+.widget_recent_comments a {
+	font-style: $h4_font_style;
+	font-weight: $h4_font_weight;
+	font-family: @font_family( $h4_font_family );
+	color: $regular_link_hover_color;
+}
+
+.widget_recent_entries a:hover,
+.widget_recent_comments a:hover {
+	color: $regular_link_color;
+}
+
+.invert .widget_recent_entries a,
+.invert .widget_recent_comments a {
+	color: $invert_link_color;
+}
+
+.invert .widget_recent_entries a:hover,
+.invert .widget_recent_comments a:hover {
+	color: $invert_link_hover_color;
+}
+
+.widget_recent_entries .post-date {
+	color: $regular_accent_color_1;
+	font-family: $metadata_font_family;
+	font-style: $metadata_font_style;
+	font-weight: $metadata_font_weight;
+}
+
+.widget_recent_comments li {
+	color: $regular_text_color;
+	font-family: $metadata_font_family;
+	font-style: $metadata_font_style;
+	font-weight: $metadata_font_weight;
+}
+
+.widget_recent_comments .comment-author-link,
+.widget_recent_comments .comment-author-link a {
+	color: $regular_text_color;
+	font-family: $metadata_font_family;
+	font-style: $metadata_font_style;
+	font-weight: $metadata_font_weight;
+}
+
+.widget_recent_comments .comment-author-link a:hover {
+	color: $regular_link_color;
+}
+
+.invert .widget_recent_comments .comment-author-link,
+.invert .widget_recent_comments .comment-author-link a {
+	color: @alpha($invert_text_color, 70);
+}
+
+.invert .widget_recent_comments .comment-author-link a:hover {
+	color: $invert_link_hover_color;
+}
+
+.widget_tag_cloud a {
+	color: $regular_text_color;
+	font-family: $metadata_font_family;
+	font-style: $metadata_font_style;
+	font-weight: $metadata_font_weight;
+}
+
+.invert .widget_tag_cloud a {
+	color: @alpha($invert_text_color, 70);
+}
+
+.widget_tag_cloud a:hover {
+	color: $regular_link_color;
+}
+
+.widget_archive,
+.widget_categories,
+.widget_pages,
+.widget_meta,
+.widget_rss,
+.widget_nav_menu {
+	font-family: $metadata_font_family;
+	font-style: $metadata_font_style;
+	font-weight: $metadata_font_weight;
+}
+
+.widget .select_wrap select,
+.widget .select_wrap option {
+	font-style: $body_font_style;
+	font-weight: $body_font_weight;
+	font-family: @font_family( $body_font_family );
+}
+
+.footer-area .widget:not(.widget-subscribe) .widget-title {
+	font-family: $breadcrumbs_font_family;
+	font-weight: $breadcrumbs_font_weight;
+	font-style: $breadcrumbs_font_style;
+}
+
+.footer-area .widget a:not(.btn) {
+	font-family: $metadata_font_family;
+	font-style: $metadata_font_style;
+	font-weight: $metadata_font_weight;
+}
+
+.sidebar-primary .widget-about,
+.sidebar-secondary .widget-about {
+	background: $regular_accent_color_1;
+	color: $invert_text_color;
+}
+
+.sidebar-primary .widget-about *,
+.sidebar-secondary .widget-about * {
+	color: $invert_text_color;
+}
+
+.rsswidget {
+	font-style: $h4_font_style;
+	font-weight: $h4_font_weight;
+	font-family: @font_family( $h4_font_family );
+	color: $regular_link_hover_color;
+}
+
+.rsswidget:hover {
+	color: $regular_link_color;
+}
+
+.rssSummary {
+	font-style: $body_font_style;
+	font-weight: $body_font_weight;
+	font-family: @font_family( $body_font_family );
+	color: $regular_link_hover_color;
+}
+
+.invert .rsswidget {
+	color: $invert_link_color;
+}
+
+.invert .rsswidget:hover {
+	color: $invert_link_hover_color;
+}
+
+.invert .rssSummary {
+	color: @alpha($invert_text_color, 70);
+}
+
+.invert blockquote {
+	color: @alpha($invert_text_color, 70);
+}
+
+.invert blockquote cite {
+	color: @alpha($invert_text_color, 50);
+}
+
+.invert blockquote cite::before {
+	background: @alpha($invert_text_color, 50);
+}

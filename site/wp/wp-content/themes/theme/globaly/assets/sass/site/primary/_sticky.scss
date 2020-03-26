@@ -1,0 +1,52 @@
+.sticky {
+	// display: block;
+	&__label {
+		line-height: 58px;
+		display: inline-block;
+		float: right;
+		width: 58px;
+		height: 58px;
+		text-align: center;
+		border-radius: 50%;
+
+		.material-icons,
+		.fa {
+			font-size: 24px;
+			line-height: 2.4;
+			display: block;
+			width: auto;
+
+		}
+		.has-post-thumbnail & {
+			position: absolute;
+			z-index: 99;
+			float: none;
+
+			top: 15px;
+			left: 15px;
+
+			@include media-breakpoint-up(lg) {
+				top: 40px;
+				left: 40px;
+				.blog-grid-3-cols &,
+				.blog-masonry-3-cols & {
+					top: 15px;
+					left: 15px;
+				}
+			}
+		}
+		.blog-grid-3-cols &,
+		.blog-masonry-3-cols & {
+			@include media-breakpoint-up(lg) {
+				width: 30px;
+				height: 30px;
+				line-height: 30px;
+				.material-icons,
+				.fa {
+					font-size: 16px;
+					line-height: 30px;
+				}
+			}
+		}
+	}
+}

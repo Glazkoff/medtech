@@ -1,0 +1,15 @@
+.smart-slider__instance .sp-arrow {
+	color: $invert_link_color;
+	background-color: $regular_accent_color_2;
+}
+.smart-slider__instance .sp-next-arrow:hover,
+.smart-slider__instance .sp-previous-arrow:hover {
+	color: $invert_link_color;
+	background-color: $regular_accent_color_1;
+}
+.smart-slider__instance .sp-selected-thumbnail {
+	border-color: $regular_accent_color_1;
+}
+.smart-slider__instance .sp-image-container:after {
+	background: @alpha( $regular_accent_color_2, 50 );
+}

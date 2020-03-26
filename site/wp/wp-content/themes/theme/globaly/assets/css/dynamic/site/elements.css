@@ -1,0 +1,57 @@
+/* #Elements */
+blockquote {
+	font-style: $blockquote_font_style;
+	font-weight: $blockquote_font_weight;
+	font-size: @font_size($blockquote_font_size, multiple, ceil, 0.6)px;
+	line-height: $blockquote_line_height;
+	font-family: $blockquote_font_family;
+	letter-spacing: $blockquote_letter_spacing;
+	color: $blockquote_color;
+}
+
+@media (min-width: 992px) {
+	blockquote {
+		font-size: $blockquote_font_size{px};
+	}
+}
+
+blockquote cite {
+	font-style: $h6_font_style;
+	font-weight: $h6_font_weight;
+	font-family: $h6_font_family;
+}
+
+blockquote cite::before {
+	background: $blockquote_color;
+}
+
+blockquote a:hover {
+	color: $regular_link_color;
+}
+
+blockquote::before {
+	color: $regular_accent_color_1;
+}
+
+code {
+	color: $invert_text_color;
+	background: $regular_accent_color_1;
+}
+
+a {
+	transition: .3s all ease;
+}
+
+.entry-content > p > a {
+	font-family: $metadata_font_family;
+	font-style: $metadata_font_style;
+	font-weight: $metadata_font_weight;
+}
+
+.entry-content > ul > li,
+.entry-content > ol > li {
+	font-family: $metadata_font_family;
+	font-style: $metadata_font_style;
+	font-weight: $metadata_font_weight;
+	color: $regular_accent_color_1;
+}

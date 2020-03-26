@@ -1,0 +1,30 @@
+.footer-menu {
+	margin: 2em 0 0;
+	&__items {
+		display: flex;
+		margin: 0;
+		padding-left: 0;
+		list-style: none;
+
+		flex-wrap: wrap;
+		justify-content: center;
+		.menu-item {
+			display: flex;
+			padding: .25em 1em;
+
+			align-items: flex-start;
+			@include media-breakpoint-up(sm) {
+				& + li {
+				}
+			}
+			@include media-breakpoint-up(lg) {
+				padding: .5em 1.5em;
+			}
+			a {
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+			}
+		}
+	}
+}
