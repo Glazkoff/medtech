@@ -1,0 +1,99 @@
+.follow-block {
+	padding: 13.15% 10.52%;
+	.sidebar-primary &,
+	.sidebar-secondary &,
+	.footer-area & {
+		text-align: center;
+	}
+	text-align: center;
+
+	.widget-title + .social-list {
+		margin-top: 36px;
+	}
+
+	.social-list {
+		.menu-item + .menu-item {
+			margin-left: 2px;
+		}
+	}
+}
+.subscribe-block {
+	padding: 13.15% 10.52% 14.21%;
+	text-align: center;
+	.sidebar-primary &,
+	.sidebar-secondary &,
+	.footer-area & {
+		text-align: center;
+	}
+
+
+
+	&__input-group {
+
+
+		.sidebar-primary &,
+		.sidebar-secondary &,
+		.footer-area & {
+
+		}
+	}
+	&__input[type='email'] {
+		width: 100%;
+		border-right: none;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		background-color: #fff;
+
+		@include media-breakpoint-up(xl) {
+
+		}
+		.footer-area & {
+			&:focus {
+				background: #fff;
+				box-shadow: none;
+			}
+		}
+		.sidebar-1-4 & {
+
+		}
+	}
+	&__submit {
+		margin-top: 10px;
+
+		.footer-area & {
+
+		}
+
+		.before-loop-area &,
+		.after-loop-area & {
+			margin-top: 40px;
+		}
+	}
+	&__message {
+		padding: 0 10% 24px;
+		.footer-area & {
+			padding-bottom: 20px;
+		}
+	}
+
+	&__form {
+		position: relative;
+	}
+
+	&__error {
+		position: absolute;
+		top: 4px;
+		right: 4px;
+		@include font-size(0.75);
+		color: $color__not-valid;
+	}
+
+	&__success {
+		margin-top: 14px;
+		@include font-size(0.875);
+	}
+}
+
+#tm_builder_outer_content .tm_pb_widget_area .widget-subscribe {
+	max-width: 720px;
+}

@@ -1,0 +1,138 @@
+#tm_builder_outer_content {
+
+
+
+  .tm_pb_module.tm_pb_countdown_timer {
+    padding: 10px 10px 30px;
+
+    @include media-breakpoint-up(xl) {
+      padding: 25px 0 60px 0;
+    }
+
+    &.tm_pb_countdown_timer_circle_layout.tm_pb_module {
+      body & {
+        padding: 0;
+        .sep {
+          margin: 0 2px;
+          @include media-breakpoint-up(sm) {
+            margin: 0 16px;
+          }
+        }
+        .values {
+          border-radius: 50%;
+          margin: 0;
+          width: auto;
+          height: auto;
+          @include media-breakpoint-up(md) {
+            width: 86px;
+            height: 86px;
+          }
+          @include media-breakpoint-up(lg) {
+            width: 174px;
+            height: 174px;
+          }
+
+          @include media-breakpoint-down(sm) {
+            background: transparent;
+          }
+        }
+      }
+    }
+
+    .tm_pb_countdown_timer_container {
+      display: block;
+      .section {
+        &.values {
+          margin: 5px 10px;
+          width: auto;
+
+          @include media-breakpoint-up(sm) {
+            margin: 5px 16px;
+          }
+
+          @include media-breakpoint-down(md) {
+
+          }
+        }
+
+        &.sep {
+          @include media-breakpoint-up(md) {
+            vertical-align: middle;
+          }
+        }
+
+        span.countdown-sep {
+          position: relative;
+          &::after,
+          &::before {
+            content: "";
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            position: absolute;
+          }
+
+          &::before {
+            top: 2px;
+            left: -2px;
+          }
+
+          &::after {
+            bottom: 2px;
+            left: -2px;
+          }
+          @include media-breakpoint-up(lg) {
+            &::after,
+            &::before {
+              width: 9px;
+              height: 9px;
+            }
+
+            &::before {
+              left: -4px;
+            }
+
+            &::after {
+              left: -4px;
+            }
+          }
+        }
+
+        .value {
+          font-weight: 700;
+        }
+
+        .label {
+
+        }
+
+        .countdown-sep {
+          font-size: 20px;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .tm_pb_column_4_4 {
+    .tm_pb_module.tm_pb_countdown_timer {
+      padding: 4% 4% 6% 4%;
+      .section {
+        &.values {
+          &.sep {
+            display: none;
+            @include media-breakpoint-up(sm) {
+              display: inline-block;
+            }
+          }
+          @include media-breakpoint-up(md) {
+            margin: 5px 28px;
+          }
+          @include media-breakpoint-up(lg) {
+            margin: 5px 58px;
+          }
+        }
+      }
+    }
+  }
+}

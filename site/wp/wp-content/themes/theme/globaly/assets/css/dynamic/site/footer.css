@@ -1,0 +1,35 @@
+/* #Footer */
+.site-footer {
+	background-color: $footer_bg;
+}
+.footer-area-wrap {
+	background-color: $footer_widgets_bg;
+}
+.site-info a:hover {
+	color: $regular_text_color;
+}
+
+.footer-copyright a {
+	color: $invert_accent_color_1;
+}
+
+.footer-copyright a:hover {
+	color: $regular_link_color;
+}
+
+.footer-menu li a {
+	font-family: $breadcrumbs_font_family;
+	font-weight: $breadcrumbs_font_weight;
+	font-style: $breadcrumbs_font_style;
+}
+
+.footer-menu li a:hover {
+	color: $invert_text_color;
+}
+
+.footer-area {
+	color: @alpha($invert_text_color, 70);
+}
+.footer-copyright {
+	color: $invert_text_color;
+}

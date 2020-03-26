@@ -1,0 +1,52 @@
+.site {
+	overflow: hidden;
+}
+
+.single .site-main {
+	border-left: 1px solid $color__border-input;
+	border-right: 1px solid $color__border-input;
+	border-bottom: 1px solid $color__border-input;
+	margin-bottom: 30px;
+
+	article.no-thumb {
+		border-top: 1px solid $color__border-input;
+	}
+
+	@include media-breakpoint-up(lg) {
+		margin-bottom: 100px;
+	}
+}
+
+.site-main {
+	.search & {
+		margin-top: 1em;
+		@include media-breakpoint-up(lg) {
+			margin-top: 3em;
+		}
+	}
+}
+
+/*--------------------------------------------------------------
+## Layout
+--------------------------------------------------------------*/
+@import "../layout/layout";
+
+/*--------------------------------------------------------------
+## Header
+--------------------------------------------------------------*/
+@import "primary/header";
+
+/*--------------------------------------------------------------
+## Posts and pages
+--------------------------------------------------------------*/
+@import "primary/posts-and-pages";
+
+/*--------------------------------------------------------------
+## Post Formats
+--------------------------------------------------------------*/
+@import "primary/post-formats";
+
+/*--------------------------------------------------------------
+## Footer
+--------------------------------------------------------------*/
+@import "primary/footer";

@@ -1,0 +1,231 @@
+.widget {
+	ul {
+		margin-bottom: 0;
+		margin-left: 0;
+		padding: 0;
+	}
+	> ul {
+		> li {
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+	}
+	li {
+		position: relative;
+		list-style: none;
+		margin-top: .8em;
+		> ul {
+			margin-left: 0;
+		}
+	}
+}
+
+.widget_rss {
+	> ul {
+		> li {
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+	}
+
+	li {
+		margin-top: 1.8em;
+	}
+
+	.rss-date {
+		display: block;
+		margin-top: 10px;
+	}
+
+	.rssSummary {
+		margin-top: 10px;
+	}
+}
+
+/*--------------------------------------------------------------
+## Widget Calendar
+--------------------------------------------------------------*/
+.widget_calendar {
+	table {
+		margin-bottom: 0;
+	}
+	caption {
+		margin-bottom: 0.9em;
+		margin-left: -20px;
+		margin-right: -20px;
+		padding: .7em .5em;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		@include font-size(1);
+	}
+
+	thead tr th,
+	tbody tr td {
+		@include font-size(0.75);
+		width: 14.22%;
+		padding: 7px 2px;
+	}
+
+	thead, tbody, tfoot {
+		tr {
+			padding-left: 19px;
+			padding-right: 19px;
+		}
+	}
+
+	tbody tr td a {
+		padding: 3px 5px 4px;
+		border: 1px solid;
+	}
+
+	tbody tr:last-child td {
+		padding-bottom: 20px;
+	}
+
+	tfoot tr td a {
+		@include font-size(0.8125);
+		text-transform: uppercase;
+	}
+
+	tfoot tr td {
+		padding-top: 10px;
+		padding-bottom: 15px;
+	}
+
+	tfoot {
+		border-top: 1px solid $color__border-input;
+	}
+
+	th, tbody td {
+		padding: .25em 0;
+		text-align: center;
+	}
+	#next {
+		text-align: right;
+	}
+
+	.calendar_wrap {
+		border-left: 1px solid $color__border-input;
+		border-right: 1px solid $color__border-input;
+		border-bottom: 1px solid $color__border-input;
+		padding-left: 19px;
+		padding-right: 19px;
+	}
+}
+
+/*--------------------------------------------------------------
+## Widget Tag Cloud
+--------------------------------------------------------------*/
+.tagcloud {
+	a {
+		display: inline-block;
+		margin: 0 18px 12px 0;
+		vertical-align: top;
+		text-decoration: none;
+		font-size: 1rem!important;
+
+		&:focus {
+			outline: none;
+		}
+	}
+}
+
+/*--------------------------------------------------------------
+## Widget Recent Posts
+--------------------------------------------------------------*/
+.widget_recent_entries {
+	li {
+		margin-left: 0;
+		position: relative;
+		a {
+			@include font-size(1.125);
+			line-height: 1.333;
+		}
+		&::before {
+			display: none;
+		}
+		& + li {
+			margin-top: 2.2em;
+		}
+		.post-date {
+			display: block;
+			margin-top: 6px;
+		}
+	}
+}
+
+/*--------------------------------------------------------------
+## Widget Recent Comments
+--------------------------------------------------------------*/
+.widget_recent_comments {
+	li {
+		margin-left: 0;
+		& > a {
+			@include font-size(1.125);
+			line-height: 1.333;
+		}
+
+		&::before {
+			display: none;
+		}
+		& + li {
+			margin-top: 2.2em;
+		}
+
+		& > a {
+			&::before {
+				content: "";
+				display: block;
+				margin-top: 6px;
+			}
+		}
+	}
+}
+
+/*--------------------------------------------------------------
+## Widget Archive
+--------------------------------------------------------------*/
+
+.site-content .select-wrap,
+.site-footer .select-wrap {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+
+	&::before {
+		@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+			content: "\E5CF";
+			@include material-icon();
+			@include font-size(1.9375);
+			color: #c2c2c2;
+			position: absolute;
+			top: 0;
+			right: 20px;
+			line-height: 56px;
+			pointer-events: none;
+		}
+	}
+
+	select {
+		padding: 17px 20px 16px 20px;
+
+		@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+			padding: 17px 56px 16px 20px;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+		}
+
+		width: 100%;
+		max-width: 100%;
+		border: none;
+		cursor: pointer;
+		transition: .3s all ease;
+
+		&:hover {
+			background: #EDEDED;
+		}
+	}
+}

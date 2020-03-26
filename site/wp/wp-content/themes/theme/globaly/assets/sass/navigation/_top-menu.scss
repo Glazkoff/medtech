@@ -1,0 +1,23 @@
+.top-panel__menu {
+	padding-top: 4px;
+	padding-bottom: 4px;
+
+	&-list {
+		text-align: left;
+		.menu-item {
+			margin: .25em .5em;
+			a {
+				text-decoration: none;
+				&:focus {
+					outline: none;
+				}
+			}
+			&.current-menu-item,
+			&.current_page_item {
+				a {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}

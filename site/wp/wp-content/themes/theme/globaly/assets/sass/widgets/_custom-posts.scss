@@ -1,0 +1,47 @@
+.custom-posts {
+	&__item {
+		margin-bottom: 30px;
+		&:last-child {
+			margin-bottom: 0;
+		}
+		.full-width-header-area &,
+		.after-content-full-width-area & {
+			margin: 0 0 1.5em;
+		}
+	}
+	.full-width-header-area &,
+	.after-content-full-width-area & {
+		padding-right: $grid-gutter-width/2;
+		padding-left: $grid-gutter-width/2;
+	}
+
+	.post-thumbnail {
+		display: inline-block;
+		float: left;
+		margin-bottom: 20px;
+		margin-right: 20px;
+	}
+
+	.entry-content {
+		clear: both;
+	}
+
+	.post__cats {
+		a {
+			margin-right: 6px;
+		}
+	}
+
+	.post__tags {
+		margin-bottom: 0;
+	}
+
+	.entry-header h4 {
+		@include font-size(1);
+		margin-top: 0;
+	}
+
+	.entry-footer {
+		margin-top: 1.5em;
+	}
+}

@@ -1,0 +1,21 @@
+.tm-hb__wrapper {
+  .tm-hb__title {
+    @include font-size(1.625);
+  }
+
+  .btn {
+    margin-top: 25px;
+    margin-bottom: 34px;
+    white-space: normal;
+  }
+
+  .tm-hb__content {
+
+  }
+
+  .tm-hb__close {
+    border-radius: 50%;
+    border-width: 2px;
+    border-style: solid;
+  }
+}

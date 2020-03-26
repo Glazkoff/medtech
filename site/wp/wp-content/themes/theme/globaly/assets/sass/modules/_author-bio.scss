@@ -1,0 +1,51 @@
+.post {
+	&-author {
+		&-bio {
+			margin: 2em -1px 3em;
+		}
+		&__holder {
+			padding: 15px;
+
+			@include media-breakpoint-up(md) {
+				padding: 30px 0;
+				padding-right: 30px;
+			}
+
+			@include media-breakpoint-up(lg) {
+				padding: 40px 0;
+				padding-right: 100px;
+			}
+		}
+		&__avatar {
+
+			@include media-breakpoint-up(md) {
+				float: left;
+				margin: 0 30px;
+			}
+
+			@include media-breakpoint-up(lg) {
+				margin: 0 60px;
+			}
+			.avatar {
+				width: 70px;
+				vertical-align: top;
+				border-radius: 50%;
+
+				@include media-breakpoint-up(lg) {
+					width: auto;
+				}
+			}
+		}
+		&__title {
+			@include media-breakpoint-up(lg) {
+				font-size: 20px;
+				line-height: 1.4;
+				margin: 20px 0;
+			}
+		}
+
+		&__content {
+			overflow: hidden;
+		}
+	}
+}

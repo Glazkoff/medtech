@@ -1,0 +1,129 @@
+@charset "utf-8";
+
+html {
+	box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after { /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+	box-sizing: inherit;
+}
+
+img {
+	height: auto; /* Make sure images are scaled correctly. */
+	max-width: 100%; /* Adhere to container width. */
+}
+
+blockquote, q {
+	quotes: none;
+
+	&:before,
+	&:after {
+		content: '';
+		clear: both;
+    display: table;
+	}
+}
+
+blockquote {
+	position: relative;
+	margin: -20px 0 1em;
+	padding: 1.1em 1.5em 0 1.72em;
+	text-align: center;
+	.format-quote & {
+		margin-bottom: 0;
+	}
+	@include media-breakpoint-up(lg) {
+		margin: 0 0 1em;
+		text-align: left;
+		.format-quote & {
+			margin-bottom: 0;
+		}
+	}
+	p {
+		margin: 0;
+		text-align: left;
+		&:first-child {
+			margin-top: -20px;
+			@include media-breakpoint-up(lg){
+				margin-top: 0;
+			}
+		}
+
+		& + p {
+			margin-top: 1em;
+		}
+	}
+	cite {
+		display: block;
+		position: relative;
+		padding-left: 25px;
+		margin-top: 15px;
+		font-size: 13px;
+		text-align: left;
+		@include media-breakpoint-up(lg){
+			margin-top: 30px;
+			@include font-size(1.125);
+		}
+		&:before {
+			content: "";
+			position: absolute;
+			top: 10px;
+			left: 0;
+			width: 18px;
+			height: 1px;
+		}
+	}
+	&:before {
+		content: '\201c';
+		font-family: 'Times New Roman', serif;
+		font-size: 4em;
+		line-height: 1;
+		margin-left: -12px;
+
+		@include media-breakpoint-up(lg) {
+			margin-left: 0;
+			position: absolute;
+			font-size: 2.5em;
+			top: 14px;
+			left: -10px;
+		}
+	}
+}
+
+hr {
+	background-color: $color__background-hr;
+	border: 0;
+	height: 1px;
+	margin: 1.5em 0;
+}
+
+code {
+	border: none;
+}
+
+/*--------------------------------------------------------------
+## Lists
+--------------------------------------------------------------*/
+@import "lists";
+
+/*--------------------------------------------------------------
+## Tables
+--------------------------------------------------------------*/
+@import "tables";
+
+/*--------------------------------------------------------------
+## Preloader
+--------------------------------------------------------------*/
+@import "page-preloader";
+
+/*--------------------------------------------------------------
+## ToTop button
+--------------------------------------------------------------*/
+@import "totop-button";
+
+/*--------------------------------------------------------------
+## TM Header Banner
+--------------------------------------------------------------*/
+@import "tm-header-banner";

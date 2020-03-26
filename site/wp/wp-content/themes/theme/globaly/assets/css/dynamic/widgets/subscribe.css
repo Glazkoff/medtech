@@ -1,0 +1,23 @@
+.subscribe-block__input { color: $regular_text_color; }
+
+.widget-subscribe .subscribe-block {
+	background-color: $regular_accent_color_1;
+}
+
+.widget-subscribe .follow-block {
+	background-color: $regular_accent_color_2;
+}
+
+.invert .widget-subscribe .follow-block {
+	background-color: $invert_accent_color_2;
+	color: $regular_text_color;
+}
+
+.invert .widget-subscribe .follow-block .widget-title {
+	color: $regular_h4_color;
+}
+
+.invert .widget-subscribe .follow-block .social-list ul li a:hover {
+	background: $regular_accent_color_2;
+	color: $invert_text_color;
+}

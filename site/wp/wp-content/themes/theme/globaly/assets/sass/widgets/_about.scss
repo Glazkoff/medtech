@@ -1,0 +1,33 @@
+.widget-about {
+	.sidebar-primary &,
+	.sidebar-secondary {
+		text-align: center;
+		&__logo-img {
+			width: 100%;
+		}
+
+		&__content {
+			padding: 5.53% 12.63% 10%;
+			margin-top: 0;
+			h1,h2,h3,h4,h5,h6 {
+				margin-bottom: 21px;
+			}
+		}
+	}
+
+	&__logo-img {
+		vertical-align: top;
+	}
+
+	&__tagline {
+		margin-top: 12px;
+	}
+
+	&__content {
+		margin-top: 30px;
+	}
+
+	#tm_builder_outer_content div.tm_pb_widget_area & {
+		max-width: 720px;
+	}
+}

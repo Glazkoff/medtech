@@ -1,0 +1,18 @@
+html {
+	@include font-size(1);
+}
+
+body a:focus { outline: none; }
+
+button,
+input,
+select,
+textarea {
+}
+
+.text-center {
+	text-align: center;
+}
+
+@import "headings";
+@import "copy";

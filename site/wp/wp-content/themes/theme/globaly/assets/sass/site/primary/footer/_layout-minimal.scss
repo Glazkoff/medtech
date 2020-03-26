@@ -1,0 +1,71 @@
+.site-footer.minimal {
+	text-align: center;
+
+	.footer {
+
+		&-container {
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+
+		&-copyright {
+			display: block;
+			vertical-align: middle;
+			margin-top: 1.5em;
+
+			@include media-breakpoint-up(lg) {
+				float: left;
+
+				margin-top: 0;
+				padding-top: 10px;
+				padding-bottom: 10px;
+			}
+		}
+		&-menu {
+			display: block;
+			vertical-align: middle;
+			text-align: left;
+			margin-top: 1.5em;
+
+			@include media-breakpoint-up(lg) {
+				margin-top: 0;
+			}
+
+			> ul {
+				margin-bottom: 10px;
+			}
+
+			@include media-breakpoint-up(xl) {
+				// float: right;
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+			&__items {
+
+				@include media-breakpoint-up(lg) {
+					margin-left: -1.5em;
+					@include justify-content(flex-start);
+				}
+
+				@include media-breakpoint-up(xl) {
+
+				}
+			}
+		}
+	}
+
+	.social-list {
+		display: inline-block;
+		margin-bottom: 0;
+		@include media-breakpoint-up(lg) {
+			float: right;
+		}
+	}
+
+	.site-info {
+		&::after {
+			@include clearfix;
+			clear: both;
+		}
+	}
+}

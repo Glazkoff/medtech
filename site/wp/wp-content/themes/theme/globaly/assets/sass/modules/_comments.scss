@@ -1,0 +1,169 @@
+.comments {
+	&-area {
+		position: relative;
+		margin-bottom: 1.875em;
+		padding-left: 15px;
+		padding-right: 15px;
+		@include media-breakpoint-up(lg) {
+			margin-bottom: 3.75em;
+			padding-left: 60px;
+			padding-right: 60px;
+		}
+	}
+	&-title {
+		@include font-size(1.375);
+		margin-bottom: 20px;
+		@include media-breakpoint-up(lg) {
+			@include font-size(1.625);
+			margin-bottom: 36px;
+		}
+	}
+}
+
+.comment {
+	&-body__holder {
+		@include flexbox;
+
+	}
+	&-author {
+		@include flex-shrink(0);
+	}
+
+	&-content {
+		@include align-self(center);
+
+	}
+}
+
+.comment {
+	&-list {
+		margin: 0;
+		padding: 0 0 36px;
+		list-style: none;
+		margin-left: -15px;
+		margin-right: -15px;
+		@include media-breakpoint-up(lg) {
+			margin-left: -61px;
+			margin-right: -61px;
+		}
+
+		> .comment {
+			> .comment-body {
+				position: relative;
+				&::before {
+					content: "";
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					left: -10px;
+					right: -10px;
+					background-color: $color__background-input;
+					@include media-breakpoint-up(lg) {
+						left: -60px;
+						right: -40px;
+					}
+				}
+			}
+		}
+
+		.children {
+			margin-left: 0;
+			padding-left: 15px;
+			list-style: none;
+			// border-top: 1px solid $color__background-hr;
+
+			@include media-breakpoint-up(lg) {
+				padding-left: 85px;
+			}
+		}
+		> .comment,
+		> .ping {
+			padding-right: 10px;
+			padding-left: 10px;
+
+
+			@include media-breakpoint-up(lg) {
+				padding-right: 40px;
+				padding-left: 60px;
+			}
+		}
+	}
+	&-content {
+		overflow: hidden;
+		a {
+			word-wrap: break-word;
+		}
+		p {
+			margin-bottom: 0;
+		}
+	}
+	&-body {
+		padding-top: 15px;
+		padding-bottom: 15px;
+
+		@include media-breakpoint-up(lg) {
+			padding-top: 40px;
+			padding-bottom: 40px;
+		}
+		&__holder {
+			position: relative;
+			padding-right: 18px;
+		}
+		.avatar {
+			// float: left;
+			width: 70px;
+			margin: 0 30px 0 0;
+			border-radius: 50%;
+
+			@include media-breakpoint-up(lg) {
+				width: auto;
+				margin: 0 60px 0 0;
+			}
+
+			@include media-breakpoint-down(md) {
+				max-width: 70px;
+			}
+		}
+		.fn {
+			margin-right: 10px;
+
+			@include media-breakpoint-up(lg) {
+				margin-right: 25px;
+			}
+		}
+		.reply {
+			position: absolute;
+			z-index: 9;
+			top: 0;
+			right: 0;
+			transition: all 0.25s ease;
+		}
+	}
+	&-reply-link {
+		font-size: 22px;
+		.material-icons {
+			font-size: inherit;
+		}
+	}
+	&-date {
+		display: block;
+		margin-right: 15px;
+		@include media-breakpoint-up(md) {
+			display: inline-block;
+		}
+
+		&__time {
+			display: inline-block;
+			vertical-align: top;
+		}
+	}
+
+	&-metadata {
+		@include font-size(1.125);
+		margin-bottom: 15px;
+	}
+}
+
+.bypostauthor {
+	display: block;
+}

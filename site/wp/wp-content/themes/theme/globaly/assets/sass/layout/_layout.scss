@@ -1,0 +1,34 @@
+.container {
+	&.site-header,
+	&.site-footer {
+		@include reset-container();
+	}
+	&.site-content {
+		.container {
+			@include reset-container();
+		}
+	}
+}
+
+.position-two-sidebars {
+	#primary {
+		order: 0;
+	}
+	#sidebar-primary {
+		order: 1;
+	}
+	#sidebar-secondary {
+		order: 2;
+	}
+	@include media-breakpoint-up(md) {
+		#primary {
+			order: 1;
+		}
+		#sidebar-primary {
+			order: 2;
+		}
+		#sidebar-secondary {
+			order: 0;
+		}
+	}
+}

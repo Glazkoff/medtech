@@ -1,0 +1,83 @@
+.site-header.default {
+
+	.header-container {
+		padding-top: 16px;
+		position: relative;
+	}
+
+	@include media-breakpoint-up(md) {
+		.header-container {
+			padding-top: 32px;
+		}
+		.header__message {
+			position: absolute;
+			top: 32px;
+			right: 32px;
+		}
+	}
+
+	@include media-breakpoint-up(lg) {
+
+	}
+
+	.main-navigation {
+		position: relative;
+		padding-top: 2em;
+		@include media-breakpoint-up(md) {
+			&::before {
+				content: "";
+				position: absolute;
+				top: 2em;
+				left: -100%;
+				right: -100%;
+				border-top: 1px solid #efefef;
+			}
+		}
+
+		@include media-breakpoint-down(lg) {
+			@include order(3);
+			@include flex(0 0 100%);
+			.menu {
+				@include justify-content(flex-start);
+				&-item a {
+					padding: 1em;
+				}
+			}
+		}
+	}
+
+	@include media-breakpoint-down(sm) {
+		.header-container_wrap {
+			@include flexbox;
+			@include justify-content(center);
+			@include flex-wrap(wrap);
+		}
+
+		.header__message {
+			order: 1;
+			margin-bottom: 20px;
+			.info-block {
+				text-align: center;
+				+ .info-block {
+					margin-top: 5px;
+				}
+			}
+		}
+
+		.site-branding {
+			order: 2;
+			@include flex(0 0 100%);
+			.site-logo {
+				text-align: center;
+				&__link {
+					display: inline-block;
+				}
+			}
+		}
+
+		.main-navigation {
+			order: 3;
+			padding-top: 3px;
+		}
+	}
+}

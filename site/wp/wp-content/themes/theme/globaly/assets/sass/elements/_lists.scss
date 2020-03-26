@@ -1,0 +1,56 @@
+ul, ol {
+
+	padding-left:0;
+}
+
+ol {
+	margin: 0 0 1.5em 2em;
+}
+
+ul {
+	list-style: none;
+}
+
+ol {
+	list-style: decimal-leading-zero;
+}
+
+li > ul,
+li > ol {
+	margin-bottom: 0;
+	margin-left: 1.5em;
+}
+
+.entry-content {
+	& > ul,
+	& > ol {
+
+		li + li {
+			margin-top: 13px;
+		}
+	}
+
+	* + ul,
+	* + ol {
+		margin-top: 36px;
+	}
+}
+
+
+
+dt {
+	font-weight: bold;
+}
+
+dd {
+	margin: 0 1.5em 1.5em;
+}
+
+/* Inline list */
+.inline-list {
+	@include reset-list;
+	li {
+		display: inline-block;
+		vertical-align: top;
+	}
+}

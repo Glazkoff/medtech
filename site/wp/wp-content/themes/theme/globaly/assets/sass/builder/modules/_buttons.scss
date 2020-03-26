@@ -1,0 +1,17 @@
+#tm_builder_outer_content a.tm_pb_button,
+#tm_builder_outer_content a.tm_pb_button:hover,
+#tm_builder_outer_content button.tm_pb_button,
+#tm_builder_outer_content button.tm_pb_button:hover {
+	@extend .btn;
+	&::after {
+		content: ""!important;
+	}
+}
+
+#tm_builder_outer_content div.tm_contact_bottom_container {
+	overflow: visible;
+	text-align: center;
+	float: none;
+	display: inline-block;
+	position: relative;
+}

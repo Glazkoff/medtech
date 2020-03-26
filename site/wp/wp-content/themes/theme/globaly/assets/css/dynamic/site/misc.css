@@ -1,0 +1,36 @@
+/* #ToTop button */
+#toTop {
+	color: $invert_text_color;
+	background-color: $regular_accent_color_1;
+}
+#toTop:hover {
+	background-color: $regular_accent_color_2;
+}
+
+/* #Page Preloader */
+.page-preloader__cube:before {
+	background-color: $regular_accent_color_1;
+}
+
+/* #TM Header Banner */
+
+.tm-hb__wrapper .tm-hb__title {
+	font-style: $h5_font_style;
+	font-weight: $h5_font_weight;
+	line-height: $h5_line_height;
+	font-family: @font_family( $h5_font_family );
+	letter-spacing: $h5_letter_spacing{px};
+	color: $invert_h5_color;
+}
+
+.tm-hb__wrapper .tm-hb__close {
+	color: $regular_accent_color_2;
+	background-color: $invert_accent_color_1;
+	border-color: $invert_accent_color_1;
+}
+
+.tm-hb__wrapper .tm-hb__close:hover {
+	color: $invert_text_color;
+	background-color: transparent;
+	box-shadow: none;
+}
