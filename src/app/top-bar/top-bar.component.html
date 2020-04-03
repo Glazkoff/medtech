@@ -2,31 +2,36 @@
     <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button> -->
-    <div class="flex-wrap">
-        <div class="dropdown">
+    <div *ngIf="logOut; else blockLogIn">
+        <div class="flex-wrap">
             <a class="nav-link" href="#">Здравствуй, Арина Оськина!</a>           
-        </div>
-        <div *ngIf="!flag;">
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Пункт 1</a>
-                <a class="dropdown-item" href="#">Пункт 2</a>
-                <a class="dropdown-item" href="#">Пункт 3</a>
-              </div>
-        </div>
-        <div class="image-for-user"></div>
-        <div *ngIf="flag; else anotherblock">
-            <div class="dropdown-toggle" (click)="openDropdownMenu()">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                    <path fill="#212529" d="M443.5 162.6l-7.1-7.1c-4.7-4.7-12.3-4.7-17 0L224 351 28.5 155.5c-4.7-4.7-12.3-4.7-17 0l-7.1 7.1c-4.7 4.7-4.7 12.3 0 17l211 211.1c4.7 4.7 12.3 4.7 17 0l211-211.1c4.8-4.7 4.8-12.3.1-17z"></path>
-                </svg>
+            <div *ngIf="!flag;">
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Пункт 1</a>
+                    <a class="dropdown-item" href="#">Пункт 2</a>
+                    <a class="dropdown-item" (click)="onLogOut()" >Выйти</a>
+                </div>
             </div>
-        </div>
-        <ng-template #anotherblock>
-            <div class="dropdown-toggle" (click)="openDropdownMenu()">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                    <path fill="#212529" d="M4.465 366.475l7.07 7.071c4.686 4.686 12.284 4.686 16.971 0L224 178.053l195.494 195.493c4.686 4.686 12.284 4.686 16.971 0l7.07-7.071c4.686-4.686 4.686-12.284 0-16.97l-211.05-211.051c-4.686-4.686-12.284-4.686-16.971 0L4.465 349.505c-4.687 4.686-4.687 12.284 0 16.97z"></path>
-                </svg>
+            <div class="image-for-user"></div>
+            <div *ngIf="flag; else menuUp">
+                <div class="dropdown-toggle" (click)="openDropdownMenu()">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path fill="#212529" d="M443.5 162.6l-7.1-7.1c-4.7-4.7-12.3-4.7-17 0L224 351 28.5 155.5c-4.7-4.7-12.3-4.7-17 0l-7.1 7.1c-4.7 4.7-4.7 12.3 0 17l211 211.1c4.7 4.7 12.3 4.7 17 0l211-211.1c4.8-4.7 4.8-12.3.1-17z"></path>
+                    </svg>
+                </div>
             </div>
-        </ng-template>
+            <ng-template #menuUp>
+                <div class="dropdown-toggle" (click)="openDropdownMenu()">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path fill="#212529" d="M4.465 366.475l7.07 7.071c4.686 4.686 12.284 4.686 16.971 0L224 178.053l195.494 195.493c4.686 4.686 12.284 4.686 16.971 0l7.07-7.071c4.686-4.686 4.686-12.284 0-16.97l-211.05-211.051c-4.686-4.686-12.284-4.686-16.971 0L4.465 349.505c-4.687 4.686-4.687 12.284 0 16.97z"></path>
+                    </svg>
+                </div>
+            </ng-template>
+        </div>
     </div>
-  </nav>
+    <ng-template #blockLogIn>
+        <div class="flex-wrap">
+            <a class="nav-link" [routerLink]="['/authorization']" routerLinkActive="active">Войти</a>           
+        </div>
+    </ng-template>   
+</nav>

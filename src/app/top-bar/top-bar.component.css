@@ -22,7 +22,9 @@
     color: #212529;
     padding: .5rem 1rem;
     font-size: 1.1rem;
+    display: block;
     font-weight: 500;
+    cursor: pointer;
 }
 .dropdown-menu{
     position: absolute;
@@ -45,6 +47,7 @@
     display: block;
 }
 .dropdown-item {
+    cursor: pointer;
     display: block;
     box-sizing:border-box;
     width: 100%;

@@ -1,0 +1,14 @@
+<div class="flex">
+    <form class="form-login" [formGroup]="myForm">
+        <h1>Вход</h1>
+        <input type="text" formControlName="login" class="form-control" placeholder="Логин" required>
+        <input type="password" formControlName="password" class="form-control" placeholder="Пароль" required>
+        <!-- <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me" formControl="rememberLoginControl">> Запомнить меня
+          </label>
+        </div> -->
+        <button class="btn" [disabled]="myForm.invalid" (click)="onClick()">Войти</button>
+        <p>Не зарегистрированы? <a [routerLink]="['/registration']" >Регистрация</a></p>
+    </form>
+</div>

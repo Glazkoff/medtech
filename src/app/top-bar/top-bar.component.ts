@@ -7,16 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopBarComponent implements OnInit {
   flag=true;
+  logOut = true;
   constructor() { }
 
   ngOnInit() {
   }
   openDropdownMenu(){
-    if (this.flag) {
-    
-    }
-    this.flag=!this.flag;
-    
+    this.flag=!this.flag;  
   }
-
+  onLogOut(){
+    this.logOut=!this.logOut;  
+  }
 }
