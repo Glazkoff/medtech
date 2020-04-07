@@ -8,22 +8,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema polywebage
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
+-- DROP SCHEMA IF EXISTS `polywebage` ;
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema polywebage
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+-- CREATE SCHEMA IF NOT EXISTS `polywebage` DEFAULT CHARACTER SET utf8 ;
+USE `polywebage` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`courses`
+-- Table `polywebage`.`courses`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`courses` ;
+DROP TABLE IF EXISTS `polywebage`.`courses` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`courses` (
+CREATE TABLE IF NOT EXISTS `polywebage`.`courses` (
   `id_courses` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NULL,
   PRIMARY KEY (`id_courses`))
@@ -31,31 +31,31 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`divisions`
+-- Table `polywebage`.`divisions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`divisions` ;
+DROP TABLE IF EXISTS `polywebage`.`divisions` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`divisions` (
+CREATE TABLE IF NOT EXISTS `polywebage`.`divisions` (
   `id_divisions` INT NOT NULL AUTO_INCREMENT,
   `id_courses` INT NOT NULL,
   `title` VARCHAR(45) NULL,
   PRIMARY KEY (`id_divisions`),
   CONSTRAINT `fk_divisions_courses`
     FOREIGN KEY (`id_courses`)
-    REFERENCES `mydb`.`courses` (`id_courses`)
+    REFERENCES `polywebage`.`courses` (`id_courses`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_divisions_courses_idx` ON `mydb`.`divisions` (`id_courses` ASC) VISIBLE;
+CREATE INDEX `fk_divisions_courses_idx` ON `polywebage`.`divisions` (`id_courses` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`materials`
+-- Table `polywebage`.`materials`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`materials` ;
+DROP TABLE IF EXISTS `polywebage`.`materials` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`materials` (
+CREATE TABLE IF NOT EXISTS `polywebage`.`materials` (
   `id_materials` INT NOT NULL AUTO_INCREMENT,
   `id_divisions` INT NOT NULL,
   `duration` VARCHAR(45) NULL,
@@ -64,41 +64,41 @@ CREATE TABLE IF NOT EXISTS `mydb`.`materials` (
   PRIMARY KEY (`id_materials`),
   CONSTRAINT `fk_materials_divisions1`
     FOREIGN KEY (`id_divisions`)
-    REFERENCES `mydb`.`divisions` (`id_divisions`)
+    REFERENCES `polywebage`.`divisions` (`id_divisions`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_materials_divisions1_idx` ON `mydb`.`materials` (`id_divisions` ASC) VISIBLE;
+CREATE INDEX `fk_materials_divisions1_idx` ON `polywebage`.`materials` (`id_divisions` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`news`
+-- Table `polywebage`.`news`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`news` ;
+DROP TABLE IF EXISTS `polywebage`.`news` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`news` (
+CREATE TABLE IF NOT EXISTS `polywebage`.`news` (
   `id_news` VARCHAR(45) NOT NULL,
   `id_materials` INT NOT NULL,
   PRIMARY KEY (`id_news`),
   CONSTRAINT `fk_news_materials1`
     FOREIGN KEY (`id_materials`)
-    REFERENCES `mydb`.`materials` (`id_materials`)
+    REFERENCES `polywebage`.`materials` (`id_materials`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_news_materials1_idx` ON `mydb`.`news` (`id_materials` ASC) VISIBLE;
+CREATE INDEX `fk_news_materials1_idx` ON `polywebage`.`news` (`id_materials` ASC) VISIBLE;
 
-CREATE UNIQUE INDEX `id_news_UNIQUE` ON `mydb`.`news` (`id_news` ASC) VISIBLE;
+CREATE UNIQUE INDEX `id_news_UNIQUE` ON `polywebage`.`news` (`id_news` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`users`
+-- Table `polywebage`.`users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`users` ;
+DROP TABLE IF EXISTS `polywebage`.`users` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`users` (
+CREATE TABLE IF NOT EXISTS `polywebage`.`users` (
   `id_users` INT NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(45) NULL DEFAULT NULL,
   `password` VARCHAR(45) NULL DEFAULT NULL,
@@ -111,11 +111,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`users_has_courses`
+-- Table `polywebage`.`users_has_courses`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`users_has_courses` ;
+DROP TABLE IF EXISTS `polywebage`.`users_has_courses` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`users_has_courses` (
+CREATE TABLE IF NOT EXISTS `polywebage`.`users_has_courses` (
   `id_courses` INT NOT NULL,
   `id_users` INT NOT NULL,
   `start_date` VARCHAR(45) NULL,
@@ -124,46 +124,46 @@ CREATE TABLE IF NOT EXISTS `mydb`.`users_has_courses` (
   PRIMARY KEY (`id_courses`, `id_users`),
   CONSTRAINT `fk_courses_has_users_courses1`
     FOREIGN KEY (`id_courses`)
-    REFERENCES `mydb`.`courses` (`id_courses`)
+    REFERENCES `polywebage`.`courses` (`id_courses`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_courses_has_users_users1`
     FOREIGN KEY (`id_users`)
-    REFERENCES `mydb`.`users` (`id_users`)
+    REFERENCES `polywebage`.`users` (`id_users`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_courses_has_users_users1_idx` ON `mydb`.`users_has_courses` (`id_users` ASC) VISIBLE;
+CREATE INDEX `fk_courses_has_users_users1_idx` ON `polywebage`.`users_has_courses` (`id_users` ASC) VISIBLE;
 
-CREATE INDEX `fk_courses_has_users_courses1_idx` ON `mydb`.`users_has_courses` (`id_courses` ASC) VISIBLE;
+CREATE INDEX `fk_courses_has_users_courses1_idx` ON `polywebage`.`users_has_courses` (`id_courses` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`users_has_materials`
+-- Table `polywebage`.`users_has_materials`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`users_has_materials` ;
+DROP TABLE IF EXISTS `polywebage`.`users_has_materials` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`users_has_materials` (
+CREATE TABLE IF NOT EXISTS `polywebage`.`users_has_materials` (
   `id_users` INT NOT NULL,
   `id_materials` INT NOT NULL,
   `status` VARCHAR(45) NULL,
   PRIMARY KEY (`id_users`, `id_materials`),
   CONSTRAINT `fk_users_has_materials1_users1`
     FOREIGN KEY (`id_users`)
-    REFERENCES `mydb`.`users` (`id_users`)
+    REFERENCES `polywebage`.`users` (`id_users`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_users_has_materials1_materials1`
     FOREIGN KEY (`id_materials`)
-    REFERENCES `mydb`.`materials` (`id_materials`)
+    REFERENCES `polywebage`.`materials` (`id_materials`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_users_has_materials1_materials1_idx` ON `mydb`.`users_has_materials` (`id_materials` ASC) VISIBLE;
+CREATE INDEX `fk_users_has_materials1_materials1_idx` ON `polywebage`.`users_has_materials` (`id_materials` ASC) VISIBLE;
 
-CREATE INDEX `fk_users_has_materials1_users1_idx` ON `mydb`.`users_has_materials` (`id_users` ASC) VISIBLE;
+CREATE INDEX `fk_users_has_materials1_users1_idx` ON `polywebage`.`users_has_materials` (`id_users` ASC) VISIBLE;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
