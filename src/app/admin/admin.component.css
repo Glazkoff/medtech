@@ -1,0 +1,16 @@
+.editor-background {
+  max-width: 850px;
+  margin: 0 auto;
+  border-radius: 120px;
+  padding: 70px 60px;
+  background: #eef5fa;
+}
+
+.editor-wrap {
+  padding: 70px 50px;
+  border-radius: 8px;
+  box-shadow: 0 24px 24px -18px rgba(69, 104, 129, .33),
+    0 9px 45px 0 rgba(114, 119, 160, .12);
+  margin: 0 auto;
+  background-color: #fff;
+}
