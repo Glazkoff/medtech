@@ -47,10 +47,7 @@ export class AdminEditorComponent implements OnInit {
     editor
       .save()
       .then((outputData) => {
-        console.log(outputData);
-        console.log("Article data: ", JSON.stringify(outputData));
         this.api.post(JSON.stringify(outputData), "/posts");
-        // this.http.post("http://localhost:3001", JSON.stringify(outputData));
       })
       .catch((error) => {
         console.log("Saving failed: ", error);

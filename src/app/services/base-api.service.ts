@@ -12,8 +12,8 @@ export class BaseApiService {
   private getUrl(url: string = ""): string {
     return "http://localhost:3001/api" + url;
   }
-  public get() {
-    return this.http.get(this.getUrl(), { headers: this.headers });
+  public get(url) {
+    return this.http.get(this.getUrl(url), { headers: this.headers });
   }
   public post(data, url) {
     return this.http

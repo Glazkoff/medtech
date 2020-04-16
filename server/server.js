@@ -25,7 +25,7 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET, PATCH, PUT, POST, DELETE, OPTIONS");
-  next(); // передаем обработку запроса методу app.post("/postuser"...
+  next();
 });
 
 // создаем соединение с нашей базой данных
@@ -72,7 +72,7 @@ app.post("/api/posts", (req, res) => {
   console.log(req.body);
 
   connection.query('INSERT INTO `materials` (`duration`, `date`, `type`, `title`, `content`) VALUES ("1 час", ?, "news", ?, ?)',
-    [req.body.time, "Название статьи".toString(), JSON.stringify(req.body.blocks)],
+    [req.body.time, "Название статьи", JSON.stringify(req.body.blocks)],
     function (err, results) {
       console.log('БД результаты:');
       if (err) {
@@ -80,22 +80,10 @@ app.post("/api/posts", (req, res) => {
         console.warn(err);
       } else {
         console.log(results);
-        connection.query('SELECT * FROM `materials` WHERE `id_materials`=?',
-          [results.insertId],
-          function (error, resu) {
-            console.log('!!!!!!!!!!');
-            console.log(error);
-            console.log(resu);
-            res.json(resu)
-          }
-        )
       }
-
     });
 })
-app.get('/api/posts', (req, res) => {
-  req.json()
-});
+
 
 app.listen(3001, () => {
   console.log("Сервер запущен на http://localhost:3001");
