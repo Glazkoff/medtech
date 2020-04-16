@@ -2,6 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
+import Table from "@editorjs/table";
+import Marker from "@editorjs/marker";
+
 
 let editor;
 @Component({
@@ -30,9 +33,18 @@ export class AdminComponent implements OnInit {
       tools: {
         header: Header,
         list: List,
+        table: {
+          class: Table,
+        },
+        Marker: {
+          class: Marker,
+          shortcut: "CMD+SHIFT+M",
+        },
       },
       autofocus: true,
       placeholder: "Напиши сюда лучшую статью!",
+      // initialBlock: "header",
+      // logLevel: "ERROR",
     });
 
     try {

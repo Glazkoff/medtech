@@ -7,6 +7,7 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { AdminComponent } from './admin/admin.component';
+import { AdminEditorComponent } from './admin-editor/admin-editor.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { AdminComponent } from './admin/admin.component';
     TopBarComponent,
     AuthorizationComponent,
     RegistrationComponent,
-    AdminComponent
+    AdminComponent,
+    AdminEditorComponent
   ],
   imports: [
     BrowserModule,

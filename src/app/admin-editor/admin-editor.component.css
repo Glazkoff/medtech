@@ -1,0 +1,78 @@
+.editor-background {
+  max-width: 850px;
+  margin: 0 auto;
+  border-radius: 100px;
+  padding: 70px 60px;
+  background: #eef5fa;
+  position: relative;
+}
+
+.editor-wrap {
+  padding: 70px 50px;
+  border-radius: 8px;
+  box-shadow: 0 24px 24px -18px rgba(69, 104, 129, .33),
+    0 9px 45px 0 rgba(114, 119, 160, .12);
+  margin: 0 auto;
+  background-color: #fff;
+}
+
+.editor-btn-wrap {
+  position: absolute;
+  top: 18px;
+  /* left: calc(50% - 50px); */
+  right: 60px;
+  display: flex;
+}
+
+.editor-btn {
+  user-select: none;
+  width: 100px;
+  border: 0px;
+  padding: 10px 15px;
+  color: #fff;
+  border-radius: 4px;
+  font-family: -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
+  cursor: pointer;
+  transition: 0.15s ease-out;
+}
+
+
+
+.editor-btn:focus {
+  outline: 0px;
+}
+
+.editor-btn:not(:last-child) {
+  margin-right: 8px;
+}
+
+.btn-normal {
+  background-color: #2034e9;
+  box-shadow: 2px 2px 20px #2034e9;
+}
+
+.btn-normal:hover {
+  background-color: #606ee7;
+  box-shadow: 1px 1px 10px #606ee7;
+}
+
+.btn-danger {
+  background-color: #e92020;
+  box-shadow: 2px 2px 20px #e92020;
+}
+
+.btn-danger:hover {
+  background-color: #e76060;
+  box-shadow: 1px 1px 10px #e92020;
+}
