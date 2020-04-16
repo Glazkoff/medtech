@@ -18,7 +18,7 @@ app.use(
 );
 
 // Обработка статических файлов
-app.use("/", serveStatic(path.join(__dirname, "../dist")));
+app.use("/", serveStatic(path.join(__dirname, "../dist/medtech")));
 
 // создаем соединение с нашей базой данных
 const connection = mysql.createConnection({
