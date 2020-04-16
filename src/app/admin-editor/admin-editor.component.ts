@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
+import { BaseApiService } from "../services/base-api.service";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Table from "@editorjs/table";
 import Marker from "@editorjs/marker";
+import { HttpClient } from "@angular/common/http";
 
 let editor;
 @Component({
@@ -12,13 +14,11 @@ let editor;
   styleUrls: ["./admin-editor.component.css"],
 })
 export class AdminEditorComponent implements OnInit {
-  constructor() {}
+  constructor(private api: BaseApiService, private http: HttpClient) {}
 
   async ngOnInit() {
     editor = new EditorJS({
-      /**
-       * Id элемента, который будет содержать редактор
-       */
+      /* Id элемента, который будет содержать редактор */
       holderId: "editorjs",
       tools: {
         header: Header,
@@ -33,7 +33,7 @@ export class AdminEditorComponent implements OnInit {
       },
       autofocus: true,
       placeholder: "Напиши сюда лучшую статью!",
-      // initialBlock: "header",
+      // Раскомментировать на продакшен:
       // logLevel: "ERROR",
     });
 
@@ -48,7 +48,9 @@ export class AdminEditorComponent implements OnInit {
     editor
       .save()
       .then((outputData) => {
-        console.log("Article data: ", outputData);
+        console.log("Article data: ", JSON.stringify(outputData));
+        this.api.post(JSON.stringify(outputData), "/posts");
+        // this.http.post("http://localhost:3001", JSON.stringify(outputData));
       })
       .catch((error) => {
         console.log("Saving failed: ", error);
