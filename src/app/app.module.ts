@@ -9,6 +9,8 @@ import { RegistrationComponent } from "./registration/registration.component";
 import { AdminComponent } from "./admin/admin.component";
 import { AdminEditorComponent } from "./admin-editor/admin-editor.component";
 import { HttpClientModule } from "@angular/common/http";
+import { MyCoursesComponent } from './my-courses/my-courses.component';
+import { CourseCardComponent } from './course-card/course-card.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { HttpClientModule } from "@angular/common/http";
     RegistrationComponent,
     AdminComponent,
     AdminEditorComponent,
+    MyCoursesComponent,
+    CourseCardComponent,
   ],
   imports: [
     BrowserModule,
