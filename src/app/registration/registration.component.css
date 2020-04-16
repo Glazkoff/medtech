@@ -70,3 +70,7 @@ button:disabled {
     background-color: #a2a1a1 !important;
     border-color: #a2a1a1 !important;
   }
+.green{
+    color: #00af4c;
+    font-weight: bold;
+}

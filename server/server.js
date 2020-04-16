@@ -84,6 +84,42 @@ app.post("/api/posts", (req, res) => {
     });
 })
 
+app.post("/api/users", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log('Пришёл POST запрос для постов:');
+  console.log(req.body);
+
+  connection.query('INSERT INTO `users` (`id_users`, `login`, `password`, `firstname`, `surname`, `organization`, `role`) VALUES (NULL, ?, ?, ?, ?, ?, ?)',
+    [req.body.login, req.body.password, req.body.name, req.body.surname, req.body.organization, req.body.role],
+    function (err, results) {
+      console.log('БД результаты:');
+      if (err) {
+        console.log('Ошибка записи в БД!');
+        console.warn(err);
+      } else {
+        console.log(results);
+      }
+    });
+})
+
+// app.post("/api/login", (req, res) => {
+//   if (!req.body) return res.sendStatus(400);
+//   console.log('Пришёл POST запрос для постов:');
+//   console.log(req.body);
+
+//   connection.query('SELECT * FROM users WHERE (login="?") AND (password="?")',
+//     [req.body.login, req.body.password],
+//     function (err, results) {
+//       console.log('БД результаты:');
+//       if (err) {
+//         console.log('Ошибка записи в БД!');
+//         console.warn(err);
+//       } else {
+//         console.log(results);
+//       }
+//     });
+// })
+
 
 app.listen(3001, () => {
   console.log("Сервер запущен на http://localhost:3001");

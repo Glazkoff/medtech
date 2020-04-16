@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { BaseApiService } from '../services/base-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authorization',
@@ -9,7 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class AuthorizationComponent implements OnInit {
 
   myForm :FormGroup;
-  constructor() { }
+  constructor(private api: BaseApiService, private router: Router) { }
 
   ngOnInit() {
     this.myForm = new FormGroup({
@@ -18,7 +20,13 @@ export class AuthorizationComponent implements OnInit {
     });
   }
 
-  onClick() {
+  onLogin() {
     console.log('Click!')
+    // let login;
+    // login = {
+    //   login: this.myForm.value.login,
+    //   password: this.myForm.value.password
+    // }
+    // this.api.post(JSON.stringify(login), "/login");
   }
 }

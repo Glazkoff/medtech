@@ -3,8 +3,11 @@
         <h1>Регистрация</h1>
         <input type="text" formControlName="name" class="form-control" placeholder="Введите имя" required>
         <input type="text" formControlName="surname" class="form-control" placeholder="Введите фамилию" required>
+        <input type="text" formControlName="organization" class="form-control" placeholder="Введите организацию" required>
+        <input type="text" formControlName="role" class="form-control" placeholder="Введите вашу роль" required>
         <input type="text"  formControlName="login" class="form-control" placeholder="Введите логин" required>
         <input type="password"  formControlName="password"  class="form-control" placeholder="Введите пароль" required>
-        <button class="btn" [disabled]="myForm.invalid" >Зарегистрироваться</button>
-       </form>
+        <button class="btn" [disabled]="myForm.invalid" (click)="onRegistr()" >Зарегистрироваться</button>
+        <!-- <p class="green">Вы успешно зарегистрированы!</p> -->
+    </form>
 </div>
