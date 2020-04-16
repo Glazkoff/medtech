@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   providedIn: "root",
 })
 export class BaseApiService {
-  headers = new HttpHeaders("Content-Type: application/json");
+  headers = new HttpHeaders("Content-Type: application/json; charset=UTF-8");
 
   constructor(private http: HttpClient) {}
 
@@ -22,7 +22,7 @@ export class BaseApiService {
       })
       .subscribe();
   }
-  "base api";
+  // "base api";
   public put(data, url) {
     console.log("base api");
     console.log(data);
