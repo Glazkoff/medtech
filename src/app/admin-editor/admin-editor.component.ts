@@ -5,7 +5,6 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Table from "@editorjs/table";
 import Marker from "@editorjs/marker";
-import { HttpClient } from "@angular/common/http";
 
 let editor;
 @Component({
@@ -14,7 +13,7 @@ let editor;
   styleUrls: ["./admin-editor.component.css"],
 })
 export class AdminEditorComponent implements OnInit {
-  constructor(private api: BaseApiService, private http: HttpClient) {}
+  constructor(private api: BaseApiService) {}
 
   async ngOnInit() {
     editor = new EditorJS({
@@ -48,9 +47,7 @@ export class AdminEditorComponent implements OnInit {
     editor
       .save()
       .then((outputData) => {
-        console.log("Article data: ", JSON.stringify(outputData));
         this.api.post(JSON.stringify(outputData), "/posts");
-        // this.http.post("http://localhost:3001", JSON.stringify(outputData));
       })
       .catch((error) => {
         console.log("Saving failed: ", error);

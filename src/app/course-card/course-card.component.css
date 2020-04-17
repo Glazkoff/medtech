@@ -1,0 +1,84 @@
+.card{
+    width: 1094px;
+    height: 329px;
+    position: relative;
+    margin-bottom: 20px;
+    
+    background: #E9E9E9;
+    border-radius: 4px;
+    
+    }
+    h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    display: block;
+    position: absolute;
+    left: 41px;
+    top: 20px;
+    }
+    
+    h2{
+    position: absolute;
+    width: 532px;
+    height: 45px;
+    left: 36px;
+    top: 253px;
+    
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    }
+    
+    .button{
+    width: 298px;
+    height: 72px;
+    position: absolute;
+    left: 707px;
+    top: 59px;
+    
+    background: #C4C4C4;
+    border-radius: 4px;
+    border: none; 
+    outline: none;
+    
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    }
+    
+    .deadline{
+    position: absolute;
+    width: 353.5px;
+    height: 79px;
+    left: 41px;
+    top: 130px;
+    
+    background: #B9D6AE;
+    border: 1px solid #008A06;
+    }
+    .danger{
+    background: rgb(246, 152, 152);
+    border: 1px solid rgb(180, 3, 12);
+    }
+
+    p{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    text-align: center;
+    }
+    
+    hr{
+    position: absolute;
+    width: 1036px;
+    height: 0px;
+    left: 26px;
+    top: 239px;
+    
+    border: 1px solid #000000;
+    }
