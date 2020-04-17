@@ -18,15 +18,7 @@ app.use(
 );
 
 // Обработка статических файлов
-app.use("/", serveStatic(path.join(__dirname, "../dist/medtech")));
-
-// настройка CORS
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "GET, PATCH, PUT, POST, DELETE, OPTIONS");
-  next(); // передаем обработку запроса методу app.post("/postuser"...
-});
+app.use("/", serveStatic(path.join(__dirname, "../dist")));
 
 // создаем соединение с нашей базой данных
 const connection = mysql.createConnection({
@@ -45,10 +37,6 @@ try {
   console.warn(err);
 }
 
-//*******************************/
-//*** Ниже пишется только API ***/
-//*******************************/
-
 // При получении любого пути возвращать index.html из папки dist
 app.get(/.*/, function (req, res) {
   res.sendFile(path.join(__dirname, "../dist/index.html"));
@@ -59,14 +47,12 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname, "../dist/index.html");
 });
 
-app.post("/api/posts", (req, res) => {
-  // res.sendFile(__dirname, "../dist/index.html");
-  if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для постов:');
-  console.log(req.body);
-  res.json(req.body)
-});
+const sql_news = `SELECT * FROM news`;
 
+connection.query(sql_news, function(err, results) {
+  if(err) console.log(err);
+  console.log(results);
+});
 app.listen(3001, () => {
   console.log("Сервер запущен на http://localhost:3001");
 });

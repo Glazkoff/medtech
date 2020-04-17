@@ -1,14 +1,13 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { TopBarComponent } from "./top-bar/top-bar.component";
-import { AuthorizationComponent } from "./authorization/authorization.component";
-import { RegistrationComponent } from "./registration/registration.component";
-import { AdminComponent } from "./admin/admin.component";
-import { AdminEditorComponent } from "./admin-editor/admin-editor.component";
-import { HttpClientModule } from "@angular/common/http";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
+import { AuthorizationComponent } from './authorization/authorization.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { AdminComponent } from './admin/admin.component';
+import { NewsComponent } from './news/news.component';
 
 @NgModule({
   declarations: [
@@ -17,16 +16,15 @@ import { HttpClientModule } from "@angular/common/http";
     AuthorizationComponent,
     RegistrationComponent,
     AdminComponent,
-    AdminEditorComponent,
+    NewsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
