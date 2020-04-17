@@ -11,6 +11,8 @@ import { AdminEditorComponent } from "./admin-editor/admin-editor.component";
 import { HttpClientModule } from "@angular/common/http";
 import { MyCoursesComponent } from './my-courses/my-courses.component';
 import { CourseCardComponent } from './course-card/course-card.component';
+import { CourseViewerComponent } from './course-viewer/course-viewer.component';
+import { CourseMaterialComponent } from './course-material/course-material.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { CourseCardComponent } from './course-card/course-card.component';
     AdminEditorComponent,
     MyCoursesComponent,
     CourseCardComponent,
+    CourseViewerComponent,
+    CourseMaterialComponent,
   ],
   imports: [
     BrowserModule,
