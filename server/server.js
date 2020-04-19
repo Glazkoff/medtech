@@ -56,14 +56,14 @@ try {
 //***********************************/
 
 // При получении любого пути возвращать index.html из папки dist
-app.get(/.*/, function (req, res) {
-  res.sendFile(path.join(__dirname, "../dist/index.html"));
-});
-
-// При корневом пути возвращать index.html из папки dist
-app.get("/", (req, res) => {
-  res.sendFile(__dirname, "../dist/index.html");
-});
+// app.get(/.*/, function (req, res) {
+//   res.sendFile(path.join(__dirname, "../dist/index.html"));
+// });
+//
+// // При корневом пути возвращать index.html из папки dist
+// app.get("/", (req, res) => {
+//   res.sendFile(__dirname, "../dist/index.html");
+// });
 
 app.post("/api/posts", (req, res) => {
   // res.sendFile(__dirname, "../dist/index.html");
@@ -82,7 +82,26 @@ app.post("/api/posts", (req, res) => {
         console.log(results);
       }
     });
-})
+});
+app.get('/api/posts', function (req, res) {
+  connection.query('SELECT * FROM `materials` WHERE 1', function (error, results, fields) {
+    if (error) throw error;
+
+    res.json(results[0]);
+  });
+});
+
+
+// rest api to get a single employee data
+// app.get('/news/:id', function (req, res) {
+//   connection.query('SELECT * FROM `materials` WHERE  id=?', [req.body.id], function (error, results, fields) {
+//     if (error) throw error;
+//     res.end(JSON.stringify(results));
+//   });
+// });
+
+
+
 
 
 app.listen(3001, () => {
