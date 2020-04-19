@@ -1,0 +1,39 @@
+.future-video{
+position: absolute;
+width: 995px;
+height: 555px;
+top: 121.25px;
+
+background: #999898;
+}
+.title{
+position: absolute;
+width: 408px;
+height: 45px;
+left: 33px;
+top: 722px;
+
+font-family: Arial, Helvetica, sans-serif;
+font-style: normal;
+font-weight: 500;
+font-size: 48px;
+display: flex;
+align-items: center;
+}
+
+p{
+position: absolute;
+width: 927px;
+height: 196px;
+margin-left: 37px;
+top: 792px;
+margin-bottom: 30px;
+
+font-family: Arial, Helvetica, sans-serif;
+font-style: normal;
+font-weight: 300;
+font-size: 24px;
+line-height: 28px;
+display: flex;
+align-items: center;
+}
