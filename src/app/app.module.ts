@@ -11,9 +11,10 @@ import { AdminEditorComponent } from "./admin-editor/admin-editor.component";
 import { HttpClientModule } from "@angular/common/http";
 import { MyCoursesComponent } from './my-courses/my-courses.component';
 import { CourseCardComponent } from './course-card/course-card.component';
+import { CourseViewerComponent } from './course-viewer/course-viewer.component';
+import { CourseMaterialComponent } from './course-material/course-material.component';
 import {NewsComponent} from "./news/news.component";
 import { NewComponent } from './new/new.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,8 +25,10 @@ import { NewComponent } from './new/new.component';
     AdminEditorComponent,
     MyCoursesComponent,
     CourseCardComponent,
+    CourseViewerComponent,
+    CourseMaterialComponent,
     NewsComponent,
-    NewComponent
+    NewComponent,
   ],
   imports: [
     BrowserModule,
