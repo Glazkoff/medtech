@@ -84,11 +84,16 @@ app.post("/api/posts", (req, res) => {
     });
 });
 app.get('/api/posts', function (req, res) {
-  connection.query('SELECT * FROM `materials` WHERE 1', function (error, results, fields) {
-    if (error) throw error;
-
-    res.json(results[0]);
-  });
+  try {
+    connection.query('SELECT * FROM `materials` WHERE 1', function (error, results, fields) {
+      if (error) throw error;
+      console.log('РЕЗУЛЬТАТЫ');
+      console.log(results);
+      res.json(results);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 
