@@ -110,6 +110,60 @@ app.get('/api/posts', function (req, res) {
 
 
 
+app.post("/api/users", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log('Пришёл POST запрос для пользователей:');
+  console.log(req.body);
+  connection.query(`SELECT * FROM users WHERE login='${req.body.login}'`, function (error, results) {
+    if (error) {
+      res.status(500).send('Ошибка сервера при получении пользователей с таким же логином')
+      console.log(error);
+    }
+    console.log('Результаты проверки существования логина:');
+    console.log(results[0]);
+    if (results[0]===undefined) {
+        connection.query('INSERT INTO `users` (`id_users`, `login`, `password`, `firstname`, `surname`, `organization`, `role`) VALUES (NULL, ?, ?, ?, ?, ?, ?)',
+        [req.body.login, req.body.password, req.body.name, req.body.surname, req.body.organization, req.body.role],
+        function (err, r) {
+          console.log('БД результаты:');
+          if (err) {
+            console.log('Ошибка записи в БД!');
+            console.warn(err);
+          } else {
+            console.log(r);
+            res.json("not exist");
+          }
+        });
+    } else {
+      res.json("exist");
+    }
+  });  
+
+})
+
+app.post("/api/login", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log('Пришёл POST запрос для входа:');
+  console.log(req.body);
+  connection.query(`SELECT * FROM users WHERE (login="${req.body.login}") AND (password="${req.body.password}")`,
+    function (err, results) {
+      if (err) {
+        res.status(500).send('Ошибка сервера при получении пользователя по логину')
+        console.log(err);
+      }
+      console.log('Результаты проверки существования пользователя:');
+      if (results!==undefined){
+        console.log(results[0]);
+      if (results[0]===undefined) {
+        res.json("not exist");
+      }
+       else {
+        res.json(results);
+      }
+      }   
+    });
+})
+
 
 app.listen(3001, () => {
   console.log("Сервер запущен на http://localhost:3001");

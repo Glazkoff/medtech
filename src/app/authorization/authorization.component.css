@@ -115,3 +115,21 @@ button:disabled {
     background-color: #a2a1a1 !important;
     border-color: #a2a1a1 !important;
   }
+  
+.attention{
+    text-align: left !important;
+    color: red;
+    margin-top: -7px !important;
+    margin-bottom: 7px;
+}
+.attention span {
+    margin-top: -27px;
+    margin-left: 25px;
+    display: block;
+}
+.danger{
+    padding-right: 5px;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
