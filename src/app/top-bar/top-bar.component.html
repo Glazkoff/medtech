@@ -4,7 +4,7 @@
     </button> -->
     <div *ngIf="logOut; else blockLogIn">
         <div class="flex-wrap">
-            <a class="nav-link" href="#">Здравствуй, Арина Оськина!</a>           
+            <a class="nav-link" href="#">Здравствуй, {{name}} {{surname}}!</a>           
             <div *ngIf="!flag;">
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">Пункт 1</a>

@@ -153,13 +153,15 @@ app.post("/api/login", (req, res) => {
         console.log(err);
       }
       console.log('Результаты проверки существования пользователя:');
-      console.log(results[0]);
+      if (results!==undefined){
+        console.log(results[0]);
       if (results[0]===undefined) {
         res.json("not exist");
       }
        else {
         res.json(results);
       }
+      }   
     });
 })
 

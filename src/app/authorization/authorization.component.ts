@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BaseApiService } from '../services/base-api.service';
 import { Router } from '@angular/router';
@@ -43,7 +43,7 @@ export class AuthorizationComponent implements OnInit {
       console.log(`Name: ${name}`);
       
       if (ExistOrNot != "not exist") {
-        this.user.id = ExistOrNot[0].id_users;
+        this.user.id = +ExistOrNot[0].id_users;
         this.user.login = ExistOrNot[0].login;
         this.user.password = ExistOrNot[0].password;
         this.user.name = ExistOrNot[0].firstname;
@@ -52,6 +52,9 @@ export class AuthorizationComponent implements OnInit {
         this.user.role = ExistOrNot[0].role; 
         console.log(this.user);       
         this.flag = true;
+        localStorage.setItem('userName', this.user.name);
+        localStorage.setItem('userSurname', this.user.surname);
+        localStorage.setItem('log', "IN");
         this.router.navigate(['/my-courses']);
         
       } else {
