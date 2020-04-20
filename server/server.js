@@ -85,8 +85,11 @@ app.post("/api/posts", (req, res) => {
 });
 app.get('/api/posts', function (req, res) {
   try {
-    connection.query('SELECT * FROM `materials` WHERE 1', function (error, results, fields) {
-      if (error) throw error;
+    connection.query('SELECT * FROM `materials`', function (error, results, fields) {
+      if (error) {
+        res.status(500).send('Ошибка сервера при получении постов')
+        console.log(error);
+      }
       console.log('РЕЗУЛЬТАТЫ');
       console.log(results);
       res.json(results);
