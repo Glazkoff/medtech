@@ -21,8 +21,7 @@ export class BaseApiService {
     return this.http
       .post(this.getUrl(url), data, {
         headers: this.headers,
-      })
-      .subscribe();
+      }).toPromise();
   }
   // "base api";
   public put(data, url) {
