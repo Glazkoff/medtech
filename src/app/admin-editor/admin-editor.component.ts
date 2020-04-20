@@ -14,7 +14,8 @@ let editor;
 })
 export class AdminEditorComponent implements OnInit {
   constructor(private api: BaseApiService) {}
-
+  title = "";
+  duration = "30 минут";
   async ngOnInit() {
     editor = new EditorJS({
       /* Id элемента, который будет содержать редактор */
@@ -47,7 +48,12 @@ export class AdminEditorComponent implements OnInit {
     editor
       .save()
       .then((outputData) => {
-        this.api.post(JSON.stringify(outputData), "/posts");
+        let postData = {
+          title: this.title,
+          duration: this.duration,
+          content: outputData,
+        };
+        this.api.post(JSON.stringify(postData), "/posts");
       })
       .catch((error) => {
         console.log("Saving failed: ", error);

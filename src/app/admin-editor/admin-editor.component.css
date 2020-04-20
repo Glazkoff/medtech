@@ -3,6 +3,7 @@
   margin: 0 auto;
   border-radius: 100px;
   padding: 70px 60px;
+  padding-top: 90px;
   background: #eef5fa;
   position: relative;
 }
@@ -24,8 +25,8 @@
   display: flex;
 }
 
-.editor-btn {
-  user-select: none;
+.editor-btn,
+.editor-input {
   width: 100px;
   border: 0px;
   padding: 10px 15px;
@@ -47,7 +48,26 @@
   transition: 0.15s ease-out;
 }
 
+.editor-input {
+  color: #000;
+  margin-right: 16px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, .2);
+  width: 400px;
+  font-size: 1.8rem;
+}
 
+.editor-input:first-child {
+  /* width: 100%; */
+}
+
+.input-secondary {
+  font-size: 1.1rem;
+  width: 140px;
+}
+
+.editor-btn {
+  user-select: none;
+}
 
 .editor-btn:focus {
   outline: 0px;

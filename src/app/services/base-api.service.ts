@@ -22,7 +22,7 @@ export class BaseApiService {
       .post(this.getUrl(url), data, {
         headers: this.headers,
       })
-      .subscribe();
+      .toPromise();
   }
   // "base api";
   public put(data, url) {

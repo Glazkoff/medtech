@@ -1,1 +1,10 @@
+#admin-wrap {
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: 1fr;
+}
 
+.sidepanel {
+  border-right: 1px solid #000;
+}

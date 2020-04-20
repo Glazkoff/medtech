@@ -70,9 +70,8 @@ app.post("/api/posts", (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log('Пришёл POST запрос для постов:');
   console.log(req.body);
-
-  connection.query('INSERT INTO `materials` (`duration`, `date`, `type`, `title`, `content`) VALUES ("1 час", ?, "news", ?, ?)',
-    [req.body.time, "Название статьи", JSON.stringify(req.body.blocks)],
+  connection.query('INSERT INTO `materials` (`duration`, `date`, `type`, `title`, `content`) VALUES (?, ?, "news", ?, ?)',
+    [req.body.duration, req.body.content.time, req.body.title, JSON.stringify(req.body.content.blocks)],
     function (err, results) {
       console.log('БД результаты:');
       if (err) {
