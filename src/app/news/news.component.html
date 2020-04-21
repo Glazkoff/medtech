@@ -3,6 +3,7 @@
   <div class="news">
   <div class="new" *ngFor="let post of posts">
     <h2>{{post.title}}</h2>
+    <p>{{post.duration}}</p>
     <button class="btn" [routerLink]="['/new', post.id]">Подробнее</button>
   </div></div>
 </div>
