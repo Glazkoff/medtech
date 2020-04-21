@@ -1,0 +1,18 @@
+<p>admin-articles works!</p>
+
+<table *ngIf="path==='editarticle' && id===''" class="table">
+  <tbody>
+    <tr>
+      <th>ID</th>
+      <th>Заголовок</th>
+      <th>Дата</th>
+      <th>Длительность</th>
+    </tr>
+    <tr *ngFor="let post of posts" [routerLink]="[ '/admin', 'editarticle', post.id_materials]">
+      <td>{{post.id_materials}}</td>
+      <td>{{post.title}}</td>
+      <td>{{post.date}}</td>
+      <td>{{post.duration}}</td>
+    </tr>
+  </tbody>
+</table>

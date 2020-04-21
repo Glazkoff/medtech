@@ -17,12 +17,12 @@ body {
   position: fixed;
   z-index: 20;
   height: calc(100vh - 50px - 1rem);
-  width: 16vw;
+  width: 18vw;
 }
 
 .mainpanel {
-  width: 84vw;
-  margin-left: 16vw;
+  width: 82vw;
+  margin-left: 18vw;
 }
 
 a.admin-menu-point {
@@ -36,4 +36,8 @@ a.admin-menu-point {
 h1 {
   margin: 0;
   padding: 10px 20px;
+}
+
+.menu-point-active {
+  font-weight: bold;
 }

@@ -5,6 +5,7 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Table from "@editorjs/table";
 import Marker from "@editorjs/marker";
+import { Router } from "@angular/router";
 
 let editor;
 @Component({
@@ -13,7 +14,7 @@ let editor;
   styleUrls: ["./admin-editor.component.css"],
 })
 export class AdminEditorComponent implements OnInit {
-  constructor(private api: BaseApiService) {}
+  constructor(private api: BaseApiService, public router: Router) {}
   title = "";
   duration = "30 минут";
   async ngOnInit() {
@@ -54,6 +55,7 @@ export class AdminEditorComponent implements OnInit {
           content: outputData,
         };
         this.api.post(JSON.stringify(postData), "/posts");
+        this.router.navigate(["/admin"]);
       })
       .catch((error) => {
         console.log("Saving failed: ", error);

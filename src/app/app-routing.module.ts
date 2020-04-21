@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: "registration", component: RegistrationComponent },
   { path: "admin", component: AdminComponent },
   { path: "admin/:adminpart", component: AdminComponent },
+  { path: "admin/:adminpart/:id", component: AdminComponent },
   { path: "my-courses", component: MyCoursesComponent },
   { path: "course-viewer", component: CourseViewerComponent },
   { path: "news", component: NewsComponent },

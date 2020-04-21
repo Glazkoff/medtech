@@ -98,6 +98,22 @@ app.get('/api/posts', function (req, res) {
   }
 });
 
+app.get('/api/posts/:id', function (req, res) {
+  console.log(req.params.id);
+  try {
+    connection.query('SELECT * FROM `materials` WHERE id_materials = ?', [req.params.id], function (error, results, fields) {
+      if (error) {
+        res.status(500).send('Ошибка сервера при получении постов')
+        console.log(error);
+      }
+      console.log('РЕЗУЛЬТАТЫ');
+      console.log(results);
+      res.json(results);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // rest api to get a single employee data
 // app.get('/news/:id', function (req, res) {
@@ -121,8 +137,8 @@ app.post("/api/users", (req, res) => {
     }
     console.log('Результаты проверки существования логина:');
     console.log(results[0]);
-    if (results[0]===undefined) {
-        connection.query('INSERT INTO `users` (`id_users`, `login`, `password`, `firstname`, `surname`, `organization`, `role`) VALUES (NULL, ?, ?, ?, ?, ?, ?)',
+    if (results[0] === undefined) {
+      connection.query('INSERT INTO `users` (`id_users`, `login`, `password`, `firstname`, `surname`, `organization`, `role`) VALUES (NULL, ?, ?, ?, ?, ?, ?)',
         [req.body.login, req.body.password, req.body.name, req.body.surname, req.body.organization, req.body.role],
         function (err, r) {
           console.log('БД результаты:');
@@ -137,7 +153,7 @@ app.post("/api/users", (req, res) => {
     } else {
       res.json("exist");
     }
-  });  
+  });
 
 })
 
@@ -152,15 +168,14 @@ app.post("/api/login", (req, res) => {
         console.log(err);
       }
       console.log('Результаты проверки существования пользователя:');
-      if (results!==undefined){
+      if (results !== undefined) {
         console.log(results[0]);
-      if (results[0]===undefined) {
-        res.json("not exist");
+        if (results[0] === undefined) {
+          res.json("not exist");
+        } else {
+          res.json(results);
+        }
       }
-       else {
-        res.json(results);
-      }
-      }   
     });
 })
 
