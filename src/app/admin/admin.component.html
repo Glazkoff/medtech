@@ -1,6 +1,11 @@
 <div id="admin-wrap">
-  <div class="sidepanel"></div>
+  <div class="sidepanel">
+    <a class="admin-menu-point" [routerLink]="['/admin']" routerLinkActive="router-link-active">Главная</a>
+    <a class="admin-menu-point" [routerLink]="['/admin', 'newarticle']" routerLinkActive="router-link-active">Создать
+      статью</a>
+  </div>
   <div class="mainpanel">
-    <app-admin-editor></app-admin-editor>
+    <h1 *ngIf="router.url === '/admin'">Административная панель</h1>
+    <app-admin-editor *ngIf="router.url === '/admin/newarticle'"></app-admin-editor>
   </div>
 </div>

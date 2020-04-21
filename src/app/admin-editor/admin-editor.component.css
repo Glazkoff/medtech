@@ -1,6 +1,6 @@
 .editor-background {
   max-width: 850px;
-  margin: 0 auto;
+  margin: 20px auto;
   border-radius: 100px;
   padding: 70px 60px;
   padding-top: 90px;
@@ -95,4 +95,9 @@
 .btn-danger:hover {
   background-color: #e76060;
   box-shadow: 1px 1px 10px #e92020;
+}
+
+h2 {
+  padding: 0.8rem 1rem;
+  margin: 0;
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-admin",
@@ -6,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./admin.component.css"],
 })
 export class AdminComponent implements OnInit {
-  constructor() {}
+  constructor(public router: Router) {}
 
   ngOnInit() {}
 }

@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: "authorization", component: AuthorizationComponent },
   { path: "registration", component: RegistrationComponent },
   { path: "admin", component: AdminComponent },
+  { path: "admin/:adminpart", component: AdminComponent },
   { path: "my-courses", component: MyCoursesComponent },
   { path: "course-viewer", component: CourseViewerComponent },
   { path: "news", component: NewsComponent },

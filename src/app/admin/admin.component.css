@@ -1,10 +1,39 @@
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 #admin-wrap {
-  width: 100vw;
-  display: grid;
-  grid-template-columns: 1fr 5fr;
-  grid-template-rows: 1fr;
+  box-sizing: border-box;
+  max-width: 100vw;
+  /* display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 1fr; */
+
 }
 
 .sidepanel {
   border-right: 1px solid #000;
+  position: fixed;
+  z-index: 20;
+  height: calc(100vh - 50px - 1rem);
+  width: 16vw;
+}
+
+.mainpanel {
+  width: 84vw;
+  margin-left: 16vw;
+}
+
+a.admin-menu-point {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+h1 {
+  margin: 0;
+  padding: 10px 20px;
 }
