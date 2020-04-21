@@ -89,8 +89,6 @@ app.get('/api/posts', function (req, res) {
         res.status(500).send('Ошибка сервера при получении постов')
         console.log(error);
       }
-      console.log('РЕЗУЛЬТАТЫ');
-      console.log(results);
       res.json(results);
     });
   } catch (error) {
@@ -116,12 +114,20 @@ app.get('/api/posts/:id', function (req, res) {
 });
 
 // rest api to get a single employee data
-// app.get('/news/:id', function (req, res) {
-//   connection.query('SELECT * FROM `materials` WHERE  id=?', [req.body.id], function (error, results, fields) {
-//     if (error) throw error;
-//     res.end(JSON.stringify(results));
-//   });
-// });
+app.get('/api/posts/:id', function (req, res) {
+  try {
+    connection.query('SELECT content FROM `materials` WHERE id_materials = ?', [req.params.id], function (error, results, fields) {
+      if (error) {
+        res.status(500).send('Ошибка сервера при получении поста')
+        console.log(error);
+      }
+      res.json(results);
+
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 
 
@@ -178,6 +184,24 @@ app.post("/api/login", (req, res) => {
       }
     });
 })
+
+
+app.get('/api/courses', function (req, res) {
+  try {
+    connection.query('SELECT * FROM `courses`', function (error, results, fields) {
+      if (error) {
+        res.status(500).send('Ошибка сервера при получении названия курса')
+        console.log(error);
+      }
+      console.log('РЕЗУЛЬТАТЫ');
+      console.log(results);
+      res.json(results);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 
 
 app.listen(3001, () => {

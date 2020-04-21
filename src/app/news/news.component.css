@@ -1,0 +1,16 @@
+.block_news{
+  max-width: 900px;
+  margin: 0 auto;
+}
+.news{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.new{
+  flex-basis: 25%;
+  box-shadow: 0 0 8px 0 #2c3e50;
+  padding: 16px;
+  margin-bottom: 16px;
+}

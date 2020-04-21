@@ -1,8 +1,8 @@
-<div class="card">
+<div class="block_news">
   <h1>Новости</h1>
-  <div class="card block" *ngFor="let post of posts">
+  <div class="news">
+  <div class="new" *ngFor="let post of posts">
     <h2>{{post.title}}</h2>
-    <p>{{post.date}}</p>
     <button class="btn" [routerLink]="['/new', post.id]">Подробнее</button>
-  </div>
+  </div></div>
 </div>

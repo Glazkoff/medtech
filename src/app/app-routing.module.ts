@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: "my-courses", component: MyCoursesComponent },
   { path: "course-viewer", component: CourseViewerComponent },
   { path: "news", component: NewsComponent },
-  { path: "new", component: NewComponent },
+  { path: "new/:id", component: NewComponent },
 ];
 
 @NgModule({
