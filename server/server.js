@@ -171,6 +171,24 @@ app.post("/api/login", (req, res) => {
 })
 
 
+app.get('/api/courses', function (req, res) {
+  try {
+    connection.query('SELECT * FROM `courses`', function (error, results, fields) {
+      if (error) {
+        res.status(500).send('Ошибка сервера при получении названия курса')
+        console.log(error);
+      }
+      console.log('РЕЗУЛЬТАТЫ');
+      console.log(results);
+      res.json(results);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+
 app.listen(3001, () => {
   console.log("Сервер запущен на http://localhost:3001");
 });
