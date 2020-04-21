@@ -22,14 +22,14 @@ id: number;
   async ngOnInit() {
     if (this.id) {
       const postsarr = await this.getPost();
-      if ( await postsarr.id === this.id) {
-        const el: NewGet = {
-          title: await postsarr.title,
-          id: await postsarr.id_materials,
-          content: await postsarr.content,
-        };
-        this.post = el;
-      }
+      // if ( await postsarr.id === this.id) {
+      //   const el: NewGet = {
+      //     title: await postsarr.title,
+      //     id: await postsarr.id_materials,
+      //     content: await postsarr.content,
+      //   };
+      //   this.post = el;
+      // }
     }
   }
 
