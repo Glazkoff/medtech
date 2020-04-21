@@ -1,32 +1,52 @@
 import { Component, OnInit } from '@angular/core';
-import {NewsGet} from "../add/news.get";
-import {NewsService} from "../add/news.service";
-
+import {NewGet} from "../add/new.get";
+import {BaseApiService} from "../services/base-api.service";
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import {Subscription} from 'rxjs';
 @Component({
   selector: 'app-new',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.css']
 })
 export class NewComponent implements OnInit {
-  posts: NewsGet[] = [];
-  constructor(private NewsServ: NewsService) { }
+  post: NewGet[] = [];
+  private subscription: Subscription;
+  constructor(private api: BaseApiService, private activateRoute: ActivatedRoute) {
 
-
-  ngOnInit() {
-    this.getPosts();
-    // this.jsonParse();
+    this.subscription = activateRoute.params.subscribe(params => {
+      this.id = params.id;
+    });
   }
 
-  getPosts() {
-    this.posts = [];
-    this.NewsServ.getPosts().then(() =>
-      (this.NewsServ.posts).forEach(post => this.posts.push(post))
-    );
+id: number;
+  async ngOnInit() {
+    if (this.id) {
+      const postsarr = await this.getPost();
+      if (postsarr.id === this.id) {
+        const el: NewGet = {
+          title: postsarr.title,
+          id: postsarr.id_materials,
+          content: postsarr.content,
+        };
+        this.post.push(el);
+      }
+    }
   }
-  // Очень бы хотелось, чтобы это превращало json в html
-  // jsonParse() {
+
+  async getPost() {
+    let response;
+    try {
+      response = await this.api.get("/posts/:id");
+      console.log("RESPONSE");
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+    return response;
+  }
+  // async jsonParse() {
   //   let html = '';
-  //   this.posts.post.content.forEach(function(content){
+  //   this.posts.content.forEach((content) => {
   //     switch (content.type) {
   //       case 'header':
   //         html += `<h${content.data.level}>${content.data.text}</h${content.data.level}>`;
@@ -42,7 +62,7 @@ export class NewComponent implements OnInit {
   //         break;
   //       case 'list':
   //         html += '<ul>';
-  //         content.data.items.forEach(function(li) {
+  //         content.data.items.forEach((li) => {
   //           html += `<li>${li}</li>`;
   //         });
   //         html += '</ul>';
@@ -52,7 +72,7 @@ export class NewComponent implements OnInit {
   //         console.log(content);
   //         break;
   //     }
-  //     document.getElementById('content').innerHTML = html;
+
   //   });
   //   console.log('html: ', html);
   // }
