@@ -113,24 +113,6 @@ app.get('/api/posts/:id', function (req, res) {
   }
 });
 
-// rest api to get a single employee data
-app.get('/api/posts/:id', function (req, res) {
-  try {
-    connection.query('SELECT content FROM `materials` WHERE id_materials = ?', [req.params.id], function (error, results, fields) {
-      if (error) {
-        res.status(500).send('Ошибка сервера при получении поста')
-        console.log(error);
-      }
-      res.json(results);
-
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-
-
 
 app.post("/api/users", (req, res) => {
   if (!req.body) return res.sendStatus(400);
