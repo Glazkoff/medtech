@@ -28,9 +28,9 @@ export class BaseApiService {
   public put(data, url) {
     console.log("base api");
     console.log(data);
-    console.log(
-      this.http.put(this.getUrl(url), data, { headers: this.headers })
-    );
+    this.http
+      .put(this.getUrl(url), data, { headers: this.headers })
+      .toPromise();
   }
   public delete(url) {
     return this.http.delete(this.getUrl(url), { headers: this.headers });

@@ -82,6 +82,11 @@
   box-shadow: 2px 2px 20px #2034e9;
 }
 
+.btn-info {
+  background-color: #20a9e9;
+  box-shadow: 2px 2px 20px #20a9e9;
+}
+
 .btn-normal:hover {
   background-color: #606ee7;
   box-shadow: 1px 1px 10px #606ee7;

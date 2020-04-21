@@ -82,6 +82,7 @@ app.post("/api/posts", (req, res) => {
       }
     });
 });
+
 app.get('/api/posts', function (req, res) {
   try {
     connection.query('SELECT * FROM `materials`', function (error, results, fields) {
@@ -113,6 +114,26 @@ app.get('/api/posts/:id', function (req, res) {
   }
 });
 
+app.put('/api/posts/:id', function (req, res) {
+  console.log('PUT /', );
+  console.log(req.body);
+  console.log(req.body.duration, req.body.content.time, req.body.title, JSON.stringify(req.body.content.blocks), req.params.id);
+  try {
+    connection.query('UPDATE `materials` SET `duration` = ?, `date` = ?, `title` = ?, `content` = ? WHERE id_materials = ?',
+      [req.body.duration, req.body.content.time, req.body.title, JSON.stringify(req.body.content.blocks), req.params.id],
+      function (error, results, fields) {
+        if (error) {
+          res.status(500).send('Ошибка сервера при получении названия курса')
+          console.log(error);
+        }
+        console.log('РЕЗУЛЬТАТЫ');
+        console.log(results);
+        res.json(results);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 app.post("/api/users", (req, res) => {
   if (!req.body) return res.sendStatus(400);
@@ -142,7 +163,6 @@ app.post("/api/users", (req, res) => {
       res.json("exist");
     }
   });
-
 })
 
 app.post("/api/login", (req, res) => {
@@ -166,7 +186,6 @@ app.post("/api/login", (req, res) => {
       }
     });
 })
-
 
 app.get('/api/courses', function (req, res) {
   try {

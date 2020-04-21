@@ -16,7 +16,6 @@ export class AdminArticlesComponent implements OnInit {
   posts = [];
   async ngOnInit() {
     try {
-      // console.log((await this.api.get("/posts")).hasOwnProperty(length));
       this.route.paramMap
         .pipe(switchMap((params) => params.getAll("id")))
         .subscribe((data) => {
@@ -33,15 +32,13 @@ export class AdminArticlesComponent implements OnInit {
           }
         }
       } else {
-        let resp = await this.api.get("/posts/" + this.id);
-        console.log(resp);
+        const resp = await this.api.get("/posts/" + this.id);
         this.data = {
           title: resp[0].title,
           blocks: JSON.parse(resp[0].content),
+          duration: resp[0].duration,
         };
-        console.log("DATA: ", this.data);
       }
-      // console.log(await response[0]);
     } catch (error) {
       console.log(error);
     }

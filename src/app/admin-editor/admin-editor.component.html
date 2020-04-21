@@ -12,8 +12,11 @@
       <option value="1 час">1 час</option>
       <option value="2 час">2 час</option>
     </select>
-    <button class="editor-btn btn-normal" type="button" (click)="onSave()">
+    <button class="editor-btn btn-normal" type="button" (click)="onSave()" *ngIf="this.data == undefined">
       Сохранить
+    </button>
+    <button class="editor-btn btn-info" type="button" (click)="onUpdate()" *ngIf="this.data !== undefined">
+      Обновить
     </button>
     <button class="editor-btn btn-danger" type="button" (click)="onDelete()" disabled>
       Удалить
