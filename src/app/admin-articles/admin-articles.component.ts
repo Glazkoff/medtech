@@ -11,6 +11,7 @@ import { switchMap } from "rxjs/operators";
 export class AdminArticlesComponent implements OnInit {
   constructor(private api: BaseApiService, private route: ActivatedRoute) {}
   id = "";
+  data: any;
   @Input() path: string;
   posts = [];
   async ngOnInit() {
@@ -34,6 +35,11 @@ export class AdminArticlesComponent implements OnInit {
       } else {
         let resp = await this.api.get("/posts/" + this.id);
         console.log(resp);
+        this.data = {
+          title: resp[0].title,
+          blocks: JSON.parse(resp[0].content),
+        };
+        console.log("DATA: ", this.data);
       }
       // console.log(await response[0]);
     } catch (error) {

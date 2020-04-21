@@ -1,4 +1,4 @@
-<h2>Создание новой статьи</h2>
+<h2 *ngIf="this.data == undefined">Создание новой статьи</h2>
 <div class="editor-background">
   <div class="editor-wrap">
     <div id="editorjs"></div>
@@ -15,7 +15,7 @@
     <button class="editor-btn btn-normal" type="button" (click)="onSave()">
       Сохранить
     </button>
-    <button class="editor-btn btn-danger" type="button" (click)="onDelete()">
+    <button class="editor-btn btn-danger" type="button" (click)="onDelete()" disabled>
       Удалить
     </button>
   </div>

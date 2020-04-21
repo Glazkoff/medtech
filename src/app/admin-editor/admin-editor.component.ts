@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input, SimpleChanges } from "@angular/core";
 import { BaseApiService } from "../services/base-api.service";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
@@ -15,9 +15,19 @@ let editor;
 })
 export class AdminEditorComponent implements OnInit {
   constructor(private api: BaseApiService, public router: Router) {}
+  @Input() data;
   title = "";
   duration = "30 минут";
+  editorData = {
+    blocks: [],
+  };
   async ngOnInit() {
+    console.log("DATAONINIT: ", this.data);
+    if (this.data !== undefined) {
+      this.editorData = {
+        blocks: this.data.blocks,
+      };
+    }
     editor = new EditorJS({
       /* Id элемента, который будет содержать редактор */
       holderId: "editorjs",
@@ -32,6 +42,7 @@ export class AdminEditorComponent implements OnInit {
           shortcut: "CMD+SHIFT+M",
         },
       },
+      data: this.editorData,
       autofocus: true,
       placeholder: "Напиши сюда лучшую статью!",
       // Раскомментировать на продакшен:
@@ -43,6 +54,44 @@ export class AdminEditorComponent implements OnInit {
       console.log("Editor.js корректно загружен");
     } catch (reason) {
       console.log(`Editor.js загрузка сломалась по причине ${reason}`);
+    }
+  }
+  async ngOnChanges(changes: SimpleChanges) {
+    console.log("DATAONINIT: ", this.data);
+    if (this.data !== undefined) {
+      this.editorData = {
+        blocks: this.data.blocks,
+      };
+      this.title = this.data.title;
+      this.duration = this.data.duration;
+      document.getElementById('editorjs').innerHTML = '';
+      editor = new EditorJS({
+        /* Id элемента, который будет содержать редактор */
+        holderId: "editorjs",
+        tools: {
+          header: Header,
+          list: List,
+          table: {
+            class: Table,
+          },
+          Marker: {
+            class: Marker,
+            shortcut: "CMD+SHIFT+M",
+          },
+        },
+        data: this.editorData,
+        autofocus: true,
+        placeholder: "Напиши сюда лучшую статью!",
+        // Раскомментировать на продакшен:
+        // logLevel: "ERROR",
+      });
+
+      try {
+        await editor.isReady;
+        console.log("Editor.js корректно загружен");
+      } catch (reason) {
+        console.log(`Editor.js загрузка сломалась по причине ${reason}`);
+      }
     }
   }
   onSave() {
