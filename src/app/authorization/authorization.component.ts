@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./authorization.component.css']
 })
 export class AuthorizationComponent implements OnInit {
+  type="password";
   flag=true;
   myForm :FormGroup;
   user = {
@@ -65,4 +66,11 @@ export class AuthorizationComponent implements OnInit {
       console.log(error);
     }
    }
+
+   onTogglePassword(){
+    this.type = (this.type == "password") ? "text" : "password";
+    console.log(this.type);
+    
+  }
+
 }

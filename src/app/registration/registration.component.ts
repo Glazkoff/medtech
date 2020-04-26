@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+  type="password";
   myForm :FormGroup;
   values='';
   flag = true;
@@ -53,4 +54,9 @@ export class RegistrationComponent implements OnInit {
     }
     }
 
+    onTogglePassword(){
+      this.type = (this.type == "password") ? "text" : "password";
+      console.log(this.type);
+      
+    }
 }

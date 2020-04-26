@@ -85,11 +85,17 @@ button:disabled {
     margin-left: 25px;
     display: block;
 }
-.danger{
+.icon{
     padding-right: 5px;
     width: 20px;
     height: 20px;
     display: inline-block;
+}
+.insideField{
+    position: relative;
+    top: -42px;
+    right: -130px;
+    cursor: pointer;
 }
 .red{
     border-color: red;
