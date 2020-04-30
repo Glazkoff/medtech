@@ -14,6 +14,7 @@ export class CommentViewerComponent implements OnInit {
   
   async ngOnInit() {
     let commentsarr = await this.getComments();
+    let id_new = await this. getUrlVar();
     if (Array.isArray(commentsarr)) {
       commentsarr.forEach((element) => {
         let el: Comment = {  
@@ -21,8 +22,9 @@ export class CommentViewerComponent implements OnInit {
           name_commentator: element.name_commentator,
           text_comment: element.text_comment,
           date_comment: element.date_comment,
+          id_materials: element.id_materials,
         };
-        this.comments.push(el);
+        if (id_new == element.id_materials){this.comments.push(el);}       
       });
     }
   }
@@ -38,6 +40,15 @@ export class CommentViewerComponent implements OnInit {
        }
        return response;
      }
+
+      getUrlVar(){
+      var path = window.location.pathname; // получаем параметры из урла
+      var arrayVar = []; // массив для хранения переменных 
+      arrayVar = path.split('/'); // разбираем урл на параметры
+      let i = arrayVar[2];
+      return i; // возвращаем результат
+      
+  }
 
 
 }
