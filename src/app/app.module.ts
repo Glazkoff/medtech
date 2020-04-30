@@ -16,6 +16,7 @@ import { CourseMaterialComponent } from './course-material/course-material.compo
 import {NewsComponent} from "./news/news.component";
 import { NewComponent } from './new/new.component';
 import { AdminArticlesComponent } from './admin-articles/admin-articles.component';
+import { CommentViewerComponent } from './comment-viewer/comment-viewer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import { AdminArticlesComponent } from './admin-articles/admin-articles.componen
     NewsComponent,
     NewComponent,
     AdminArticlesComponent,
+    CommentViewerComponent,
   ],
   imports: [
     BrowserModule,

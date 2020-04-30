@@ -36,3 +36,21 @@ align-items: center;
     align-items: center;
     padding-left: 20px;
     }
+
+
+    #nav {
+        
+        position: absolute;
+        right: 0px;
+        top: 140px;
+    }
+    #nav, #nav ul {
+        list-style:none;
+        padding:0;
+        width:230px;
+    }
+    #nav ul {
+        position:relative;
+        z-index:-1;
+    }
+   

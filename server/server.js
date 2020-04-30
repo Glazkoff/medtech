@@ -203,7 +203,74 @@ app.get('/api/courses', function (req, res) {
   }
 });
 
+//comments
+app.get('/api/comments', function (req, res) {
+  try {
+    connection.query('SELECT * FROM `Comments`', function (error, results, fields) {
+      if (error) {
+        res.status(500).send('Ошибка сервера при получении комментариев')
+        console.log(error);
+      }
+      res.json(results);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
+app.post("/api/comments", (req, res) => {
+  // res.sendFile(__dirname, "../dist/index.html");
+  if (!req.body) return res.sendStatus(400);
+  console.log('Пришёл POST запрос для комментариев:');
+  console.log(req.body);
+  connection.query('INSERT INTO `Comments` (`id_comment`, `name_commentator`, `date_comment`, `text_comment`, `id_materials`) VALUES (NULL, ?, ?, ?, ?);',
+    [req.body.name_commentator, req.body.date_comment, JSON.stringify(req.body.text_comment),  req.body.id_materials],
+    function (err, results) {
+      console.log('БД результаты:');
+      if (err) {
+        console.log('Ошибка записи в БД!');
+        console.warn(err);
+      } else {
+        console.log(results);
+      }
+    });
+});
+// app.put('/api/comments/:id', function (req, res) {
+//   console.log('PUT /', );
+//   console.log(req.body);
+//   console.log(req.body.duration, req.body.content.time, req.body.title, JSON.stringify(req.body.content.blocks), req.params.id);
+//   try {
+//     connection.query('UPDATE `Comments` SET `duration` = ?, `date` = ?, `title` = ?, `content` = ? WHERE id_materials = ?',
+//       [req.body.duration, req.body.content.time, req.body.title, JSON.stringify(req.body.content.blocks), req.params.id],
+//       function (error, results, fields) {
+//         if (error) {
+//           res.status(500).send('Ошибка сервера при получении названия курса')
+//           console.log(error);
+//         }
+//         console.log('РЕЗУЛЬТАТЫ');
+//         console.log(results);
+//         res.json(results);
+//       });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+app.delete('/api/comments', function (req, res) {
+  if (!req.body) return res.sendStatus(400);
+  console.log('Пришёл delete запрос для комментариев:');
+  console.log(req.body);
+  connection.query('DELETE FROM `Comments` WHERE `id_comment`= ?', [req.body.id_comment],
+    function (err, results) {
+      console.log('БД результаты:');
+      if (err) {
+        console.log('Ошибка записи в БД!');
+        console.warn(err);
+      } else {
+        console.log(results);
+      }
+    });
+});
 
 app.listen(3001, () => {
   console.log("Сервер запущен на http://localhost:3001");
