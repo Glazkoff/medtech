@@ -17,6 +17,7 @@ import {NewsComponent} from "./news/news.component";
 import { NewComponent } from './new/new.component';
 import { AdminArticlesComponent } from './admin-articles/admin-articles.component';
 import { CommentViewerComponent } from './comment-viewer/comment-viewer.component';
+import { PipeTimeCommentPipe } from './pipes/pipe-time-comment.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { CommentViewerComponent } from './comment-viewer/comment-viewer.componen
     NewComponent,
     AdminArticlesComponent,
     CommentViewerComponent,
+    PipeTimeCommentPipe,
   ],
   imports: [
     BrowserModule,
