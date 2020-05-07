@@ -9,15 +9,19 @@ import { RegistrationComponent } from "./registration/registration.component";
 import { AdminComponent } from "./admin/admin.component";
 import { AdminEditorComponent } from "./admin-editor/admin-editor.component";
 import { HttpClientModule } from "@angular/common/http";
-import { MyCoursesComponent } from './my-courses/my-courses.component';
-import { CourseCardComponent } from './course-card/course-card.component';
-import { CourseViewerComponent } from './course-viewer/course-viewer.component';
-import { CourseMaterialComponent } from './course-material/course-material.component';
-import {NewsComponent} from "./news/news.component";
-import { NewComponent } from './new/new.component';
-import { AdminArticlesComponent } from './admin-articles/admin-articles.component';
-import { CommentViewerComponent } from './comment-viewer/comment-viewer.component';
-import { PipeTimeCommentPipe } from './pipes/pipe-time-comment.pipe';
+import { MyCoursesComponent } from "./my-courses/my-courses.component";
+import { CourseCardComponent } from "./course-card/course-card.component";
+import { CourseViewerComponent } from "./course-viewer/course-viewer.component";
+import { CourseMaterialComponent } from "./course-material/course-material.component";
+import { NewsComponent } from "./news/news.component";
+import { NewComponent } from "./new/new.component";
+import { AdminArticlesComponent } from "./admin-articles/admin-articles.component";
+import { CommentViewerComponent } from "./comment-viewer/comment-viewer.component";
+import { PipeTimeCommentPipe } from "./pipes/pipe-time-comment.pipe";
+import { AuthErrorHandler } from "./services/auth-error-handler";
+import { ErrorHandler } from "@angular/core";
+import { AuthGuard } from "./services/auth.guard";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +47,13 @@ import { PipeTimeCommentPipe } from './pipes/pipe-time-comment.pipe';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useClass: AuthErrorHandler,
+    },
+    AuthGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

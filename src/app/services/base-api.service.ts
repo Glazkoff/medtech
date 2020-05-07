@@ -5,7 +5,10 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   providedIn: "root",
 })
 export class BaseApiService {
-  headers = new HttpHeaders("Content-Type: application/json; charset=UTF-8");
+  headers = new HttpHeaders({
+    "Content-Type": "application/json; charset=UTF-8",
+    Authorization: localStorage.getItem("token") || "",
+  });
 
   constructor(private http: HttpClient) {}
 

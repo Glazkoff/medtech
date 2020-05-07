@@ -29,7 +29,7 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   res.header(
     "Access-Control-Allow-Methods",
@@ -122,6 +122,7 @@ app.post("/api/posts", (req, res) => {
 });
 
 app.get("/api/posts", function (req, res) {
+  console.log("AUTHORIZATION: ", req.headers.authorization);
   try {
     connection.query("SELECT * FROM `materials`", function (
       error,
