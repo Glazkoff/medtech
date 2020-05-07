@@ -1,9 +1,13 @@
+"use strict";
 const express = require("express");
 const serveStatic = require("serve-static");
 const bodyParser = require("body-parser");
 const mysql = require("mysql2");
 const path = require("path");
 const dbConfig = require("./db.config.js");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const CONFIG = require("./secret.config.js");
 
 const app = express();
 
@@ -23,33 +27,61 @@ app.use("/", serveStatic(path.join(__dirname, "../dist/medtech")));
 // настройка CORS
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "GET, PATCH, PUT, POST, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, PATCH, PUT, POST, DELETE, OPTIONS"
+  );
   next();
 });
 
 // создаем соединение с нашей базой данных
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
+  connectionLimit: 10,
   host: dbConfig.HOST,
   user: dbConfig.USER,
   password: dbConfig.PASSWORD,
   database: dbConfig.DB,
-  charset: 'utf8_general_ci'
+  charset: "utf8_general_ci",
 });
-try {
-  connection.connect((err) => {
-    if (err) {
-      console.warn(err);
-    } else {
-      console.log("Успешно соединено с базой данных");
-      connection.query('SET NAMES "utf8"')
-      connection.query('SET CHARACTER SET "utf8"')
-      connection.query('SET SESSION collation_connection = "utf8_general_ci"')
+connection.getConnection((err, connection) => {
+  if (err) {
+    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+      console.error("Database connection was closed.");
     }
-  });
-} catch (err) {
-  console.warn(err);
-}
+    if (err.code === "ER_CON_COUNT_ERROR") {
+      console.error("Database has too many connections.");
+    }
+    if (err.code === "ECONNREFUSED") {
+      console.error("Database connection was refused.");
+    }
+  } else {
+    connection.query('SET NAMES "utf8"');
+    connection.query('SET CHARACTER SET "utf8"');
+    connection.query('SET SESSION collation_connection = "utf8_general_ci"');
+    console.log("Успешно соединено с БД");
+  }
+  if (connection) connection.release();
+});
+// try {
+//   connection.connect((err) => {
+//     if (err) {
+//       console.warn(err);
+//     } else {
+//       console.log("Успешно соединено с базой данных");
+//       connection.query('SET NAMES "utf8"');
+//       connection.query('SET CHARACTER SET "utf8"');
+//       connection.query('SET SESSION collation_connection = "utf8_general_ci"');
+//     }
+//   });
+// } catch (err) {
+//   console.warn(err);
+// }
+
+let salt = bcrypt.genSaltSync(10);
 
 //***********************************/
 //*** Ниже пишется только API!!!! ***/
@@ -66,28 +98,38 @@ try {
 // });
 
 app.post("/api/posts", (req, res) => {
-  // res.sendFile(__dirname, "../dist/index.html");
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для постов:');
+  console.log("Пришёл POST запрос для постов:");
   console.log(req.body);
-  connection.query('INSERT INTO `materials` (`duration`, `date`, `type`, `title`, `content`) VALUES (?, ?, "news", ?, ?)',
-    [req.body.duration, req.body.content.time, req.body.title, JSON.stringify(req.body.content.blocks)],
+  connection.query(
+    'INSERT INTO `materials` (`duration`, `date`, `type`, `title`, `content`) VALUES (?, ?, "news", ?, ?)',
+    [
+      req.body.duration,
+      req.body.content.time,
+      req.body.title,
+      JSON.stringify(req.body.content.blocks),
+    ],
     function (err, results) {
-      console.log('БД результаты:');
+      console.log("БД результаты:");
       if (err) {
-        console.log('Ошибка записи в БД!');
+        console.log("Ошибка записи в БД!");
         console.warn(err);
       } else {
         console.log(results);
       }
-    });
+    }
+  );
 });
 
-app.get('/api/posts', function (req, res) {
+app.get("/api/posts", function (req, res) {
   try {
-    connection.query('SELECT * FROM `materials`', function (error, results, fields) {
+    connection.query("SELECT * FROM `materials`", function (
+      error,
+      results,
+      fields
+    ) {
       if (error) {
-        res.status(500).send('Ошибка сервера при получении постов')
+        res.status(500).send("Ошибка сервера при получении постов");
         console.log(error);
       }
       res.json(results);
@@ -97,104 +139,225 @@ app.get('/api/posts', function (req, res) {
   }
 });
 
-app.get('/api/posts/:id', function (req, res) {
+app.get("/api/posts/:id", function (req, res) {
   console.log(req.params.id);
   try {
-    connection.query('SELECT * FROM `materials` WHERE id_materials = ?', [req.params.id], function (error, results, fields) {
-      if (error) {
-        res.status(500).send('Ошибка сервера при получении постов')
-        console.log(error);
+    connection.query(
+      "SELECT * FROM `materials` WHERE id_materials = ?",
+      [req.params.id],
+      function (error, results, fields) {
+        if (error) {
+          res.status(500).send("Ошибка сервера при получении постов");
+          console.log(error);
+        }
+        console.log("РЕЗУЛЬТАТЫ");
+        console.log(results);
+        res.json(results);
       }
-      console.log('РЕЗУЛЬТАТЫ');
-      console.log(results);
-      res.json(results);
-    });
+    );
   } catch (error) {
     console.log(error);
   }
 });
 
-app.put('/api/posts/:id', function (req, res) {
-  console.log('PUT /', );
+app.put("/api/posts/:id", function (req, res) {
+  console.log("PUT /");
   console.log(req.body);
-  console.log(req.body.duration, req.body.content.time, req.body.title, JSON.stringify(req.body.content.blocks), req.params.id);
+  console.log(
+    req.body.duration,
+    req.body.content.time,
+    req.body.title,
+    JSON.stringify(req.body.content.blocks),
+    req.params.id
+  );
   try {
-    connection.query('UPDATE `materials` SET `duration` = ?, `date` = ?, `title` = ?, `content` = ? WHERE id_materials = ?',
-      [req.body.duration, req.body.content.time, req.body.title, JSON.stringify(req.body.content.blocks), req.params.id],
+    connection.query(
+      "UPDATE `materials` SET `duration` = ?, `date` = ?, `title` = ?, `content` = ? WHERE id_materials = ?",
+      [
+        req.body.duration,
+        req.body.content.time,
+        req.body.title,
+        JSON.stringify(req.body.content.blocks),
+        req.params.id,
+      ],
       function (error, results, fields) {
         if (error) {
-          res.status(500).send('Ошибка сервера при получении названия курса')
+          res.status(500).send("Ошибка сервера при получении названия курса");
           console.log(error);
         }
-        console.log('РЕЗУЛЬТАТЫ');
+        console.log("РЕЗУЛЬТАТЫ");
         console.log(results);
         res.json(results);
-      });
+      }
+    );
   } catch (error) {
     console.log(error);
   }
-})
+});
 
+// Регистрация пользователя
 app.post("/api/users", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для пользователей:');
+  console.log("Пришёл POST запрос для пользователей:");
   console.log(req.body);
-  connection.query(`SELECT * FROM users WHERE login='${req.body.login}'`, function (error, results) {
-    if (error) {
-      res.status(500).send('Ошибка сервера при получении пользователей с таким же логином')
-      console.log(error);
-    }
-    console.log('Результаты проверки существования логина:');
-    console.log(results[0]);
-    if (results[0] === undefined) {
-      connection.query('INSERT INTO `users` (`id_users`, `login`, `password`, `firstname`, `surname`, `organization`, `role`) VALUES (NULL, ?, ?, ?, ?, ?, ?)',
-        [req.body.login, req.body.password, req.body.name, req.body.surname, req.body.organization, req.body.role],
-        function (err, r) {
-          console.log('БД результаты:');
-          if (err) {
-            console.log('Ошибка записи в БД!');
-            console.warn(err);
-          } else {
-            console.log(r);
-            res.json("not exist");
+  connection.query(
+    `SELECT * FROM users WHERE login='${req.body.login}'`,
+    function (error, results) {
+      if (error) {
+        res
+          .status(500)
+          .send(
+            "Ошибка сервера при получении пользователей с таким же логином"
+          );
+        console.log(error);
+      }
+      console.log("Результаты проверки существования логина:");
+      console.log(results[0]);
+      if (results[0] === undefined) {
+        let hashPassword = bcrypt.hashSync(req.body.password, salt);
+        connection.query(
+          "INSERT INTO `users` (`id_users`, `login`, `password`, `firstname`, `surname`, `organization`, `role`) VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+          [
+            req.body.login,
+            hashPassword,
+            req.body.name,
+            req.body.surname,
+            req.body.organization,
+            req.body.role,
+          ],
+          function (err, r) {
+            console.log("БД результаты:");
+            if (err) {
+              console.log("Ошибка записи в БД!");
+              console.warn(err);
+            } else {
+              console.log(r);
+              try {
+                connection.query(
+                  `SELECT * FROM users WHERE login = ? `,
+                  [req.body.login],
+                  function (err, results) {
+                    if (err) {
+                      res
+                        .status(500)
+                        .send(
+                          "Ошибка сервера при получении пользователя по логину"
+                        );
+                      console.log(err);
+                    }
+                    console.log(
+                      "Результаты проверки существования пользователя:"
+                    );
+                    if (results !== undefined) {
+                      console.log(results[0]);
+                      if (results[0] === undefined) {
+                        res.send({
+                          error: "401",
+                          message: "Неправильный логин или пароль",
+                          token: null,
+                        });
+                      } else {
+                        console.log(results[0]);
+                        let token = jwt.sign(
+                          {
+                            id_users: results[0].id_users,
+                            firstname: results[0].firstname,
+                            surname: results[0].surname,
+                            organization: results[0].organization,
+                            role: results[0].role,
+                          },
+                          CONFIG.SECRET,
+                          {
+                            expiresIn: 86400, // токен на 24 часа
+                          }
+                        );
+                        res.send({
+                          token,
+                        });
+                      }
+                    }
+                  }
+                );
+              } catch (error) {}
+              // res.json("not exist");
+            }
           }
-        });
-    } else {
-      res.json("exist");
+        );
+      } else {
+        res.json("exist");
+      }
     }
-  });
-})
+  );
+});
 
+// Попытка входа пользователя
 app.post("/api/login", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для входа:');
+  console.log("Пришёл POST запрос для входа:");
   console.log(req.body);
-  connection.query(`SELECT * FROM users WHERE (login="${req.body.login}") AND (password="${req.body.password}")`,
+  connection.query(
+    `SELECT * FROM users WHERE (login="${req.body.login}")`,
     function (err, results) {
       if (err) {
-        res.status(500).send('Ошибка сервера при получении пользователя по логину')
+        res
+          .status(500)
+          .send("Ошибка сервера при получении пользователя по логину");
         console.log(err);
       }
-      console.log('Результаты проверки существования пользователя:');
+      console.log("Результаты проверки существования пользователя:");
       if (results !== undefined) {
         console.log(results[0]);
         if (results[0] === undefined) {
-          res.json("not exist");
+          res.send({
+            error: "401",
+            message: "Неправильный логин или пароль",
+            token: null,
+          });
         } else {
-          res.json(results);
+          console.log(results[0]);
+          let bool = bcrypt.compareSync(req.body.password, results[0].password);
+          if (bool) {
+            let token = jwt.sign(
+              {
+                id_users: results[0].id_users,
+                firstname: results[0].firstname,
+                surname: results[0].surname,
+                organization: results[0].organization,
+                role: results[0].role,
+              },
+              CONFIG.SECRET,
+              {
+                expiresIn: 86400, // токен на 24 часа
+              }
+            );
+            res.send({
+              token,
+            });
+          } else {
+            res.send({
+              error: "401",
+              message: "Неправильный логин или пароль",
+              token: null,
+            });
+          }
         }
       }
-    });
-})
+    }
+  );
+});
 
-app.get('/api/courses', function (req, res) {
+app.get("/api/courses", function (req, res) {
   try {
-    connection.query('SELECT * FROM `courses`', function (error, results, fields) {
+    connection.query("SELECT * FROM `courses`", function (
+      error,
+      results,
+      fields
+    ) {
       if (error) {
-        res.status(500).send('Ошибка сервера при получении названия курса')
+        res.status(500).send("Ошибка сервера при получении названия курса");
         console.log(error);
       }
-      console.log('РЕЗУЛЬТАТЫ');
+      console.log("РЕЗУЛЬТАТЫ");
       console.log(results);
       res.json(results);
     });
@@ -204,11 +367,15 @@ app.get('/api/courses', function (req, res) {
 });
 
 //comments
-app.get('/api/comments', function (req, res) {
+app.get("/api/comments", function (req, res) {
   try {
-    connection.query('SELECT * FROM `Comments`', function (error, results, fields) {
+    connection.query("SELECT * FROM `Comments`", function (
+      error,
+      results,
+      fields
+    ) {
       if (error) {
-        res.status(500).send('Ошибка сервера при получении комментариев')
+        res.status(500).send("Ошибка сервера при получении комментариев");
         console.log(error);
       }
       res.json(results);
@@ -221,19 +388,26 @@ app.get('/api/comments', function (req, res) {
 app.post("/api/comments", (req, res) => {
   // res.sendFile(__dirname, "../dist/index.html");
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для комментариев:');
+  console.log("Пришёл POST запрос для комментариев:");
   console.log(req.body);
-  connection.query('INSERT INTO `Comments` (`id_comment`, `name_commentator`, `date_comment`, `text_comment`, `id_materials`) VALUES (NULL, ?, ?, ?, ?);',
-    [req.body.name_commentator, req.body.date_comment, JSON.stringify(req.body.text_comment),  req.body.id_materials],
+  connection.query(
+    "INSERT INTO `Comments` (`id_comment`, `name_commentator`, `date_comment`, `text_comment`, `id_materials`) VALUES (NULL, ?, ?, ?, ?);",
+    [
+      req.body.name_commentator,
+      req.body.date_comment,
+      JSON.stringify(req.body.text_comment),
+      req.body.id_materials,
+    ],
     function (err, results) {
-      console.log('БД результаты:');
+      console.log("БД результаты:");
       if (err) {
-        console.log('Ошибка записи в БД!');
+        console.log("Ошибка записи в БД!");
         console.warn(err);
       } else {
         console.log(results);
       }
-    });
+    }
+  );
 });
 // app.put('/api/comments/:id', function (req, res) {
 //   console.log('PUT /', );
@@ -256,20 +430,23 @@ app.post("/api/comments", (req, res) => {
 //   }
 // });
 
-app.delete('/api/comments', function (req, res) {
+app.delete("/api/comments", function (req, res) {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл delete запрос для комментариев:');
+  console.log("Пришёл delete запрос для комментариев:");
   console.log(req.body);
-  connection.query('DELETE FROM `Comments` WHERE `id_comment`= ?', [req.body.id_comment],
+  connection.query(
+    "DELETE FROM `Comments` WHERE `id_comment`= ?",
+    [req.body.id_comment],
     function (err, results) {
-      console.log('БД результаты:');
+      console.log("БД результаты:");
       if (err) {
-        console.log('Ошибка записи в БД!');
+        console.log("Ошибка записи в БД!");
         console.warn(err);
       } else {
         console.log(results);
       }
-    });
+    }
+  );
 });
 
 app.listen(3001, () => {
