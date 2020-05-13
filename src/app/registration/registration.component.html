@@ -1,37 +1,47 @@
 <div class="flex">
     <form class="form-login" [formGroup]="myForm">
         <h1>Регистрация</h1>
-        <input type="text" formControlName="name" class="form-control" placeholder="Введите имя" required>
-        <input type="text" formControlName="surname" class="form-control" placeholder="Введите фамилию" required>
-        <input type="text" formControlName="organization" class="form-control" placeholder="Введите организацию" required>
-        <input type="text" formControlName="role" class="form-control" placeholder="Введите вашу роль" required>
-        <input type="text" [ngClass]="{'red': !flag}" formControlName="login" class="form-control" placeholder="Введите логин" required>
-        <div *ngIf="!flag" class="attention"> 
-            <div class="icon">
-                <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="exclamation-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path fill="red" d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-11.49 120h22.979c6.823 0 12.274 5.682 11.99 12.5l-7 168c-.268 6.428-5.556 11.5-11.99 11.5h-8.979c-6.433 0-11.722-5.073-11.99-11.5l-7-168c-.283-6.818 5.167-12.5 11.99-12.5zM256 340c-15.464 0-28 12.536-28 28s12.536 28 28 28 28-12.536 28-28-12.536-28-28-28z" class=""></path>
-                </svg>
-            </div>
-            <span>Такой логин уже существует!</span>
+        <div class="input-form">
+            <input type="text" (focus)="inputName=true" [ngClass]="{'red': !inputName}" formControlName="name" class="form-control" placeholder="Введите имя" required> 
+            <small *ngIf="(!inputName) && (!fieldRequired)" >Данное поле обязательное!</small>
         </div>
-        <input [type]="type"  formControlName="password"  class="form-control" placeholder="Введите пароль" required>
+        <div class="input-form">
+            <input type="text" (focus)="inputSurname=true" [ngClass]="{'red': !inputSurname}" formControlName="surname" class="form-control" placeholder="Введите фамилию" required>
+            <small *ngIf="(!inputSurname) && (!fieldRequired)" >Данное поле обязательное!</small>
+        </div>
+        <div class="input-form">
+            <input type="text" (focus)="inputOrganization=true" [ngClass]="{'red': !inputOrganization}" formControlName="organization" class="form-control" placeholder="Введите организацию" required>
+            <small *ngIf="(!inputOrganization) && (!fieldRequired)" >Данное поле обязательное!</small>
+        </div>
+        <div class="input-form">
+            <input type="text" (focus)="inputRole=true" [ngClass]="{'red': !inputRole}" formControlName="role" class="form-control" placeholder="Введите вашу роль" required>
+            <small *ngIf="(!inputRole) && (!fieldRequired)" >Данное поле обязательное!</small>
+        </div>
+        <div class="input-form">
+            <input type="text" (focus)="inputLogin=true; loginExist = true;" [ngClass]="{'red': !inputLogin}" formControlName="login" class="form-control" placeholder="Введите логин" required>
+            <small *ngIf="!loginExist">Данный логин уже существует!</small>
+            <small *ngIf="(!inputLogin) && (!fieldRequired)" >Данное поле обязательное!</small>
+        </div>
+        <div class="input-form">
+            <input [type]="type" (focus)="inputPassword=true" [ngClass]="{'red': !inputPassword}" formControlName="password"  class="form-control" placeholder="Введите пароль" required>
+            <small *ngIf="(!inputPassword) && (!fieldRequired)" >Данное поле обязательное!</small>
+        </div> 
         <div class="icon insideField" (click)="onTogglePassword()">
             <div *ngIf="type=='password'; else elseblock">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 516">
                     <path fill="#a2a1a1" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z" class=""></path>
                 </svg>
             </div>
-            <ng-template #elseblock>
+        <ng-template #elseblock>
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye-slash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 516">
                     <path fill="#a2a1a1" d="M572.5,241.4C518.3,135.6,410.9,64,288,64S57.7,135.6,3.5,241.4c-4.6,9.2-4.6,20,0,29.2C57.7,376.4,165.1,448,288,448
                         s230.3-71.6,284.5-177.4C577.2,261.4,577.2,250.6,572.5,241.4z M288,400c-79.5,0-144-64.5-144-144s64.5-144,144-144
                         s144,64.5,144,144c0,79.5-64.4,144-143.9,144C288.1,400,288,400,288,400z"/>
                     <path fill="#a2a1a1" d="M288,420c0.1,0,0.1,0,0.2,0c90.5,0,163.9-73.5,163.8-164c0-90.6-73.4-164-164-164s-164,73.4-164,164S197.4,420,288,420z"/>
-                    <!-- <path fill="#a2a1a1" d="M320 400c-75.85 0-137.25-58.71-142.9-133.11L72.2 185.82c-13.79 17.3-26.48 35.59-36.72 55.59a32.35 32.35 0 0 0 0 29.19C89.71 376.41 197.07 448 320 448c26.91 0 52.87-4 77.89-10.46L346 397.39a144.13 144.13 0 0 1-26 2.61zm313.82 58.1l-110.55-85.44a331.25 331.25 0 0 0 81.25-102.07 32.35 32.35 0 0 0 0-29.19C550.29 135.59 442.93 64 320 64a308.15 308.15 0 0 0-147.32 37.7L45.46 3.37A16 16 0 0 0 23 6.18L3.37 31.45A16 16 0 0 0 6.18 53.9l588.36 454.73a16 16 0 0 0 22.46-2.81l19.64-25.27a16 16 0 0 0-2.82-22.45zm-183.72-142l-39.3-30.38A94.75 94.75 0 0 0 416 256a94.76 94.76 0 0 0-121.31-92.21A47.65 47.65 0 0 1 304 192a46.64 46.64 0 0 1-1.54 10l-73.61-56.89A142.31 142.31 0 0 1 320 112a143.92 143.92 0 0 1 144 144c0 21.63-5.29 41.79-13.9 60.11z" class=""></path> -->
                 </svg>
             </ng-template>
         </div>
-        <button class="btn" [disabled]="myForm.invalid" (click)="onRegistr()" >Зарегистрироваться</button>
-        <!-- <p class="green">Вы успешно зарегистрированы!</p> -->
+        
+        <button class="btn" (click)="onRegistr()" >Зарегистрироваться</button>
     </form>
 </div>

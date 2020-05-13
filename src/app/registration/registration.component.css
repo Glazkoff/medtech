@@ -3,7 +3,7 @@
     display: flex;
     -ms-flex-align: center;
     align-items: center;
-    padding-top: 40px;
+    /* padding-top: 40px; */
     padding-bottom: 40px;
      
 }
@@ -27,7 +27,6 @@ h1{
 }
 .form-control{
     margin: 0;
-    margin-bottom: 10px;
     box-sizing: border-box;
     height: auto;
     padding: 10px;
@@ -74,29 +73,30 @@ button:disabled {
     color: #00af4c;
     font-weight: bold;
 }
-.attention{
-    text-align: left !important;
-    color: red;
-    margin-top: -7px !important;
-    margin-bottom: 7px;
+
+.red{
+    border-color: red;
 }
-.attention span {
-    margin-top: -27px;
-    margin-left: 25px;
+
+.input-form{
+    padding-bottom: 1.5rem;
+    position: relative;
+}
+
+.input-form small{
+    color: red;
+    text-align: left;
     display: block;
+    position: absolute;
+    width: 100%;
 }
 .icon{
-    padding-right: 5px;
     width: 20px;
     height: 20px;
     display: inline-block;
 }
 .insideField{
-    position: relative;
-    top: -42px;
-    right: -130px;
-    cursor: pointer;
-}
-.red{
-    border-color: red;
+    position: absolute;
+    margin-top: -55px;;
+    margin-left: 120px;
 }
