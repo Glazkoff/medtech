@@ -1,22 +1,23 @@
 <h2>Редактирвание созданной статьи</h2>
-<div class="loader-wrap">
+<div class="loader-wrap" *ngIf="loading; else afterLoading">
   <app-loader></app-loader>
 </div>
-<table *ngIf="path==='editarticle' && id===''" class="table">
-  <tbody>
-    <tr>
-      <th>ID</th>
-      <th>Заголовок</th>
-      <th>Дата</th>
-      <th>Длительность</th>
-    </tr>
-    <tr *ngFor="let post of posts" [routerLink]="[ '/admin', 'editarticle', post.id_materials]">
-      <td>{{post.id_materials}}</td>
-      <td>{{post.title}}</td>
-      <td>{{post.date}}</td>
-      <td>{{post.duration}}</td>
-    </tr>
-  </tbody>
-</table>
-<app-admin-editor *ngIf="id!==''" class="table" [(data)]="data" [id]="id"></app-admin-editor>
-rgb(92, 52, 52)
+<ng-template #afterLoading>
+  <table *ngIf="path==='editarticle' && id===''" class="table">
+    <tbody>
+      <tr>
+        <th>ID</th>
+        <th>Заголовок</th>
+        <th>Дата</th>
+        <th>Длительность</th>
+      </tr>
+      <tr *ngFor="let post of posts" [routerLink]="[ '/admin', 'editarticle', post.id_materials]">
+        <td>{{post.id_materials}}</td>
+        <td>{{post.title}}</td>
+        <td>{{post.date}}</td>
+        <td>{{post.duration}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <app-admin-editor *ngIf="id!==''" class="table" [(data)]="data" [id]="id"></app-admin-editor>
+</ng-template>

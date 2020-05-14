@@ -137,7 +137,8 @@ export class AdminEditorComponent implements OnInit {
         console.log("Saving failed: ", error);
       });
   }
-  onDelete() {
-    // TODO: add article delete function
+  async onDelete() {
+    console.log(await this.api.delete("/posts/" + this.id).subscribe());
+    this.router.navigate(["/admin", "editarticle"]);
   }
 }
