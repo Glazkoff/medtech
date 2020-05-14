@@ -21,3 +21,10 @@ h2 {
   margin: 0;
   padding: 15px 20px;
 }
+
+.loader-wrap {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  height: 10rem;
+}

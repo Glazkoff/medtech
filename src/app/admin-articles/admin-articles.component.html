@@ -1,4 +1,7 @@
 <h2>Редактирвание созданной статьи</h2>
+<div class="loader-wrap">
+  <app-loader></app-loader>
+</div>
 <table *ngIf="path==='editarticle' && id===''" class="table">
   <tbody>
     <tr>
@@ -16,3 +19,4 @@
   </tbody>
 </table>
 <app-admin-editor *ngIf="id!==''" class="table" [(data)]="data" [id]="id"></app-admin-editor>
+rgb(92, 52, 52)
