@@ -8,6 +8,7 @@ const dbConfig = require("./db.config.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const CONFIG = require("./secret.config.js");
+const morgan = require("morgan");
 
 const app = express();
 
@@ -23,6 +24,9 @@ app.use(
 
 // Обработка статических файлов
 app.use("/", serveStatic(path.join(__dirname, "../dist/medtech")));
+
+// Логгирование запросов
+app.use(morgan("dev"));
 
 // настройка CORS
 app.use(function (req, res, next) {
@@ -97,6 +101,10 @@ let salt = bcrypt.genSaltSync(10);
 //   res.sendFile(__dirname, "../dist/index.html");
 // });
 
+/******************************************************************** */
+/** CRUD для новостных постов */
+
+// Создание новостного поста
 app.post("/api/posts", (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл POST запрос для постов:");
@@ -121,7 +129,8 @@ app.post("/api/posts", (req, res) => {
   );
 });
 
-app.get("/api/posts", function (req, res) {
+// Получение списка новостных постов
+app.get("/api/posts", (req, res) => {
   console.log("AUTHORIZATION: ", req.headers.authorization);
   try {
     connection.query("SELECT * FROM `materials`", function (
@@ -140,7 +149,8 @@ app.get("/api/posts", function (req, res) {
   }
 });
 
-app.get("/api/posts/:id", function (req, res) {
+// Получение конкретного поста
+app.get("/api/posts/:id", (req, res) => {
   console.log(req.params.id);
   try {
     connection.query(
@@ -161,7 +171,8 @@ app.get("/api/posts/:id", function (req, res) {
   }
 });
 
-app.put("/api/posts/:id", function (req, res) {
+// Редактирование конкретного поста
+app.put("/api/posts/:id", (req, res) => {
   console.log("PUT /");
   console.log(req.body);
   console.log(
@@ -195,6 +206,29 @@ app.put("/api/posts/:id", function (req, res) {
     console.log(error);
   }
 });
+
+app.delete("/api/posts/:id", (req, res) => {
+  try {
+    connection.query(
+      "DELETE FROM `materials` WHERE id_materials = ?",
+      [
+        req.params.id,
+      ],
+      function (error, results, fields) {
+        if (error) {
+          res.status(500).send("Ошибка сервера при получении названия курса");
+          console.log(error);
+        } else {
+          res.send({
+            message: `Удалена запись с ID ${req.params.id}`
+          })
+        }
+      })
+  } catch (err) {
+    console.log(err);
+  }
+});
+/******************************************************************** */
 
 // Регистрация пользователя
 app.post("/api/users", (req, res) => {
@@ -259,16 +293,14 @@ app.post("/api/users", (req, res) => {
                         });
                       } else {
                         console.log(results[0]);
-                        let token = jwt.sign(
-                          {
+                        let token = jwt.sign({
                             id_users: results[0].id_users,
                             firstname: results[0].firstname,
                             surname: results[0].surname,
                             organization: results[0].organization,
                             role: results[0].role,
                           },
-                          CONFIG.SECRET,
-                          {
+                          CONFIG.SECRET, {
                             expiresIn: 86400, // токен на 24 часа
                           }
                         );
@@ -318,16 +350,14 @@ app.post("/api/login", (req, res) => {
           console.log(results[0]);
           let bool = bcrypt.compareSync(req.body.password, results[0].password);
           if (bool) {
-            let token = jwt.sign(
-              {
+            let token = jwt.sign({
                 id_users: results[0].id_users,
                 firstname: results[0].firstname,
                 surname: results[0].surname,
                 organization: results[0].organization,
                 role: results[0].role,
               },
-              CONFIG.SECRET,
-              {
+              CONFIG.SECRET, {
                 expiresIn: 86400, // токен на 24 часа
               }
             );

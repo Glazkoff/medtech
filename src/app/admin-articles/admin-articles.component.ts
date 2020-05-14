@@ -12,9 +12,11 @@ export class AdminArticlesComponent implements OnInit {
   constructor(private api: BaseApiService, private route: ActivatedRoute) {}
   id = "";
   data: any;
-  @Input() path: string;
+  loading = false;
   posts = [];
+  @Input() path: string;
   async ngOnInit() {
+    this.loading = true;
     try {
       this.route.paramMap
         .pipe(switchMap((params) => params.getAll("id")))
@@ -25,6 +27,7 @@ export class AdminArticlesComponent implements OnInit {
       if (!this.id) {
         let resp = await this.api.get("/posts");
         if (await resp.hasOwnProperty(length)) {
+          this.loading = false;
           // tslint:disable-next-line: no-string-literal
           for (let index = 0; index < resp["length"]; index++) {
             console.log(resp[index]);
@@ -33,6 +36,7 @@ export class AdminArticlesComponent implements OnInit {
         }
       } else {
         const resp = await this.api.get("/posts/" + this.id);
+        this.loading = false;
         this.data = {
           title: resp[0].title,
           blocks: JSON.parse(resp[0].content),

@@ -21,6 +21,7 @@ import { PipeTimeCommentPipe } from "./pipes/pipe-time-comment.pipe";
 import { AuthErrorHandler } from "./services/auth-error-handler";
 import { ErrorHandler } from "@angular/core";
 import { AuthGuard } from "./services/auth.guard";
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { AuthGuard } from "./services/auth.guard";
     AdminArticlesComponent,
     CommentViewerComponent,
     PipeTimeCommentPipe,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
