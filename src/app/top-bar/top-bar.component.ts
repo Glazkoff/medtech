@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./top-bar.component.css"],
 })
 export class TopBarComponent implements OnInit {
-  flag = true;
+  iconOfMenu = "down";
   logOut = true;
   name = "Арина";
   surname = "Оськина";
@@ -42,12 +42,12 @@ export class TopBarComponent implements OnInit {
   }
 
   openDropdownMenu() {
-    this.flag = !this.flag;
+    this.iconOfMenu = this.iconOfMenu == "down" ? "up" : "down";
   }
   onLogOut() {
     this.logOut = !this.logOut;
     localStorage.clear();
-    this.flag = !this.flag;
+    this.iconOfMenu = "down";
     this.router.navigate(["/news"]);
   }
 }

@@ -1,14 +1,80 @@
-.top-bar{
-    background: #1d1d1d;
+@font-face {
+    font-family: "PT Root UI Web"; 
+    src: url("/assets/fonts/PT Root UI/PT Root UI_Regular/PT Root UI_Regular.ttf") format("truetype"); 
+    font-style: normal;
+    font-weight: normal;
+} 
+@font-face {
+    font-family: "PT Root UI Web"; 
+    src: url("/assets/fonts/PT Root UI/PT Root UI_Light/PT Root UI_Light.ttf") format("truetype"); 
+    font-style: normal;
+    font-weight: 300;
+} 
+header{
+    display: flex;
+    height: 3rem;
+    width: 100%;
+    background: #1D1D1D;
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
     z-index: 1030;
-    padding: .5rem 1rem;
     box-sizing: border-box;
+    padding: 0 10px;
+    justify-content: center;
 }
+.top-bar{
+    width: 72rem;
+    max-width: 1216px;
+    padding: .5rem 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    flex-basis: auto;
+    align-items: center;
+}
+.minlogo{
+    height: 2rem;
+    display: inline-block;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    margin-right: 2rem;
+}
+.devider{
+    width: 1px;
+    height: 2rem;
+    margin-right: 1rem;
+    border-left: 1px solid #EDEEDF;
+}
+
+.menu{
+    display: flex;
+    margin-right: auto!important;
+}
+.link{
+    font-family: PT Root UI Web;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.5rem;
+    color: #EDEEDF;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+.active{
+    font-weight: normal;
+}
+
+.navbar-collapse{
+    display: flex;
+    flex-basis: auto;
+    flex-grow: 1;
+    align-items: center;
+}
+
 .flex-wrap{
+    width: 100%;
     display: flex;
     flex-basis: auto;
     align-items: center;
@@ -19,12 +85,35 @@
     position: relative;
 }
 .nav-link{
-    color: #fff;
-    padding: .5rem 1rem;
-    font-size: 1.1rem;
-    display: block;
+    text-align: right;
+    font-size: .75rem;
+    line-height: 1rem;
+    color: #EDEEDF;
+    font-family: PT Root UI Web;
+    font-style: normal;
     font-weight: 500;
+    padding: 0rem .7rem;
+    display: block;
     cursor: pointer;
+}
+.icon{
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+}
+.add-menu{
+    margin-right: 1rem;
+}
+
+.image-for-user{
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: #C4C4C4;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
 }
 .dropdown-menu{
     position: absolute;
@@ -59,20 +148,7 @@
 .dropdown-item:focus, .dropdown-item:hover {
     background-color: #f8f9fa;
 }
-.image-for-user{
-    margin-right:  1rem;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #C4C4C4;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
-}
-.dropdown-toggle{
-    cursor: pointer;
-    width: 25px;
-    height: 25px;
-    margin-right:  1rem;
+.center{
+    text-align: right;
+    padding: 0;
 }
