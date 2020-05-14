@@ -22,6 +22,7 @@ import { AuthErrorHandler } from "./services/auth-error-handler";
 import { ErrorHandler } from "@angular/core";
 import { AuthGuard } from "./services/auth.guard";
 import { LoaderComponent } from './loader/loader.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { LoaderComponent } from './loader/loader.component';
     CommentViewerComponent,
     PipeTimeCommentPipe,
     LoaderComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
