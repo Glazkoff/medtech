@@ -15,15 +15,18 @@
     <div *ngIf="logOut; else blockLogIn">
       <div class="flex-wrap">
         <a class="nav-link">Здравствуйте,<br>  {{name}} {{surname}}!</a>
-        <div *ngIf="iconOfMenu=='up'">
+        <div *ngIf="iconOfMenu=='close'">
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Пункт 1</a>
-            <a class="dropdown-item" href="#">Пункт 2</a>
-            <a class="dropdown-item" (click)="onLogOut()">Выйти</a>
+            <img src="/assets/menu-up.png" class="icon triangle">
+            <a class="dropdown-item" href="#">пункт первый</a>
+            <a class="dropdown-item" href="#">пункт 2</a>
+            <a class="dropdown-item" href="#">третий пунктик</a>
+            <div class="devider-bottom"></div>
+            <a class="dropdown-item" (click)="onLogOut()">выйти</a>
           </div>
         </div>
         <div class="image-for-user"></div>
-        <img (click)="openDropdownMenu()" [src]="'/assets/chevron-'+iconOfMenu+'.png'" alt="Доп. меню" class="icon add-menu">
+        <img (click)="openDropdownMenu()" [src]="'/assets/'+iconOfMenu+'.png'" alt="Доп. меню" class="icon add-menu">
         <div class="devider"></div>
         <img src="/assets/search.png" alt="Поиск" class="icon">
       </div>

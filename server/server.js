@@ -247,8 +247,9 @@ app.post("/api/users", (req, res) => {
         console.log(error);
       }
       console.log("Результаты проверки существования логина:");
-      console.log(results[0]);
+      console.log(results);
       if (results[0] === undefined) {
+        console.log(results[0]);
         let hashPassword = bcrypt.hashSync(req.body.password, salt);
         connection.query(
           "INSERT INTO `users` (`id_users`, `login`, `password`, `firstname`, `surname`, `organization`, `role`) VALUES (NULL, ?, ?, ?, ?, ?, ?)",

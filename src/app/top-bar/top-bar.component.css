@@ -81,9 +81,7 @@ header{
     flex-grow: 1;
     justify-content: flex-end;
 }
-.dropdown{
-    position: relative;
-}
+
 .nav-link{
     text-align: right;
     font-size: .75rem;
@@ -101,6 +99,12 @@ header{
     height: 1.5rem;
     cursor: pointer;
 }
+.triangle{
+    cursor: default;
+    position: absolute;
+    top: -15px;
+    left: 180px;
+}
 .add-menu{
     margin-right: 1rem;
 }
@@ -115,38 +119,45 @@ header{
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
 }
+
 .dropdown-menu{
     position: absolute;
     float: none;
-    top: 100%;
-    right: 2rem;
+    top: 48px;
+    right: 129px;
     z-index: 1000;
-    min-width: 10rem;
-    padding: .5rem 0;
-    margin: .125rem 0 0;
-    margin-right: 12px;
-    font-size: 1rem;
-    color: #212529;
+    width: 14.5rem;
+    padding: 1rem;
+    color: #EDEEDF;
     list-style: none;
-    background-color: #fff;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: .25rem;
+    background: #1D1D1D;
+    border: 0.5px solid #EDEEDF;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 2px 2px;
 }
-.dropdown-menu.show {
-    display: block;
+.devider-bottom{
+    width: 12.5rem;
+    border-bottom: 0.5px solid #EDEEDF;
+    margin-top: 25px;
+    margin-bottom: 7px;
 }
+
 .dropdown-item {
     cursor: pointer;
     display: block;
     box-sizing:border-box;
     width: 100%;
-    padding: .25rem 1.5rem;
     clear: both;
-    font-weight: 400;
-    color: #212529;
+    font-family: PT Root UI Web;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    color: #EDEEDF;
 }
 .dropdown-item:focus, .dropdown-item:hover {
-    background-color: #f8f9fa;
+    font-weight: normal;
 }
 .center{
     text-align: right;

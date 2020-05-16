@@ -7,10 +7,10 @@ import { Router } from "@angular/router";
   styleUrls: ["./top-bar.component.css"],
 })
 export class TopBarComponent implements OnInit {
-  iconOfMenu = "down";
+  iconOfMenu = "chevron-down";
   logOut = true;
-  name = "Арина";
-  surname = "Оськина";
+  name = "";
+  surname = "";
   isSetName = false;
   constructor(private router: Router) {}
 
@@ -42,12 +42,12 @@ export class TopBarComponent implements OnInit {
   }
 
   openDropdownMenu() {
-    this.iconOfMenu = this.iconOfMenu == "down" ? "up" : "down";
+    this.iconOfMenu = this.iconOfMenu == "chevron-down" ? "close" : "chevron-down";
   }
   onLogOut() {
     this.logOut = !this.logOut;
     localStorage.clear();
-    this.iconOfMenu = "down";
+    this.iconOfMenu = "chevron-down";
     this.router.navigate(["/news"]);
   }
 }
