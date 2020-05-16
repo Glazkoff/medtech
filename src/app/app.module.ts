@@ -22,7 +22,8 @@ import { AuthErrorHandler } from "./services/auth-error-handler";
 import { ErrorHandler } from "@angular/core";
 import { AuthGuard } from "./services/auth.guard";
 import { LoaderComponent } from './loader/loader.component';
-
+import { ModalComponent } from './modal/modal.component';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { LoaderComponent } from './loader/loader.component';
     CommentViewerComponent,
     PipeTimeCommentPipe,
     LoaderComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +50,8 @@ import { LoaderComponent } from './loader/loader.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RecaptchaModule, //this is the recaptcha main module
+    RecaptchaFormsModule, //this is the module for form incase form validation
   ],
   providers: [
     {

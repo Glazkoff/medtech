@@ -22,6 +22,7 @@ export class AdminEditorComponent implements OnInit {
   @Input() id;
   title = "";
   duration = "30 минут";
+  modal = false;
   editorData = {
     blocks: [],
   };
@@ -137,8 +138,14 @@ export class AdminEditorComponent implements OnInit {
         console.log("Saving failed: ", error);
       });
   }
+  async onDeleteAsk() {
+    this.modal = true;
+  }
   async onDelete() {
     console.log(await this.api.delete("/posts/" + this.id).subscribe());
     this.router.navigate(["/admin", "editarticle"]);
+  }
+  onCloseModal() {
+    this.modal = false;
   }
 }

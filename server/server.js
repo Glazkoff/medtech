@@ -211,19 +211,18 @@ app.delete("/api/posts/:id", (req, res) => {
   try {
     connection.query(
       "DELETE FROM `materials` WHERE id_materials = ?",
-      [
-        req.params.id,
-      ],
+      [req.params.id],
       function (error, results, fields) {
         if (error) {
           res.status(500).send("Ошибка сервера при получении названия курса");
           console.log(error);
         } else {
           res.send({
-            message: `Удалена запись с ID ${req.params.id}`
-          })
+            message: `Удалена запись с ID ${req.params.id}`,
+          });
         }
-      })
+      }
+    );
   } catch (err) {
     console.log(err);
   }
@@ -294,14 +293,16 @@ app.post("/api/users", (req, res) => {
                         });
                       } else {
                         console.log(results[0]);
-                        let token = jwt.sign({
+                        let token = jwt.sign(
+                          {
                             id_users: results[0].id_users,
                             firstname: results[0].firstname,
                             surname: results[0].surname,
                             organization: results[0].organization,
                             role: results[0].role,
                           },
-                          CONFIG.SECRET, {
+                          CONFIG.SECRET,
+                          {
                             expiresIn: 86400, // токен на 24 часа
                           }
                         );
@@ -351,14 +352,16 @@ app.post("/api/login", (req, res) => {
           console.log(results[0]);
           let bool = bcrypt.compareSync(req.body.password, results[0].password);
           if (bool) {
-            let token = jwt.sign({
+            let token = jwt.sign(
+              {
                 id_users: results[0].id_users,
                 firstname: results[0].firstname,
                 surname: results[0].surname,
                 organization: results[0].organization,
                 role: results[0].role,
               },
-              CONFIG.SECRET, {
+              CONFIG.SECRET,
+              {
                 expiresIn: 86400, // токен на 24 часа
               }
             );
@@ -401,7 +404,7 @@ app.get("/api/courses", function (req, res) {
 //comments
 app.get("/api/comments", function (req, res) {
   try {
-    connection.query("SELECT * FROM `Comments`", function (
+    connection.query("SELECT * FROM `comments`", function (
       error,
       results,
       fields
@@ -423,7 +426,7 @@ app.post("/api/comments", (req, res) => {
   console.log("Пришёл POST запрос для комментариев:");
   console.log(req.body);
   connection.query(
-    "INSERT INTO `Comments` (`id_comment`, `name_commentator`, `date_comment`, `text_comment`, `id_materials`) VALUES (NULL, ?, ?, ?, ?);",
+    "INSERT INTO `comments` (`id_comment`, `name_commentator`, `date_comment`, `text_comment`, `id_materials`) VALUES (NULL, ?, ?, ?, ?);",
     [
       req.body.name_commentator,
       req.body.date_comment,
@@ -467,7 +470,7 @@ app.delete("/api/comments", function (req, res) {
   console.log("Пришёл delete запрос для комментариев:");
   console.log(req.body);
   connection.query(
-    "DELETE FROM `Comments` WHERE `id_comment`= ?",
+    "DELETE FROM `comments` WHERE `id_comment`= ?",
     [req.body.id_comment],
     function (err, results) {
       console.log("БД результаты:");
@@ -479,6 +482,40 @@ app.delete("/api/comments", function (req, res) {
       }
     }
   );
+});
+app.post('/api/token_validate', (req, res)=>{
+
+  let token = req.body.recaptcha;
+  const secretkey = "6Lcd5PMUAAAAADuWGBBEwGhouabjY-SSWRLB2kUv"; //the secret key from your google admin console;
+
+  //token validation url is URL: https://www.google.com/recaptcha/api/siteverify
+  // METHOD used is: POST
+
+  const url =  `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}&remoteip=${req.connection.remoteAddress}`
+
+  //note that remoteip is the users ip address and it is optional
+  // in node req.connection.remoteAddress gives the users ip address
+
+  if(token === null || token === undefined){
+    res.status(201).send({success: false, message: "Token is empty or invalid"})
+    return console.log("token empty");
+  }
+
+  request(url, function(err, response, body){
+    //the body is the data that contains success message
+    body = JSON.parse(body);
+
+    //check if the validation failed
+    if(body.success !== undefined && !data.success){
+      res.send({success: false, 'message': "recaptcha failed"});
+      return console.log("failed")
+    }
+
+    //if passed response success message to client
+    res.send({"success": true, 'message': "recaptcha passed"});
+
+  })
+
 });
 
 app.listen(3001, () => {

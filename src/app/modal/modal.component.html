@@ -1,0 +1,13 @@
+<div class="modal-wrap" tabindex="0">
+  <div class="outer">
+    <div class="relative">
+      <h2>{{title}}</h2>
+      <button class="closeBtn" (click)="onClose()">
+        &times;
+      </button>
+      <div class="inner">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

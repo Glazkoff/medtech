@@ -106,3 +106,25 @@ h2 {
   padding: 0.8rem 1rem;
   margin: 0;
 }
+
+.modal-btn-wrap {
+  margin-top: 1.5rem;
+  width: 100%;
+  display: flex;
+}
+
+.modal-btn-wrap>button {
+  width: 100%;
+  margin-left: 1rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+}
+
+app-modal .relative h2 {
+  margin-bottom: 0.5rem;
+}
+
+app-modal p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
