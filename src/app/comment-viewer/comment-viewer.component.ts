@@ -15,15 +15,12 @@ export class CommentViewerComponent implements OnInit {
   @Input() comment
   comments: Comment[] = [];
   private subscription: Subscription;
+  name: any;
   constructor(private api: BaseApiService, private fb: FormBuilder, private activateRoute: ActivatedRoute) {
     this.subscription = activateRoute.params.subscribe(params => {
       this.id = params.id;
     });
   }
-  resolved(captchaResponse: string, res) {
-    console.log(`Resolved response token: ${captchaResponse}`);
-
-  };
   id: number;
   async ngOnInit() {
     this.initForm();
@@ -53,8 +50,9 @@ export class CommentViewerComponent implements OnInit {
   }
   async onSave() {
     let comment_add;
+    this.name = localStorage.getItem("userName");
     comment_add = {
-      name_commentator: this.myFirstReactiveForm.value.comment,
+      name_commentator: this.name,
       text_comment: this.myFirstReactiveForm.value.comment,
       id_materials: this.id,
     };
