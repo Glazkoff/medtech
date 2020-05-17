@@ -20,6 +20,7 @@ export class AdminEditorComponent implements OnInit {
   constructor(private api: BaseApiService, public router: Router) {}
   @Input() data;
   @Input() id;
+  @Input() fromList: boolean;
   title = "";
   duration = "30 минут";
   modal = false;
@@ -33,30 +34,31 @@ export class AdminEditorComponent implements OnInit {
         blocks: this.data.blocks,
       };
     }
-    editor = new EditorJS({
-      /* Id элемента, который будет содержать редактор */
-      holderId: "editorjs",
-      tools: {
-        header: Header,
-        list: List,
-        table: {
-          class: Table,
+    if (!this.fromList) {
+      editor = new EditorJS({
+        /* Id элемента, который будет содержать редактор */
+        holderId: "editorjs",
+        tools: {
+          header: Header,
+          list: List,
+          table: {
+            class: Table,
+          },
+          image: SimpleImage,
+          embed: Embed,
+          quote: Quote,
+          Marker: {
+            class: Marker,
+            shortcut: "CMD+SHIFT+M",
+          },
         },
-        image: SimpleImage,
-        embed: Embed,
-        quote: Quote,
-        Marker: {
-          class: Marker,
-          shortcut: "CMD+SHIFT+M",
-        },
-      },
-      data: this.editorData,
-      autofocus: true,
-      placeholder: "Напиши сюда лучшую статью!",
-      // Раскомментировать на продакшен:
-      // logLevel: "ERROR",
-    });
-
+        data: this.editorData,
+        autofocus: true,
+        placeholder: "Напиши сюда лучшую статью!",
+        // Раскомментировать на продакшен:
+        // logLevel: "ERROR",
+      });
+    }
     try {
       await editor.isReady;
       console.log("Editor.js корректно загружен");

@@ -175,33 +175,40 @@ app.get("/api/posts/:id", (req, res) => {
 app.put("/api/posts/:id", (req, res) => {
   console.log("PUT /");
   console.log(req.body);
-  console.log(
-    req.body.duration,
-    req.body.content.time,
-    req.body.title,
-    JSON.stringify(req.body.content.blocks),
-    req.params.id
-  );
   try {
-    connection.query(
-      "UPDATE `materials` SET `duration` = ?, `date` = ?, `title` = ?, `content` = ? WHERE id_materials = ?",
-      [
+    connection.query("START TRANSACTION", () => {
+      console.log("НАЧАЛАСЬ ТРАНЗАКЦИЯ");
+      console.log(
         req.body.duration,
         req.body.content.time,
         req.body.title,
         JSON.stringify(req.body.content.blocks),
-        req.params.id,
-      ],
-      function (error, results, fields) {
-        if (error) {
-          res.status(500).send("Ошибка сервера при получении названия курса");
-          console.log(error);
+        req.params.id
+      );
+      connection.query(
+        "UPDATE `materials` SET `duration` = ?, `date` = ?, `title` = ?, `content` = ? WHERE id_materials = ?",
+        [
+          req.body.duration,
+          req.body.content.time,
+          req.body.title,
+          JSON.stringify(req.body.content.blocks),
+          req.params.id,
+        ],
+        function (error, results, fields) {
+          if (error) {
+            res.status(500).send("Ошибка сервера при получении названия курса");
+            console.log(error);
+          }
+          console.log("РЕЗУЛЬТАТЫ");
+          console.log(results);
+          connection.query("COMMIT", () => {
+            res.json(results);
+            console.log("ЗАВЕРШЕНА ТРАНЗАКЦИЯ");
+          })
         }
-        console.log("РЕЗУЛЬТАТЫ");
-        console.log(results);
-        res.json(results);
-      }
-    );
+      );
+    })
+
   } catch (error) {
     console.log(error);
   }
@@ -293,16 +300,14 @@ app.post("/api/users", (req, res) => {
                         });
                       } else {
                         console.log(results[0]);
-                        let token = jwt.sign(
-                          {
+                        let token = jwt.sign({
                             id_users: results[0].id_users,
                             firstname: results[0].firstname,
                             surname: results[0].surname,
                             organization: results[0].organization,
                             role: results[0].role,
                           },
-                          CONFIG.SECRET,
-                          {
+                          CONFIG.SECRET, {
                             expiresIn: 86400, // токен на 24 часа
                           }
                         );
@@ -352,16 +357,14 @@ app.post("/api/login", (req, res) => {
           console.log(results[0]);
           let bool = bcrypt.compareSync(req.body.password, results[0].password);
           if (bool) {
-            let token = jwt.sign(
-              {
+            let token = jwt.sign({
                 id_users: results[0].id_users,
                 firstname: results[0].firstname,
                 surname: results[0].surname,
                 organization: results[0].organization,
                 role: results[0].role,
               },
-              CONFIG.SECRET,
-              {
+              CONFIG.SECRET, {
                 expiresIn: 86400, // токен на 24 часа
               }
             );
@@ -482,7 +485,7 @@ app.delete("/api/comments", function (req, res) {
     }
   );
 });
-app.post('/api/token_validate', (req, res)=>{
+app.post('/api/token_validate', (req, res) => {
 
   let token = req.body.recaptcha;
   const secretkey = "6Lcd5PMUAAAAADuWGBBEwGhouabjY-SSWRLB2kUv"; //the secret key from your google admin console;
@@ -490,28 +493,37 @@ app.post('/api/token_validate', (req, res)=>{
   //token validation url is URL: https://www.google.com/recaptcha/api/siteverify
   // METHOD used is: POST
 
-  const url =  `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}&remoteip=${req.connection.remoteAddress}`
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}&remoteip=${req.connection.remoteAddress}`
 
   //note that remoteip is the users ip address and it is optional
   // in node req.connection.remoteAddress gives the users ip address
 
-  if(token === null || token === undefined){
-    res.status(201).send({success: false, message: "Token is empty or invalid"})
+  if (token === null || token === undefined) {
+    res.status(201).send({
+      success: false,
+      message: "Token is empty or invalid"
+    })
     return console.log("token empty");
   }
 
-  request(url, function(err, response, body){
+  request(url, function (err, response, body) {
     //the body is the data that contains success message
     body = JSON.parse(body);
 
     //check if the validation failed
-    if(body.success !== undefined && !data.success){
-      res.send({success: false, 'message': "recaptcha failed"});
+    if (body.success !== undefined && !data.success) {
+      res.send({
+        success: false,
+        'message': "recaptcha failed"
+      });
       return console.log("failed")
     }
 
     //if passed response success message to client
-    res.send({"success": true, 'message': "recaptcha passed"});
+    res.send({
+      "success": true,
+      'message': "recaptcha passed"
+    });
 
   })
 
