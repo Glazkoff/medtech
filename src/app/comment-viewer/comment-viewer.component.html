@@ -1,14 +1,6 @@
-<<<<<<< HEAD
-=======
-<div class="comment" *ngFor="let comment of comments">
-<h1>{{comment.name_commentator}}</h1>
-<p class="time">{{comment.date_comment | pipeTimeComment}}</p>
-<p>{{comment.text_comment}}</p>
-</div>
-<h1>Оставить комментарий</h1>
->>>>>>> beb35f5e97caaf2fddaae19ee0f66f5df92278cb
 <form [formGroup]="myFirstReactiveForm"(submit)="onSave()">
-  <label for="comment">Комментарий</label>
+  <h1>Оставить комментарий</h1>
+  <label for="comment">Комментарий</label> <br>
   <input type="text" id="comment" formControlName="comment" />
   <br/><br/>
 <!--  <div>-->
