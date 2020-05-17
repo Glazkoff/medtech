@@ -14,10 +14,9 @@ import { AppService} from "../services/app.service";
 })
 
 export class NewComponent implements OnInit {
-  myForm:FormGroup;
   post: any;
   private subscription: Subscription;
-  constructor(private api: BaseApiService, private activateRoute: ActivatedRoute,service: AppService) {
+  constructor(private api: BaseApiService, private activateRoute: ActivatedRoute) {
 
     this.subscription = activateRoute.params.subscribe(params => {
       this.id = params.id;
@@ -25,26 +24,9 @@ export class NewComponent implements OnInit {
   }
   id: number;
 
-  // //function to resolve the reCaptcha and retrieve a token
-  // async resolved(captchaResponse: string, res) {
-  //   console.log(`Resolved response token: ${captchaResponse}`);
-  //   await sendTokenToBackend(capchaResponse); //declaring the token send function with a token parameter
-  // }
 
-// //function to send the token to the node server
-//   sendTokenToBackend(tok) {
-//     //calling the service and passing the token to the service
-//     this.service.sendToken(tok).subscribe(
-//       data => {
-//         console.log(data);
-//       },
-//       err => {
-//         console.log(err);
-//       },
-//       () => {}
-//     );
-//   }
   async ngOnInit() {
+
     if (this.id) {
       const postsarr = await this.getPost();
       // if ( await postsarr.id === this.id) {
@@ -56,27 +38,9 @@ export class NewComponent implements OnInit {
       //   this.post = el;
       // }
     }
-    this.myForm = new FormGroup({
-      'name': new FormControl('', [ Validators.required]),
-      'comment': new FormControl('', [Validators.required]),
-    });
+
   }
-  async onSave() {
-    console.log('it was a click, wow')
-    let comment;
-    comment = {
-      name_commentator: this.myForm.value.name,
-      text_comment: this.myForm.value.comment,
-      id_materials: this.id
-    }
-    console.log(comment);
-    try {
-      let com =  await this.api.post(JSON.stringify(comment), "/comments");
-      console.log(com);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+
   async getPost() {
     let response;
     try {

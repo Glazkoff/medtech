@@ -426,11 +426,10 @@ app.post("/api/comments", (req, res) => {
   console.log("Пришёл POST запрос для комментариев:");
   console.log(req.body);
   connection.query(
-    "INSERT INTO `comments` (`id_comment`, `name_commentator`, `date_comment`, `text_comment`, `id_materials`) VALUES (NULL, ?, ?, ?, ?);",
+    "INSERT INTO `comments` (`id_comment`, `name_commentator`, `date_comment`, `text_comment`, `id_materials`) VALUES (NULL, ?, CURRENT_TIMESTAMP, ?, ?);",
     [
       req.body.name_commentator,
-      req.body.date_comment,
-      JSON.stringify(req.body.text_comment),
+      req.body.text_comment,
       req.body.id_materials,
     ],
     function (err, results) {
