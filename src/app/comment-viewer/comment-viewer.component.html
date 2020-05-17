@@ -9,6 +9,11 @@
 <!--</div>-->
   <input type="submit" onclick='window.location.reload()' value="Отправить">
 </form>
+<div class="comment" *ngFor="let comment of comments">
+  <h1>{{comment.name_commentator}}</h1>
+  <p class="time">{{comment.date_comment | pipeTimeComment}}</p>
+  <p>{{comment.text_comment}}</p>
+</div>
 
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
