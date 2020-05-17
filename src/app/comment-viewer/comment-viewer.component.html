@@ -3,20 +3,17 @@
 <p class="time">{{comment.date_comment | pipeTimeComment}}</p>
 <p>{{comment.text_comment}}</p>
 </div>
+<h1>Оставить комментарий</h1>
 <form [formGroup]="myFirstReactiveForm"(submit)="onSave()">
   <label for="comment">Комментарий</label>
   <input type="text" id="comment" formControlName="comment" />
   <br/><br/>
 <!--  <div>-->
-<!--    &lt;!&ndash;-->
-<!--      the SITE_KEY is the sitekey from your admin console.-->
-<!--      use form control for validation-->
-<!--    &ndash;&gt;-->
-<!--    <re-captcha (resolved)="resolved($event)"-->
-<!--                formControlName="recaptchaReactive"-->
-<!--                siteKey="6LcQN_MUAAAAAOrVunargMhymEkhht4g2OvEI-bJ">-->
-<!--    </re-captcha>-->
-<!--  </div>-->
-  <button type="submit">отправить</button>
+<!--  <re-captcha formControlName="recaptchaReactive" siteKey="6Lcd5PMUAAAAAC86xKhg5Ow0Y1ikl27UkBnLknuZ">-->
+<!--  </re-captcha>-->
+<!--</div>-->
+  <input type="submit" value="Отправить">
 </form>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+

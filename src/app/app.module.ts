@@ -50,7 +50,7 @@ import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RecaptchaModule, //this is the recaptcha main module
+    RecaptchaModule,  //this is the recaptcha main module
     RecaptchaFormsModule, //this is the module for form incase form validation
   ],
   providers: [
