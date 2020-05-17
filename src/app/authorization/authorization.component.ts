@@ -54,6 +54,7 @@ export class AuthorizationComponent implements OnInit {
           login: this.myForm.value.login,
           password: this.myForm.value.password,
         };
+        this.type = "password";
         try {
           let response = await this.api.post(
             JSON.stringify(infoAboutUser),

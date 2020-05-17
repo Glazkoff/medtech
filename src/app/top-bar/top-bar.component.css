@@ -40,12 +40,12 @@ header{
     display: inline-block;
     padding-top: .3125rem;
     padding-bottom: .3125rem;
-    margin-right: 2rem;
+    margin-right: 1.5rem;
 }
 .devider{
     width: 1px;
     height: 2rem;
-    margin-right: 1rem;
+    margin-right: 1.5rem;
     border-left: 1px solid #EDEEDF;
 }
 
@@ -79,6 +79,7 @@ header{
     flex-basis: auto;
     align-items: center;
     flex-grow: 1;
+    position: relative;
     justify-content: flex-end;
 }
 
@@ -103,10 +104,10 @@ header{
     cursor: default;
     position: absolute;
     top: -15px;
-    left: 180px;
+    left: 174px;
 }
 .add-menu{
-    margin-right: 1rem;
+    margin-right: 1.5rem;
 }
 
 .image-for-user{
@@ -124,7 +125,7 @@ header{
     position: absolute;
     float: none;
     top: 48px;
-    right: 129px;
+    right: 40px;
     z-index: 1000;
     width: 14.5rem;
     padding: 1rem;
