@@ -38,7 +38,11 @@ export class CommentViewerComponent implements OnInit {
           date_comment: element.date_comment,
           id_materials: element.id_materials,
         };
-        if (id_new == element.id_materials){this.comments.push(el);}
+        if (id_new == element.id_materials){
+          
+          console.log(element.date_comment);
+          this.comments.push(el);
+        }
       });
     }
   }
