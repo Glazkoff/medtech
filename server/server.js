@@ -445,6 +445,7 @@ app.post("/api/comments", (req, res) => {
         console.warn(err);
       } else {
         console.log(results);
+        res.json(results);
       }
     }
   );

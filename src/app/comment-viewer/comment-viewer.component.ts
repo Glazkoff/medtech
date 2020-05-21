@@ -47,16 +47,20 @@ export class CommentViewerComponent implements OnInit {
   }
   async onSave() {
     let comment_add;
-    this.name = localStorage.getItem("userName");
+    console.log();
+    if (localStorage.getItem("userName") !== null) {
+      this.name = localStorage.getItem("userName");
+    }
+    else this.name = "Аноним";
     comment_add = {
       name_commentator: this.name,
       text_comment: this.myFirstReactiveForm.value.comment,
       id_materials: this.id,
+      date_comment: "Только что"
     };
     try {
       let comm = await this.api.post(
       JSON.stringify(comment_add), "/comments");
-      console.log("ksdsndk ", comment_add);
       this.comments.push(comment_add);
       console.log(this.comments);
     }

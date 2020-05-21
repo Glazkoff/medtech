@@ -27,11 +27,11 @@ export class TopBarComponent implements OnInit {
   ngDoCheck() {
     if (localStorage.getItem("userName") !== null) {
       this.name = localStorage.getItem("userName");
-      console.log("Имя: ", this.name);
+      // console.log("Имя: ", this.name);
     }
     if (localStorage.getItem("userSurname") !== null) {
       this.surname = localStorage.getItem("userSurname");
-      console.log("Фамилия: ", this.surname);
+      // console.log("Фамилия: ", this.surname);
     }
     if (localStorage.getItem("token") !== null) {
       this.logOut = true;
