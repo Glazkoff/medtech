@@ -127,13 +127,13 @@ export class AdminEditorComponent implements OnInit {
   onUpdate() {
     editor
       .save()
-      .then((outputData) => {
+      .then(async (outputData) => {
         const postData = {
           title: this.title,
           duration: this.duration,
           content: outputData,
         };
-        this.api.put(JSON.stringify(postData), "/posts/" + this.id);
+        await this.api.put(JSON.stringify(postData), "/posts/" + this.id);
         this.router.navigate(["/admin", "editarticle"]);
       })
       .catch((error) => {

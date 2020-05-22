@@ -42,6 +42,96 @@ app.use(function (req, res, next) {
   next();
 });
 
+/**************** ТЕСТОВЫЙ ФРАГМЕНТ ********************** */
+const Sequelize = require("sequelize");
+const detect = require("charset-detector");
+// Подключение к Sequelize
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+  dialect: "mysql",
+  host: dbConfig.HOST,
+  define: {
+    dialectOptions: {
+      charset: "UTF8",
+      collate: "utf8_unicode_ci",
+    },
+    // collate: "utf8_unicode_ci",
+    timestamps: true,
+  },
+  pool: {
+    max: 10,
+    min: 1,
+    acquire: 30000,
+    idle: 10000,
+  },
+  isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+});
+// const sequelize = new Sequelize(dbConfig.DB, "root", "", {
+//   dialect: "mysql",
+//   host: "localhost",
+//   define: {
+//     charset: "utf8mb4",
+//     collate: "utf8mb4_general_ci",
+//     timestamps: true,
+//   },
+// });
+// Модель таблицы "materials"
+const Materials = sequelize.define(
+  "materials", {
+    id_materials: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
+    },
+    date: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    duration: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    type: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    title: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    content: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+    },
+  }, {
+    charset: "UTF8",
+    collate: "utf8_unicode_ci",
+  }
+);
+// Синхронизация Sequelize с удалённой БД
+sequelize
+  .sync()
+  .then((result) => {
+    console.log("[Sequelize] Всё ОК");
+
+    // console.log(result);
+  })
+  .catch((err) => console.log(err));
+sequelize.afterConnect((connect) => {
+  // return Promise.fromCallback((callback) =>
+  sequelize.query('SHOW VARIABLES LIKE "character%"').then(result => {
+    console.log(result);
+  });
+  connect.query("SET NAMES UTF8", (res) => {
+    console.log("Set names", res);
+  });
+  sequelize.query('SHOW VARIABLES LIKE "character%"').then(result => {
+    console.log('AFTER', result);
+  });
+  // );
+});
+/**************** ТЕСТОВЫЙ ФРАГМЕНТ ********************** */
+
 // создаем соединение с нашей базой данных
 const connection = mysql.createPool({
   connectionLimit: 10,
@@ -105,28 +195,94 @@ let salt = bcrypt.genSaltSync(10);
 /** CRUD для новостных постов */
 
 // Создание новостного поста
-app.post("/api/posts", (req, res) => {
+app.post("/api/posts", async (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл POST запрос для постов:");
   console.log(req.body);
-  connection.query(
-    'INSERT INTO `materials` (`duration`, `date`, `type`, `title`, `content`) VALUES (?, ?, "news", ?, ?)',
-    [
-      req.body.duration,
-      req.body.content.time,
-      req.body.title,
-      JSON.stringify(req.body.content.blocks),
-    ],
-    function (err, results) {
-      console.log("БД результаты:");
-      if (err) {
-        console.log("Ошибка записи в БД!");
-        console.warn(err);
-      } else {
-        console.log(results);
-      }
-    }
-  );
+  // //***************** Вариант транзакции с библиотекой mysql2  ********************************
+  // connection.query("START TRANSACTION", () => {
+  //   console.log("НАЧАЛАСЬ ТРАНЗАКЦИЯ POST");
+  //   connection.query(
+  //     'INSERT INTO `materials` (`duration`, `date`, `type`, `title`, `content`) VALUES (?, ?, "news", ?, ?)',
+  //     [
+  //       req.body.duration,
+  //       req.body.content.time,
+  //       req.body.title,
+  //       JSON.stringify(req.body.content.blocks),
+  //     ],
+  //     function (err, results) {
+  //       console.log("БД результаты:");
+  //       if (err) {
+  //         console.log("Ошибка записи в БД!");
+  //         console.warn(err);
+  //       } else {
+  //         console.log(results);
+  //       }
+  //       connection.query("COMMIT", () => {
+  //         console.log("ЗАВЕРШЕНИЕ ТРАНЗАКЦИИ POST");
+  //       });
+  //     }
+  //   );
+  // });
+  // //***************** Вариант транзакции с библиотекой mysql2  ********************************
+  let result;
+  try {
+    result = await Materials.create({
+      duration: req.body.duration,
+      date: req.body.content.time,
+      type: "news",
+      title: req.body.title,
+      content: JSON.stringify(req.body.content.blocks),
+    });
+
+    // for (let index = 0; index < 3; index++) {
+    //   result = await Materials.create({
+    //     duration: "тест" + (index + 1),
+    //     date: "тест",
+    //     type: "news",
+    //     title: "тест",
+    //     content: "тест",
+    //   });
+    // }
+    // result = await Materials.create({
+    //   duration: "тест",
+    //   date: "тест",
+    //   type: "news",
+    //   title: "тест",
+    //   content: "тест",
+    // });
+  } catch (error) {
+    console.log(error);
+  }
+  res.send(result);
+  // sequelize.query('SET NAMES "utf8"');
+  // sequelize.query('SET CHARACTER SET "utf8"');
+  // sequelize.query('SET SESSION collation_connection = "utf8_unicode_ci"');
+  // Materials.create({
+  //   duration: "тест",
+  //   date: "тест",
+  //   type: "news",
+  //   title: "тест",
+  //   content: "тест",
+  // })
+  //   .then((result) => {
+  //     Materials.create({
+  //       duration: "тест2",
+  //       date: "тест2",
+  //       type: "news2",
+  //       title: "тест2",
+  //       content: "тест2",
+  //     })
+  //       .then((result) => {
+  //         res.send(result);
+  //         Materials.findByPk(result.dataValues.id_materials).then((ress) => {
+  //           console.log(detect(ress.dataValues.title));
+  //         });
+  //         console.log("RESULTAT: ", result);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   })
+  //   .catch((err) => console.log(err));
 });
 
 // Получение списка новостных постов
@@ -177,7 +333,7 @@ app.put("/api/posts/:id", (req, res) => {
   console.log(req.body);
   try {
     connection.query("START TRANSACTION", () => {
-      console.log("НАЧАЛАСЬ ТРАНЗАКЦИЯ");
+      console.log("НАЧАЛАСЬ ТРАНЗАКЦИЯ PUT");
       console.log(
         req.body.duration,
         req.body.content.time,
@@ -203,12 +359,11 @@ app.put("/api/posts/:id", (req, res) => {
           console.log(results);
           connection.query("COMMIT", () => {
             res.json(results);
-            console.log("ЗАВЕРШЕНА ТРАНЗАКЦИЯ");
-          })
+            console.log("ЗАВЕРШЕНА ТРАНЗАКЦИЯ PUT");
+          });
         }
       );
-    })
-
+    });
   } catch (error) {
     console.log(error);
   }
@@ -216,20 +371,26 @@ app.put("/api/posts/:id", (req, res) => {
 
 app.delete("/api/posts/:id", (req, res) => {
   try {
-    connection.query(
-      "DELETE FROM `materials` WHERE id_materials = ?",
-      [req.params.id],
-      function (error, results, fields) {
-        if (error) {
-          res.status(500).send("Ошибка сервера при получении названия курса");
-          console.log(error);
-        } else {
-          res.send({
-            message: `Удалена запись с ID ${req.params.id}`,
+    connection.query("START TRANSACTION", () => {
+      console.log("НАЧАЛАСЬ ТРАНЗАКЦИЯ DELETE");
+      connection.query(
+        "DELETE FROM `materials` WHERE id_materials = ?",
+        [req.params.id],
+        function (error, results, fields) {
+          if (error) {
+            res.status(500).send("Ошибка сервера при получении названия курса");
+            console.log(error);
+          } else {
+            res.send({
+              message: `Удалена запись с ID ${req.params.id}`,
+            });
+          }
+          connection.query("COMMIT", () => {
+            console.log("ЗАВЕРШЕНА ТРАНЗАКЦИЯ DELETE");
           });
         }
-      }
-    );
+      );
+    });
   } catch (err) {
     console.log(err);
   }
@@ -430,11 +591,7 @@ app.post("/api/comments", (req, res) => {
   console.log(req.body);
   connection.query(
     "INSERT INTO `comments` (`id_comment`, `name_commentator`, `date_comment`, `text_comment`, `id_materials`) VALUES (NULL, ?, CURRENT_TIMESTAMP, ?, ?);",
-    [
-      req.body.name_commentator,
-      req.body.text_comment,
-      req.body.id_materials,
-    ],
+    [req.body.name_commentator, req.body.text_comment, req.body.id_materials],
     function (err, results) {
       console.log("БД результаты:");
       if (err) {
@@ -485,15 +642,14 @@ app.delete("/api/comments", function (req, res) {
     }
   );
 });
-app.post('/api/token_validate', (req, res) => {
-
+app.post("/api/token_validate", (req, res) => {
   let token = req.body.recaptcha;
   const secretkey = "6Lcd5PMUAAAAADuWGBBEwGhouabjY-SSWRLB2kUv"; //the secret key from your google admin console;
 
   //token validation url is URL: https://www.google.com/recaptcha/api/siteverify
   // METHOD used is: POST
 
-  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}&remoteip=${req.connection.remoteAddress}`
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}&remoteip=${req.connection.remoteAddress}`;
 
   //note that remoteip is the users ip address and it is optional
   // in node req.connection.remoteAddress gives the users ip address
@@ -501,8 +657,8 @@ app.post('/api/token_validate', (req, res) => {
   if (token === null || token === undefined) {
     res.status(201).send({
       success: false,
-      message: "Token is empty or invalid"
-    })
+      message: "Token is empty or invalid",
+    });
     return console.log("token empty");
   }
 
@@ -514,19 +670,17 @@ app.post('/api/token_validate', (req, res) => {
     if (body.success !== undefined && !data.success) {
       res.send({
         success: false,
-        'message': "recaptcha failed"
+        message: "recaptcha failed",
       });
-      return console.log("failed")
+      return console.log("failed");
     }
 
     //if passed response success message to client
     res.send({
-      "success": true,
-      'message': "recaptcha passed"
+      success: true,
+      message: "recaptcha passed",
     });
-
-  })
-
+  });
 });
 
 app.listen(3001, () => {
