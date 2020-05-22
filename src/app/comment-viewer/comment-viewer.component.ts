@@ -13,33 +13,30 @@ import {Subscription} from "rxjs";
 export class CommentViewerComponent implements OnInit {
   myFirstReactiveForm: FormGroup
   @Input() comment
-  comments: Comment[] = [];
+  comments = [];
   private subscription: Subscription;
   name: any;
+  id: number;
   constructor(private api: BaseApiService, private fb: FormBuilder, private activateRoute: ActivatedRoute) {
     this.subscription = activateRoute.params.subscribe(params => {
-      this.id = params.id;
+      this.id = +params.id;
     });
   }
-  id: number;
+
   async ngOnInit() {
     this.initForm();
     let commentsarr = await this.getComments();
-    let id_new = await this. getUrlVar();
     if (Array.isArray(commentsarr)) {
       commentsarr.forEach((element) => {
-        let el: Comment = {
+        let el = {
           id_comment: element.id_comment,
           name_commentator: element.name_commentator,
           text_comment: element.text_comment,
           date_comment: element.date_comment,
           id_materials: element.id_materials,
         };
-        if (id_new == element.id_materials){
-          
           console.log(element.date_comment);
           this.comments.push(el);
-        }
       });
     }
   }
@@ -58,7 +55,10 @@ export class CommentViewerComponent implements OnInit {
     };
     try {
       let comm = await this.api.post(
-        JSON.stringify(comment_add), "/comments");
+      JSON.stringify(comment_add), "/comments");
+      console.log("ksdsndk ", comment_add);
+      this.comments.push(comment_add);
+      console.log(this.comments);
     }
     catch (error) {
       console.log(error);
@@ -67,7 +67,7 @@ export class CommentViewerComponent implements OnInit {
     async getComments() {
       let response;
        try {
-         response = await this.api.get("/comments");
+         response = await this.api.get(`/comments/${this.id}`);
          console.log("RESPONSE");
          console.log(response);
        } catch (error) {
@@ -76,14 +76,6 @@ export class CommentViewerComponent implements OnInit {
        return response;
      }
 
-      getUrlVar() {
-      var path = window.location.pathname; // получаем параметры из урла
-      var arrayVar = []; // массив для хранения переменных
-      arrayVar = path.split('/'); // разбираем урл на параметры
-      let i = arrayVar[2];
-      return i; // возвращаем результат
-
-  }
 
 
 }

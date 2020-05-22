@@ -566,9 +566,11 @@ app.get("/api/courses", function (req, res) {
 });
 
 //comments
-app.get("/api/comments", function (req, res) {
+app.get("/api/comments/:id", function (req, res) {
   try {
-    connection.query("SELECT * FROM `comments`", function (
+    connection.query("SELECT * FROM `comments` WHERE id_materials=?",
+    [req.params.id],
+     function (
       error,
       results,
       fields
@@ -578,6 +580,7 @@ app.get("/api/comments", function (req, res) {
         console.log(error);
       }
       res.json(results);
+      console.log(results)
     });
   } catch (error) {
     console.log(error);
