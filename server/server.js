@@ -44,7 +44,7 @@ app.use(function (req, res, next) {
 
 /**************** ТЕСТОВЫЙ ФРАГМЕНТ ********************** */
 const Sequelize = require("sequelize");
-const detect = require("charset-detector");
+
 // Подключение к Sequelize
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   dialect: "mysql",
@@ -54,7 +54,6 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
       charset: "UTF8",
       collate: "utf8_unicode_ci",
     },
-    // collate: "utf8_unicode_ci",
     timestamps: true,
   },
   pool: {
@@ -65,18 +64,10 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   },
   isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
 });
-// const sequelize = new Sequelize(dbConfig.DB, "root", "", {
-//   dialect: "mysql",
-//   host: "localhost",
-//   define: {
-//     charset: "utf8mb4",
-//     collate: "utf8mb4_general_ci",
-//     timestamps: true,
-//   },
-// });
-// Модель таблицы "materials"
+
 const Materials = sequelize.define(
-  "materials", {
+  "materials",
+  {
     id_materials: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -103,7 +94,8 @@ const Materials = sequelize.define(
       type: Sequelize.TEXT,
       allowNull: false,
     },
-  }, {
+  },
+  {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
@@ -113,22 +105,18 @@ sequelize
   .sync()
   .then((result) => {
     console.log("[Sequelize] Всё ОК");
-
-    // console.log(result);
   })
   .catch((err) => console.log(err));
 sequelize.afterConnect((connect) => {
-  // return Promise.fromCallback((callback) =>
-  sequelize.query('SHOW VARIABLES LIKE "character%"').then(result => {
-    console.log(result);
-  });
+  // sequelize.query('SHOW VARIABLES LIKE "character%"').then((result) => {
+  //   console.log(result);
+  // });
   connect.query("SET NAMES UTF8", (res) => {
     console.log("Set names", res);
   });
-  sequelize.query('SHOW VARIABLES LIKE "character%"').then(result => {
-    console.log('AFTER', result);
-  });
-  // );
+  // sequelize.query('SHOW VARIABLES LIKE "character%"').then((result) => {
+  //   console.log("AFTER", result);
+  // });
 });
 /**************** ТЕСТОВЫЙ ФРАГМЕНТ ********************** */
 
@@ -234,23 +222,6 @@ app.post("/api/posts", async (req, res) => {
       title: req.body.title,
       content: JSON.stringify(req.body.content.blocks),
     });
-
-    // for (let index = 0; index < 3; index++) {
-    //   result = await Materials.create({
-    //     duration: "тест" + (index + 1),
-    //     date: "тест",
-    //     type: "news",
-    //     title: "тест",
-    //     content: "тест",
-    //   });
-    // }
-    // result = await Materials.create({
-    //   duration: "тест",
-    //   date: "тест",
-    //   type: "news",
-    //   title: "тест",
-    //   content: "тест",
-    // });
   } catch (error) {
     console.log(error);
   }
@@ -286,110 +257,154 @@ app.post("/api/posts", async (req, res) => {
 });
 
 // Получение списка новостных постов
-app.get("/api/posts", (req, res) => {
+app.get("/api/posts", async (req, res) => {
   console.log("AUTHORIZATION: ", req.headers.authorization);
+  let result;
   try {
-    connection.query("SELECT * FROM `materials`", function (
-      error,
-      results,
-      fields
-    ) {
-      if (error) {
-        res.status(500).send("Ошибка сервера при получении постов");
-        console.log(error);
-      }
-      res.json(results);
-    });
+    // connection.query("SELECT * FROM `materials`", function (
+    //   error,
+    //   results,
+    //   fields
+    // ) {
+    //   if (error) {
+    //     res.status(500).send("Ошибка сервера при получении постов");
+    //     console.log(error);
+    //   }
+    //   res.json(results);
+    // });
+    result = await Materials.findAll();
+    if (await !result) {
+      res.status(500).send({
+        status: 500,
+        message: "Ошибка получения постов",
+      });
+    } else {
+      res.send(result);
+    }
+    console.log(result);
   } catch (error) {
     console.log(error);
   }
 });
 
 // Получение конкретного поста
-app.get("/api/posts/:id", (req, res) => {
+app.get("/api/posts/:id", async (req, res) => {
   console.log(req.params.id);
+  let result;
   try {
-    connection.query(
-      "SELECT * FROM `materials` WHERE id_materials = ?",
-      [req.params.id],
-      function (error, results, fields) {
-        if (error) {
-          res.status(500).send("Ошибка сервера при получении постов");
-          console.log(error);
-        }
-        console.log("РЕЗУЛЬТАТЫ");
-        console.log(results);
-        res.json(results);
-      }
-    );
+    // connection.query(
+    //   "SELECT * FROM `materials` WHERE id_materials = ?",
+    //   [req.params.id],
+    //   function (error, results, fields) {
+    //     if (error) {
+    //       res.status(500).send("Ошибка сервера при получении постов");
+    //       console.log(error);
+    //     }
+    //     console.log("РЕЗУЛЬТАТЫ");
+    //     console.log(results);
+    //     res.json(results);
+    //   }
+    // );
+    result = await Materials.findAll({
+      where: { id_materials: req.params.id },
+    });
+    if (!result) {
+      res.status(404).send({
+        status: 404,
+        message: "Пост не найден",
+      });
+    } else {
+      res.send(result);
+    }
   } catch (error) {
     console.log(error);
   }
 });
 
 // Редактирование конкретного поста
-app.put("/api/posts/:id", (req, res) => {
+app.put("/api/posts/:id", async (req, res) => {
   console.log("PUT /");
   console.log(req.body);
+  let result;
   try {
-    connection.query("START TRANSACTION", () => {
-      console.log("НАЧАЛАСЬ ТРАНЗАКЦИЯ PUT");
-      console.log(
-        req.body.duration,
-        req.body.content.time,
-        req.body.title,
-        JSON.stringify(req.body.content.blocks),
-        req.params.id
-      );
-      connection.query(
-        "UPDATE `materials` SET `duration` = ?, `date` = ?, `title` = ?, `content` = ? WHERE id_materials = ?",
-        [
-          req.body.duration,
-          req.body.content.time,
-          req.body.title,
-          JSON.stringify(req.body.content.blocks),
-          req.params.id,
-        ],
-        function (error, results, fields) {
-          if (error) {
-            res.status(500).send("Ошибка сервера при получении названия курса");
-            console.log(error);
-          }
-          console.log("РЕЗУЛЬТАТЫ");
-          console.log(results);
-          connection.query("COMMIT", () => {
-            res.json(results);
-            console.log("ЗАВЕРШЕНА ТРАНЗАКЦИЯ PUT");
-          });
-        }
-      );
-    });
+    // connection.query("START TRANSACTION", () => {
+    //   console.log("НАЧАЛАСЬ ТРАНЗАКЦИЯ PUT");
+    //   console.log(
+    //     req.body.duration,
+    //     req.body.content.time,
+    //     req.body.title,
+    //     JSON.stringify(req.body.content.blocks),
+    //     req.params.id
+    //   );
+    //   connection.query(
+    //     "UPDATE `materials` SET `duration` = ?, `date` = ?, `title` = ?, `content` = ? WHERE id_materials = ?",
+    //     [
+    //       req.body.duration,
+    //       req.body.content.time,
+    //       req.body.title,
+    //       JSON.stringify(req.body.content.blocks),
+    //       req.params.id,
+    //     ],
+    //     function (error, results, fields) {
+    //       if (error) {
+    //         res.status(500).send("Ошибка сервера при получении названия курса");
+    //         console.log(error);
+    //       }
+    //       console.log("РЕЗУЛЬТАТЫ");
+    //       console.log(results);
+    //       connection.query("COMMIT", () => {
+    //         res.json(results);
+    //         console.log("ЗАВЕРШЕНА ТРАНЗАКЦИЯ PUT");
+    //       });
+    //     }
+    //   );
+    // });
+    result = await Materials.update(
+      {
+        duration: req.body.duration,
+        date: req.body.content.time,
+        title: req.body.title,
+        content: JSON.stringify(req.body.content.blocks),
+      },
+      {
+        where: {
+          id_materials: req.params.id,
+        },
+      }
+    );
+    res.send(result);
   } catch (error) {
     console.log(error);
   }
 });
 
-app.delete("/api/posts/:id", (req, res) => {
+app.delete("/api/posts/:id", async (req, res) => {
+  let result;
   try {
-    connection.query("START TRANSACTION", () => {
-      console.log("НАЧАЛАСЬ ТРАНЗАКЦИЯ DELETE");
-      connection.query(
-        "DELETE FROM `materials` WHERE id_materials = ?",
-        [req.params.id],
-        function (error, results, fields) {
-          if (error) {
-            res.status(500).send("Ошибка сервера при получении названия курса");
-            console.log(error);
-          } else {
-            res.send({
-              message: `Удалена запись с ID ${req.params.id}`,
-            });
-          }
-          connection.query("COMMIT", () => {
-            console.log("ЗАВЕРШЕНА ТРАНЗАКЦИЯ DELETE");
-          });
-        }
-      );
+    // connection.query("START TRANSACTION", () => {
+    //   console.log("НАЧАЛАСЬ ТРАНЗАКЦИЯ DELETE");
+    //   connection.query(
+    //     "DELETE FROM `materials` WHERE id_materials = ?",
+    //     [req.params.id],
+    //     function (error, results, fields) {
+    //       if (error) {
+    //         res.status(500).send("Ошибка сервера при получении названия курса");
+    //         console.log(error);
+    //       } else {
+    //         res.send({
+    //           message: `Удалена запись с ID ${req.params.id}`,
+    //         });
+    //       }
+    //       connection.query("COMMIT", () => {
+    //         console.log("ЗАВЕРШЕНА ТРАНЗАКЦИЯ DELETE");
+    //       });
+    //     }
+    //   );
+    // });
+    result = await Materials.destroy({
+      where: {
+        id_materials: req.params.id,
+      },
     });
   } catch (err) {
     console.log(err);
@@ -461,14 +476,16 @@ app.post("/api/users", (req, res) => {
                         });
                       } else {
                         console.log(results[0]);
-                        let token = jwt.sign({
+                        let token = jwt.sign(
+                          {
                             id_users: results[0].id_users,
                             firstname: results[0].firstname,
                             surname: results[0].surname,
                             organization: results[0].organization,
                             role: results[0].role,
                           },
-                          CONFIG.SECRET, {
+                          CONFIG.SECRET,
+                          {
                             expiresIn: 86400, // токен на 24 часа
                           }
                         );
@@ -518,14 +535,16 @@ app.post("/api/login", (req, res) => {
           console.log(results[0]);
           let bool = bcrypt.compareSync(req.body.password, results[0].password);
           if (bool) {
-            let token = jwt.sign({
+            let token = jwt.sign(
+              {
                 id_users: results[0].id_users,
                 firstname: results[0].firstname,
                 surname: results[0].surname,
                 organization: results[0].organization,
                 role: results[0].role,
               },
-              CONFIG.SECRET, {
+              CONFIG.SECRET,
+              {
                 expiresIn: 86400, // токен на 24 часа
               }
             );
@@ -568,20 +587,18 @@ app.get("/api/courses", function (req, res) {
 //comments
 app.get("/api/comments/:id", function (req, res) {
   try {
-    connection.query("SELECT * FROM `comments` WHERE id_materials=?",
-    [req.params.id],
-     function (
-      error,
-      results,
-      fields
-    ) {
-      if (error) {
-        res.status(500).send("Ошибка сервера при получении комментариев");
-        console.log(error);
+    connection.query(
+      "SELECT * FROM `comments` WHERE id_materials=?",
+      [req.params.id],
+      function (error, results, fields) {
+        if (error) {
+          res.status(500).send("Ошибка сервера при получении комментариев");
+          console.log(error);
+        }
+        res.json(results);
+        console.log(results);
       }
-      res.json(results);
-      console.log(results)
-    });
+    );
   } catch (error) {
     console.log(error);
   }
