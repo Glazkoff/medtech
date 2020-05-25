@@ -100,6 +100,46 @@ const Materials = sequelize.define(
     collate: "utf8_unicode_ci",
   }
 );
+
+const Users = sequelize.define(
+  "users",
+  {
+    id_users: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
+    },
+    login: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+    },
+    firstname: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    surname: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    organization: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    role: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    charset: "UTF8",
+    collate: "utf8_unicode_ci",
+  }
+);
 // Синхронизация Sequelize с удалённой БД
 sequelize
   .sync()
@@ -222,10 +262,14 @@ app.post("/api/posts", async (req, res) => {
       title: req.body.title,
       content: JSON.stringify(req.body.content.blocks),
     });
+    res.send(result);
   } catch (error) {
     console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера",
+    });
   }
-  res.send(result);
   // sequelize.query('SET NAMES "utf8"');
   // sequelize.query('SET CHARACTER SET "utf8"');
   // sequelize.query('SET SESSION collation_connection = "utf8_unicode_ci"');
@@ -284,6 +328,10 @@ app.get("/api/posts", async (req, res) => {
     console.log(result);
   } catch (error) {
     console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера",
+    });
   }
 });
 
@@ -318,6 +366,10 @@ app.get("/api/posts/:id", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера",
+    });
   }
 });
 
@@ -375,6 +427,10 @@ app.put("/api/posts/:id", async (req, res) => {
     res.send(result);
   } catch (error) {
     console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера",
+    });
   }
 });
 
@@ -407,105 +463,136 @@ app.delete("/api/posts/:id", async (req, res) => {
       },
     });
   } catch (err) {
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера",
+    });
     console.log(err);
   }
 });
 /******************************************************************** */
 
 // Регистрация пользователя
-app.post("/api/users", (req, res) => {
+app.post("/api/users", async (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл POST запрос для пользователей:");
   console.log(req.body);
-  connection.query(
-    `SELECT * FROM users WHERE login='${req.body.login}'`,
-    function (error, results) {
-      if (error) {
-        res
-          .status(500)
-          .send(
-            "Ошибка сервера при получении пользователей с таким же логином"
-          );
-        console.log(error);
-      }
-      console.log("Результаты проверки существования логина:");
-      console.log(results);
-      if (results[0] === undefined) {
-        console.log(results[0]);
-        let hashPassword = bcrypt.hashSync(req.body.password, salt);
-        connection.query(
-          "INSERT INTO `users` (`id_users`, `login`, `password`, `firstname`, `surname`, `organization`, `role`) VALUES (NULL, ?, ?, ?, ?, ?, ?)",
-          [
-            req.body.login,
-            hashPassword,
-            req.body.name,
-            req.body.surname,
-            req.body.organization,
-            req.body.role,
-          ],
-          function (err, r) {
-            console.log("БД результаты:");
-            if (err) {
-              console.log("Ошибка записи в БД!");
-              console.warn(err);
-            } else {
-              console.log(r);
-              try {
-                connection.query(
-                  `SELECT * FROM users WHERE login = ? `,
-                  [req.body.login],
-                  function (err, results) {
-                    if (err) {
-                      res
-                        .status(500)
-                        .send(
-                          "Ошибка сервера при получении пользователя по логину"
-                        );
-                      console.log(err);
-                    }
-                    console.log(
-                      "Результаты проверки существования пользователя:"
-                    );
-                    if (results !== undefined) {
-                      console.log(results[0]);
-                      if (results[0] === undefined) {
-                        res.send({
-                          error: "401",
-                          message: "Неправильный логин или пароль",
-                          token: null,
-                        });
-                      } else {
-                        console.log(results[0]);
-                        let token = jwt.sign(
-                          {
-                            id_users: results[0].id_users,
-                            firstname: results[0].firstname,
-                            surname: results[0].surname,
-                            organization: results[0].organization,
-                            role: results[0].role,
-                          },
-                          CONFIG.SECRET,
-                          {
-                            expiresIn: 86400, // токен на 24 часа
-                          }
-                        );
-                        res.send({
-                          token,
-                        });
-                      }
-                    }
-                  }
-                );
-              } catch (error) {}
-              // res.json("not exist");
-            }
-          }
-        );
-      } else {
-        res.json("exist");
-      }
+  let existUser;
+  let result;
+  let user;
+  try {
+    existUser = await Users.findOne({ where: { login: req.body.login } });
+    if (await !existUser) {
+      let hashPassword = bcrypt.hashSync(req.body.password, salt);
+      result = await Users.create({
+        login: req.body.login,
+        password: hashPassword,
+        firstname: req.body.name,
+        surname: req.body.surname,
+        organization: req.body.organization,
+        role: req.body.role,
+      });
+      user = await Users.findOne({
+        where: {
+          login: req.body.login,
+        },
+      });
     }
-  );
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера",
+    });
+  }
+  // connection.query(
+  //   `SELECT * FROM users WHERE login='${req.body.login}'`,
+  //   function (error, results) {
+  //     if (error) {
+  //       res
+  //         .status(500)
+  //         .send(
+  //           "Ошибка сервера при получении пользователей с таким же логином"
+  //         );
+  //       console.log(error);
+  //     }
+  //     console.log("Результаты проверки существования логина:");
+  //     console.log(results);
+  //     if (results[0] === undefined) {
+  //       console.log(results[0]);
+  //       let hashPassword = bcrypt.hashSync(req.body.password, salt);
+  //       connection.query(
+  //         "INSERT INTO `users` (`id_users`, `login`, `password`, `firstname`, `surname`, `organization`, `role`) VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+  //         [
+  //           req.body.login,
+  //           hashPassword,
+  //           req.body.name,
+  //           req.body.surname,
+  //           req.body.organization,
+  //           req.body.role,
+  //         ],
+  //         function (err, r) {
+  //           console.log("БД результаты:");
+  //           if (err) {
+  //             console.log("Ошибка записи в БД!");
+  //             console.warn(err);
+  //           } else {
+  //             console.log(r);
+  //             try {
+  //               connection.query(
+  //                 `SELECT * FROM users WHERE login = ? `,
+  //                 [req.body.login],
+  //                 function (err, results) {
+  //                   if (err) {
+  //                     res
+  //                       .status(500)
+  //                       .send(
+  //                         "Ошибка сервера при получении пользователя по логину"
+  //                       );
+  //                     console.log(err);
+  //                   }
+  //                   console.log(
+  //                     "Результаты проверки существования пользователя:"
+  //                   );
+  //                   if (results !== undefined) {
+  //                     console.log(results[0]);
+  //                     if (results[0] === undefined) {
+  //                       res.send({
+  //                         error: "401",
+  //                         message: "Неправильный логин или пароль",
+  //                         token: null,
+  //                       });
+  //                     } else {
+  //                       console.log(results[0]);
+  //                       let token = jwt.sign(
+  //                         {
+  //                           id_users: results[0].id_users,
+  //                           firstname: results[0].firstname,
+  //                           surname: results[0].surname,
+  //                           organization: results[0].organization,
+  //                           role: results[0].role,
+  //                         },
+  //                         CONFIG.SECRET,
+  //                         {
+  //                           expiresIn: 86400, // токен на 24 часа
+  //                         }
+  //                       );
+  //                       res.send({
+  //                         token,
+  //                       });
+  //                     }
+  //                   }
+  //                 }
+  //               );
+  //             } catch (error) {}
+  //             // res.json("not exist");
+  //           }
+  //         }
+  //       );
+  //     } else {
+  //       res.json("exist");
+  //     }
+  //   }
+  // );
 });
 
 // Попытка входа пользователя
