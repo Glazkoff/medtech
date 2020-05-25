@@ -1,102 +1,140 @@
 .flex{
-    height: 75vh;  
-    display: flex;
-    -ms-flex-align: center;
+    display: flex;  
     align-items: center;
-    /* padding-top: 40px; */
-    padding-bottom: 40px;
-     
+    padding-top: 44px;
+    max-width: 555px;
+    margin: 0 auto;
+    padding-bottom: 44px;    
+    flex-direction: column;
 }
-.form-login {
-    display: block;
+.wrap-flex{
+    display: flex;
     width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: auto;
-    box-sizing: border-box;
-    text-align: center;
-}
-h1{
-    margin-top: 0;
-    font-weight: 400;
-    font-size: 1.75rem;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-}
-.form-control{
-    margin: 0;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-    display: block;
-    width: 100%;
-    line-height: 1.5;
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;    
+    margin-bottom: 62px;
 }
 
+.wrap-flex img{
+    width: 176px;
+    height: 129px;
+}
+.wrap-flex h1{
+    margin: 0;
+    margin-left: 27px;
+    margin-top: 21px;
+    font-family: PT Astra Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 38px;
+    color: #000000;
+}
+
+.wrap-grid{
+    display: grid;
+    width: 100%;
+    grid-template-rows: 56px 40px 40px 40px 40px 40px 40px 42px;
+    grid-template-columns: 176px 352px;
+    grid-row-gap: 8px;
+    grid-column-gap: 27px;
+}
+
+.wrap-flex2{
+    display: flex;
+    margin-bottom: 18px;
+}
+
+.wrap-flex2 h2 {
+    margin: 0;
+    font-family: PT Root UI Web;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 38px;
+    color: #000000;
+    cursor: pointer;
+}
+.wrap-flex2 h2:first-child{
+    margin-right: 59px;
+}
+.wrap-flex2 h2.active{
+    color: #747474; 
+}
+.label{
+    font-family: PT Root UI Web;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: right;
+    color: #944545;
+}
+.form-control{
+    width: 256px;
+    padding: 12px 8px;
+    display: block;
+    background: #EEEEEE;
+    border: 1px solid #94624D;
+    box-sizing: border-box;
+    box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    font-family: PT Astra Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: #000000;
+}
+
+.form-control:focus{
+    outline: none;
+}
 .btn{
+    margin-top: 2px;
+    height: 40px;
     cursor: pointer;
     display: block;
-    width: 100%;
-    padding: .5rem 1rem;
-    font-size: 1.25rem;
-    line-height: 1.5;
-    border-radius: .3rem;
-    color: #fff;
-    background-color: #a2a1a1;
-    border-color: #a2a1a1;
-    font-weight: 400;
-    text-align: center;
-    border: 1px solid transparent;
-    -webkit-border-radius: .3rem;
-    -moz-border-radius: .3rem;
-    -ms-border-radius: .3rem;
-    -o-border-radius: .3rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    width: 256px;
+    background: #94624D;
+    border-radius: 2px;
+    font-family: PT Root UI Web;
+    font-style: normal;
+    font-weight: 700;
+    border: none;
+    font-size: 18px;
+    line-height: 16px;
+    color: #EDEEDF;
 }
-.btn:hover{
-    background-color: #909090;
-    border-color: #909090;
+.insideField img{
+    width: 16px;
+    height: 16px;
 }
-button:disabled {
-    color: #bfbebe !important;
-    background-color: #a2a1a1 !important;
-    border-color: #a2a1a1 !important;
-  }
-.green{
-    color: #00af4c;
-    font-weight: bold;
+.input-form{
+    position: relative;
+}
+.insideField{
+    position: absolute;
+    left: 14.25rem;
+    top: .65rem;
+}
+
+.btn:focus{
+    outline: none;
 }
 
 .red{
-    border-color: red;
-}
-
-.input-form{
-    padding-bottom: 1.5rem;
-    position: relative;
+    border-color: #944545;
 }
 
 .input-form small{
-    color: red;
+    color: #944545;
     text-align: left;
     display: block;
     position: absolute;
     width: 100%;
+    top: .65rem;
+    left: .55rem;
 }
-.icon{
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-}
-.insideField{
-    position: absolute;
-    margin-top: -55px;;
-    margin-left: 120px;
-}
+

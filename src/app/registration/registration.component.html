@@ -1,47 +1,54 @@
 <div class="flex">
-    <form class="form-login" [formGroup]="myForm">
-        <h1>Регистрация</h1>
-        <div class="input-form">
-            <input type="text" (focus)="inputName=true" [ngClass]="{'red': !inputName}" formControlName="name" class="form-control" placeholder="Введите имя" required> 
-            <small *ngIf="(!inputName) && (!fieldRequired)" >Данное поле обязательное!</small>
-        </div>
-        <div class="input-form">
-            <input type="text" (focus)="inputSurname=true" [ngClass]="{'red': !inputSurname}" formControlName="surname" class="form-control" placeholder="Введите фамилию" required>
-            <small *ngIf="(!inputSurname) && (!fieldRequired)" >Данное поле обязательное!</small>
-        </div>
-        <div class="input-form">
-            <input type="text" (focus)="inputOrganization=true" [ngClass]="{'red': !inputOrganization}" formControlName="organization" class="form-control" placeholder="Введите организацию" required>
-            <small *ngIf="(!inputOrganization) && (!fieldRequired)" >Данное поле обязательное!</small>
-        </div>
-        <div class="input-form">
-            <input type="text" (focus)="inputRole=true" [ngClass]="{'red': !inputRole}" formControlName="role" class="form-control" placeholder="Введите вашу роль" required>
-            <small *ngIf="(!inputRole) && (!fieldRequired)" >Данное поле обязательное!</small>
-        </div>
-        <div class="input-form">
-            <input type="text" (focus)="inputLogin=true; loginExist = true;" [ngClass]="{'red': !inputLogin}" formControlName="login" class="form-control" placeholder="Введите логин" required>
-            <small *ngIf="!loginExist">Данный логин уже существует!</small>
-            <small *ngIf="(!inputLogin) && (!fieldRequired)" >Данное поле обязательное!</small>
-        </div>
-        <div class="input-form">
-            <input [type]="type" (focus)="inputPassword=true" [ngClass]="{'red': !inputPassword}" formControlName="password"  class="form-control" placeholder="Введите пароль" required>
-            <small *ngIf="(!inputPassword) && (!fieldRequired)" >Данное поле обязательное!</small>
+    <div class="wrap-flex">
+        <img src="/assets/midlogo.png" alt="Логотип" >
+        <h1>Войдите или зарегистрируйтесь, чтобы начать</h1>
+    </div>
+
+    <form [formGroup]="myForm" class="wrap-grid"> 
+        <div></div>
+        <div class="wrap-flex2"> 
+            <h2 class="active">Вход</h2>
+            <h2>Регистрация</h2>
         </div> 
-        <div class="icon insideField" (click)="onTogglePassword()">
-            <div *ngIf="type=='password'; else elseblock">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 516">
-                    <path fill="#a2a1a1" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z" class=""></path>
-                </svg>
-            </div>
-        <ng-template #elseblock>
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye-slash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 516">
-                    <path fill="#a2a1a1" d="M572.5,241.4C518.3,135.6,410.9,64,288,64S57.7,135.6,3.5,241.4c-4.6,9.2-4.6,20,0,29.2C57.7,376.4,165.1,448,288,448
-                        s230.3-71.6,284.5-177.4C577.2,261.4,577.2,250.6,572.5,241.4z M288,400c-79.5,0-144-64.5-144-144s64.5-144,144-144
-                        s144,64.5,144,144c0,79.5-64.4,144-143.9,144C288.1,400,288,400,288,400z"/>
-                    <path fill="#a2a1a1" d="M288,420c0.1,0,0.1,0,0.2,0c90.5,0,163.9-73.5,163.8-164c0-90.6-73.4-164-164-164s-164,73.4-164,164S197.4,420,288,420z"/>
-                </svg>
-            </ng-template>
+        <div class="label">Имя</div>
+        <div class="input-form" >
+            <input type="text" (click)="inputName=true; placeholderName='Введите имя'" [ngClass]="{'red': !inputName}" formControlName="name" class="form-control" [placeholder]="placeholderName" >
+            <small (click)="inputName=true; placeholderName='Введите имя'" *ngIf="(!inputName) && (!fieldRequired)" >Данное поле обязательное!</small>
         </div>
-        
-        <button class="btn" (click)="onRegistr()" >Зарегистрироваться</button>
+        <div class="label">Фамилия</div>
+        <div class="input-form">
+            <input (click)="inputSurname=true; placeholderSurname='Введите фамилию'" type="text"  [ngClass]="{'red': !inputSurname}" formControlName="surname" class="form-control" [placeholder]="placeholderSurname" required>
+            <small (click)="inputSurname=true; placeholderSurname='Введите фамилию'" *ngIf="(!inputSurname) && (!fieldRequired)" >Данное поле обязательное!</small>
+        </div>
+        <div class="label">Организация</div>
+        <div class="input-form">
+            <input (click)="inputOrganization=true; placeholderOrganization='Введите организацию'" type="text"  [ngClass]="{'red': !inputOrganization}" formControlName="organization" class="form-control" [placeholder]="placeholderOrganization">
+            <small (click)="inputOrganization=true; placeholderOrganization='Введите организацию'"  *ngIf="(!inputOrganization) && (!fieldRequired)" >Данное поле обязательное!</small>
+        </div>
+        <div class="label">Роль</div>
+        <div class="input-form">
+            <input (click)="inputRole=true; placeholderRole='Введите роль'" type="text"  [ngClass]="{'red': !inputRole}" formControlName="role" class="form-control" [placeholder]="placeholderRole">
+            <small (click)="inputRole=true; placeholderRole='Введите роль'"  *ngIf="(!inputRole) && (!fieldRequired)" >Данное поле обязательное!</small>
+        </div>
+        <div class="label">Логин</div>
+        <div class="input-form">
+            <input (click)="inputLogin=true; loginExist=true; placeholderLogin='Введите логин'" type="text"  [ngClass]="{'red': !inputLogin}" formControlName="login" class="form-control" [placeholder]="placeholderLogin" >
+            <small (click)="inputLogin=true; loginExist=true; placeholderLogin='Введите логин'" *ngIf="!loginExist">Данный логин уже существует!</small>
+            <small (click)="inputLogin=true; loginExist=true; placeholderLogin='Введите логин'" *ngIf="(!inputLogin) && (!fieldRequired)" >Данное поле обязательное!</small>
+        </div>
+        <div class="label">Пароль</div>
+        <div class="input-form">
+            <input (click)="inputPassword=true; placeholderPassword='Введите пароль'" [type]="type"  [ngClass]="{'red': !inputPassword}" formControlName="password"  class="form-control" [placeholder]="placeholderPassword">
+            <small (click)="inputPassword=true; placeholderPassword='Введите пароль'" *ngIf="(!inputPassword) && (!fieldRequired)" >Данное поле обязательное!</small>
+            <div class="icon insideField" (click)="onTogglePassword()">
+                <img *ngIf="type=='password'" src="/assets/eye.png" alt="Показать/спрятать пароль">
+                <img *ngIf="type=='text'" src="/assets/eye.png" alt="Показать/спрятать пароль">
+           </div>
+        </div>
+        <div></div>
+        <button class="btn" (click)="onRegistr()" >Регистрация</button>
     </form>
+
+    
+
 </div>

@@ -21,6 +21,13 @@ export class RegistrationComponent implements OnInit {
   inputRole = true;
   inputLogin = true;
   inputPassword = true;
+
+  placeholderName = "Введите имя";
+  placeholderSurname = "Введите фамилию";
+  placeholderOrganization = "Введите организацию";
+  placeholderRole = "Введите роль";
+  placeholderLogin = "Введите логин";
+  placeholderPassword = "Введите пароль";
   constructor(private api: BaseApiService, private router: Router) {}
 
   ngOnInit() {
@@ -47,26 +54,32 @@ export class RegistrationComponent implements OnInit {
       if (this.myForm.value.name == "") {
           this.fieldRequired = false;
           this.inputName = false;
+          this.placeholderName="";
         }
       if (this.myForm.value.surname == "") {
             this.fieldRequired = false;
             this.inputSurname = false;
+            this.placeholderSurname="";
         } 
       if (this.myForm.value.organization == "") {
             this.fieldRequired = false;
             this.inputOrganization= false;
+            this.placeholderOrganization="";
         }
       if (this.myForm.value.role == "") {
           this.fieldRequired = false;
           this.inputRole = false;
+          this.placeholderRole="";
         }
       if (this.myForm.value.login == "") {
           this.fieldRequired = false;
           this.inputLogin = false;
+          this.placeholderLogin="";
         }
       if (this.myForm.value.password == "") {
           this.fieldRequired = false;
           this.inputPassword = false;
+          this.placeholderPassword="";
         }
     } else {
       this.fieldRequired = true;
@@ -77,6 +90,7 @@ export class RegistrationComponent implements OnInit {
       this.inputRole = true;
       this.inputLogin = true;
       this.inputPassword = true;
+    
       console.log("it was a click, wow");
       let infoAboutNewUser;
       infoAboutNewUser = {
@@ -108,6 +122,7 @@ export class RegistrationComponent implements OnInit {
         } else {
           this.loginExist = false;
           this.inputLogin = false;
+          this.placeholderPassword="";
         }
         } 
     catch (error) {

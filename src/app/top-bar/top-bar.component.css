@@ -1,15 +1,4 @@
-@font-face {
-    font-family: "PT Root UI Web"; 
-    src: url("/assets/fonts/PT Root UI/PT Root UI_Regular/PT Root UI_Regular.ttf") format("truetype"); 
-    font-style: normal;
-    font-weight: normal;
-} 
-@font-face {
-    font-family: "PT Root UI Web"; 
-    src: url("/assets/fonts/PT Root UI/PT Root UI_Light/PT Root UI_Light.ttf") format("truetype"); 
-    font-style: normal;
-    font-weight: 300;
-} 
+
 header{
     display: flex;
     height: 3rem;
@@ -36,11 +25,15 @@ header{
     align-items: center;
 }
 .minlogo{
+    cursor: pointer;
     height: 2rem;
     display: inline-block;
     padding-top: .3125rem;
     padding-bottom: .3125rem;
     margin-right: 1.5rem;
+}
+.minlogo:focus{
+    outline: none;
 }
 .devider{
     width: 1px;
