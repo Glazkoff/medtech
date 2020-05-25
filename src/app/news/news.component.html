@@ -1,9 +1,20 @@
+<body>
+<div class="logo_news"><img  src="../../assets/logo_news.png" alt=""></div>
 <div class="block_news">
-  <h1>Новости</h1>
-  <div class="news">
-  <div class="new" *ngFor="let post of posts">
-    <h2>{{post.title}}</h2>
-    <p>{{post.duration}}</p>
-    <button class="btn" [routerLink]="['/new', post.id]">Подробнее</button>
-  </div></div>
+
+  <div class="content">
+  <div class="content__item" *ngFor="let post of posts">
+    <a [routerLink]="['/new', post.id]">
+      <img src="../../assets/example1.png" alt="">
+  <span id="post_type">{{post.type}}</span>
+    <span id="post_date">{{post.date| date:"dd.MM.yyyy"}}</span>
+      <br>
+      <span id="post_title">{{post.title}}</span>
+<br>
+      <span id="post_duration">{{post.duration}}</span>
+<!--      <div id="paragraph_content"+post.id>-->
+<!--      </div>-->
+    </a>
+    </div></div>
 </div>
+</body>
