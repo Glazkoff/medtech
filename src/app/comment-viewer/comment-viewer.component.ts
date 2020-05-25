@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BaseApiService } from '../services/base-api.service';
-import { Comment } from '../services/comment.model';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import { ReactiveFormsModule } from '@angular/forms';
 import {ActivatedRoute} from "@angular/router";
@@ -17,6 +16,7 @@ export class CommentViewerComponent implements OnInit {
   private subscription: Subscription;
   name: any;
   id: number;
+  moment = require('moment');
   constructor(private api: BaseApiService, private fb: FormBuilder, private activateRoute: ActivatedRoute) {
     this.subscription = activateRoute.params.subscribe(params => {
       this.id = +params.id;
@@ -35,7 +35,7 @@ export class CommentViewerComponent implements OnInit {
           date_comment: element.date_comment,
           id_materials: element.id_materials,
         };
-          console.log(element.date_comment);
+          this.moment.locale("ru");
           this.comments.push(el);
       });
     }
@@ -45,13 +45,13 @@ export class CommentViewerComponent implements OnInit {
       comment: ['']
     });
   }
+
   async onSave() {
     let comment_add;
     console.log();
     if (localStorage.getItem("userName") !== null) {
       this.name = localStorage.getItem("userName");
-    }
-    else this.name = "Аноним";
+  
     comment_add = {
       name_commentator: this.name,
       text_comment: this.myFirstReactiveForm.value.comment,
@@ -67,6 +67,7 @@ export class CommentViewerComponent implements OnInit {
     catch (error) {
       console.log(error);
     }
+  }
   }
     async getComments() {
       let response;
