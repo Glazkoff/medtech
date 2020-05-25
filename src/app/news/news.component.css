@@ -1,16 +1,125 @@
-.block_news{
-  max-width: 900px;
+@font-face {
+  font-family: "PT Root UI Web";
+  src: url("/assets/fonts/PT Root UI/PT Root UI_Regular/PT Root UI_Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "PT Root UI Web";
+  src: url("/assets/fonts/PT Root UI/PT Root UI_Light/PT Root UI_Light.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-family: "PT Astra Sans";
+  src: url("/assets/fonts/PT Astra Sans/PT Astra Sans_Bold/PT Astra Sans_Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+body{
+  background: #1D1D1D;
+  margin: 0;
+  padding: 0;
+}
+.logo_news img{
+  padding-top: 46px;
+  padding-bottom: 46px;
+
+
+}
+.logo_news{
+  max-width: 1216px;
   margin: 0 auto;
+  text-align: center;
 }
-.news{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
+.block_news{
+
+  max-width: 1216px;
+  margin: 0 auto;
+  background: #EDEEDF;
 }
-.new{
-  flex-basis: 25%;
-  box-shadow: 0 0 8px 0 #2c3e50;
-  padding: 16px;
-  margin-bottom: 16px;
+.content {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, 160px);
+  grid-template-rows: repeat(auto-fill, 80px);
+  justify-content: center;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  counter-reset: item 0;
+  padding-top: 56px;
+  padding-bottom: 56px;
+
+}
+.content__item {
+
+  padding: 15px;
+}
+.content__item img{
+  border-radius: 2px 2px 0px 0px;
+
+}
+.content__item:nth-child(5n+1) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.content__item:nth-child(5n+2) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.content__item:nth-child(5n+3) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.content__item:nth-child(5n+4) {
+  grid-column: span 4;
+  grid-row: auto;
+}
+.content__item:nth-child(5n+4) img{
+width: 704px;
+  height: 224px;
+}
+.content__item:nth-child(5n+5) {
+  grid-column: span 2;
+  grid-row: auto;
+}
+#post_type{
+  float: left;
+  font-family: PT Root UI;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  color: #94624D;
+}
+
+#post_date{
+  float: right;
+  font-family: PT Root UI Web;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: right;
+  color: #94624D;
+}
+#post_title{
+  font-family: PT Astra Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 24px;
+  color: #000000;
+}
+.content__item:hover{
+  border: #94624D 1px solid;
+}
+#post_duration{
+  font-family: PT Root UI Web;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #94624D;
 }

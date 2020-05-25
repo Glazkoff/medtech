@@ -25,6 +25,10 @@ export class NewsComponent implements OnInit {
         };
         this.posts.push(el);
       });
+     for (let i = 0; i <= postsarr.length; i++) {
+       console.log(postsarr.length);
+       this.jsonParse(JSON.parse(postsarr[i].content));
+     };
     }
   }
 
@@ -41,5 +45,19 @@ export class NewsComponent implements OnInit {
       console.log(error);
     }
     return response;
+  }
+  async jsonParse(cont) {
+    let html = '';
+    // for (let i = 0; i <= this.posts.length; i++) {
+      cont.forEach((content) => {
+      switch (content.type) {
+        case 'paragraph':
+          html += `<p>${content.data.text}</p>`;
+          break;
+      }
+    });
+    console.log('html: ', html);
+    // document.getElementById('paragraph_content' + this.posts[i].id).innerHTML = html;
+    // };
   }
 }
