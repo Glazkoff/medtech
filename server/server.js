@@ -351,7 +351,7 @@ app.get("/api/posts/:id", async (req, res) => {
     // );
     result = await Materials.findAll({
       where: {
-        id_materials: req.params.id
+        id_materials: req.params.id,
       },
     });
     if (!result) {
@@ -478,8 +478,8 @@ app.post("/api/users", async (req, res) => {
   try {
     existUser = await Users.findOne({
       where: {
-        login: req.body.login
-      }
+        login: req.body.login,
+      },
     });
     if (!existUser) {
       bcrypt.hash(req.body.password, salt, async (err, encrypted) => {
@@ -487,8 +487,8 @@ app.post("/api/users", async (req, res) => {
           console.log(err);
           res.status(500).send({
             status: 500,
-            message: "Ошибка криптографии пароля"
-          })
+            message: "Ошибка криптографии пароля",
+          });
         }
         result = await Users.create({
           login: req.body.login,
@@ -503,7 +503,7 @@ app.post("/api/users", async (req, res) => {
             login: req.body.login,
           },
         });
-        console.log('Созданный пользователь: ', user);
+        console.log("Созданный пользователь: ", user);
         let token = await jwt.sign({
             id_users: user.id_users,
             firstname: user.firstname,
@@ -518,7 +518,6 @@ app.post("/api/users", async (req, res) => {
         res.send({
           token,
         });
-
       });
     } else {
       // res.status(400).send({
@@ -625,57 +624,111 @@ app.post("/api/users", async (req, res) => {
 });
 
 // Попытка входа пользователя
-app.post("/api/login", (req, res) => {
+app.post("/api/login", async (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log("Пришёл POST запрос для входа:");
-  console.log(req.body);
-  connection.query(
-    `SELECT * FROM users WHERE (login="${req.body.login}")`,
-    function (err, results) {
-      if (err) {
-        res
-          .status(500)
-          .send("Ошибка сервера при получении пользователя по логину");
-        console.log(err);
-      }
-      console.log("Результаты проверки существования пользователя:");
-      if (results !== undefined) {
-        console.log(results[0]);
-        if (results[0] === undefined) {
-          res.send({
-            error: "401",
-            message: "Неправильный логин или пароль",
-            token: null,
-          });
-        } else {
-          console.log(results[0]);
-          let bool = bcrypt.compareSync(req.body.password, results[0].password);
-          if (bool) {
-            let token = jwt.sign({
-                id_users: results[0].id_users,
-                firstname: results[0].firstname,
-                surname: results[0].surname,
-                organization: results[0].organization,
-                role: results[0].role,
-              },
-              CONFIG.SECRET, {
-                expiresIn: 86400, // токен на 24 часа
-              }
-            );
-            res.send({
-              token,
-            });
-          } else {
-            res.send({
-              error: "401",
-              message: "Неправильный логин или пароль",
-              token: null,
-            });
+  try {
+    let existUser = await Users.findOne({
+      where: {
+        login: req.body.login,
+      },
+    });
+    if (!existUser) {
+      res.status(404).send({
+        status: 404,
+        message: "Неправильный логин или пароль",
+      });
+    } else {
+      let passwordCompare = await bcrypt.compare(
+        req.body.password,
+        existUser.password
+      );
+      if (!passwordCompare) {
+        res.status(404).send({
+          status: 404,
+          message: "Неправильный логин или пароль",
+        });
+      } else {
+        jwt.sign({
+            id_users: existUser.id_users,
+            firstname: existUser.firstname,
+            surname: existUser.surname,
+            organization: existUser.organization,
+            role: existUser.role,
+          },
+          CONFIG.SECRET, {
+            expiresIn: 86400, // токен на 24 часа
+          },
+          (err, token) => {
+            if (err) {
+              res.status(500).send({
+                status: 500,
+                message: "Ошибка сервера"
+              })
+            } else {
+              res.send({
+                token,
+              });
+            }
           }
-        }
+        );
       }
     }
-  );
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера",
+    });
+  }
+
+  // console.log("Пришёл POST запрос для входа:");
+  // console.log(req.body);
+  // connection.query(
+  //   `SELECT * FROM users WHERE (login="${req.body.login}")`,
+  //   function (err, results) {
+  //     if (err) {
+  //       res
+  //         .status(500)
+  //         .send("Ошибка сервера при получении пользователя по логину");
+  //       console.log(err);
+  //     }
+  //     console.log("Результаты проверки существования пользователя:");
+  //     if (results !== undefined) {
+  //       console.log(results[0]);
+  //       if (results[0] === undefined) {
+  //         res.send({
+  //           error: "401",
+  //           message: "Неправильный логин или пароль",
+  //           token: null,
+  //         });
+  //       } else {
+  //         console.log(results[0]);
+  //         let bool = bcrypt.compareSync(req.body.password, results[0].password);
+  //         if (bool) {
+  //           let token = jwt.sign({
+  //               id_users: results[0].id_users,
+  //               firstname: results[0].firstname,
+  //               surname: results[0].surname,
+  //               organization: results[0].organization,
+  //               role: results[0].role,
+  //             },
+  //             CONFIG.SECRET, {
+  //               expiresIn: 86400, // токен на 24 часа
+  //             }
+  //           );
+  //           res.send({
+  //             token,
+  //           });
+  //         } else {
+  //           res.send({
+  //             error: "401",
+  //             message: "Неправильный логин или пароль",
+  //             token: null,
+  //           });
+  //         }
+  //       }
+  //     }
+  //   }
+  // );
 });
 
 app.get("/api/courses", function (req, res) {
