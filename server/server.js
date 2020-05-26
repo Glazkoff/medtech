@@ -66,8 +66,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 });
 
 const Materials = sequelize.define(
-  "materials",
-  {
+  "materials", {
     id_materials: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -94,16 +93,14 @@ const Materials = sequelize.define(
       type: Sequelize.TEXT,
       allowNull: false,
     },
-  },
-  {
+  }, {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
 );
 
 const Users = sequelize.define(
-  "users",
-  {
+  "users", {
     id_users: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -134,8 +131,7 @@ const Users = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-  },
-  {
+  }, {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
@@ -354,7 +350,9 @@ app.get("/api/posts/:id", async (req, res) => {
     //   }
     // );
     result = await Materials.findAll({
-      where: { id_materials: req.params.id },
+      where: {
+        id_materials: req.params.id
+      },
     });
     if (!result) {
       res.status(404).send({
@@ -411,19 +409,16 @@ app.put("/api/posts/:id", async (req, res) => {
     //     }
     //   );
     // });
-    result = await Materials.update(
-      {
-        duration: req.body.duration,
-        date: req.body.content.time,
-        title: req.body.title,
-        content: JSON.stringify(req.body.content.blocks),
+    result = await Materials.update({
+      duration: req.body.duration,
+      date: req.body.content.time,
+      title: req.body.title,
+      content: JSON.stringify(req.body.content.blocks),
+    }, {
+      where: {
+        id_materials: req.params.id,
       },
-      {
-        where: {
-          id_materials: req.params.id,
-        },
-      }
-    );
+    });
     res.send(result);
   } catch (error) {
     console.log(error);
@@ -481,22 +476,56 @@ app.post("/api/users", async (req, res) => {
   let result;
   let user;
   try {
-    existUser = await Users.findOne({ where: { login: req.body.login } });
-    if (await !existUser) {
-      let hashPassword = bcrypt.hashSync(req.body.password, salt);
-      result = await Users.create({
-        login: req.body.login,
-        password: hashPassword,
-        firstname: req.body.name,
-        surname: req.body.surname,
-        organization: req.body.organization,
-        role: req.body.role,
-      });
-      user = await Users.findOne({
-        where: {
+    existUser = await Users.findOne({
+      where: {
+        login: req.body.login
+      }
+    });
+    if (!existUser) {
+      bcrypt.hash(req.body.password, salt, async (err, encrypted) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send({
+            status: 500,
+            message: "Ошибка криптографии пароля"
+          })
+        }
+        result = await Users.create({
           login: req.body.login,
-        },
+          password: encrypted,
+          firstname: req.body.name,
+          surname: req.body.surname,
+          organization: req.body.organization,
+          role: req.body.role,
+        });
+        user = await Users.findOne({
+          where: {
+            login: req.body.login,
+          },
+        });
+        console.log('Созданный пользователь: ', user);
+        let token = await jwt.sign({
+            id_users: user.id_users,
+            firstname: user.firstname,
+            surname: user.surname,
+            organization: user.organization,
+            role: user.role,
+          },
+          CONFIG.SECRET, {
+            expiresIn: 86400, // токен на 24 часа
+          }
+        );
+        res.send({
+          token,
+        });
+
       });
+    } else {
+      // res.status(400).send({
+      //   status: 400,
+      //   message: "Пользователь с таким логином существует!",
+      // });
+      res.json("exist");
     }
   } catch (error) {
     res.status(500).send({
@@ -622,16 +651,14 @@ app.post("/api/login", (req, res) => {
           console.log(results[0]);
           let bool = bcrypt.compareSync(req.body.password, results[0].password);
           if (bool) {
-            let token = jwt.sign(
-              {
+            let token = jwt.sign({
                 id_users: results[0].id_users,
                 firstname: results[0].firstname,
                 surname: results[0].surname,
                 organization: results[0].organization,
                 role: results[0].role,
               },
-              CONFIG.SECRET,
-              {
+              CONFIG.SECRET, {
                 expiresIn: 86400, // токен на 24 часа
               }
             );
