@@ -15,19 +15,14 @@ export class RegistrationComponent implements OnInit {
   values = "";
   fieldRequired = true;
   loginExist = true;
-  inputName = true;
-  inputSurname = true;
-  inputOrganization = true;
-  inputRole = true;
-  inputLogin = true;
-  inputPassword = true;
-
+  tryForLogin=""
   placeholderName = "Введите имя";
   placeholderSurname = "Введите фамилию";
   placeholderOrganization = "Введите организацию";
   placeholderRole = "Введите роль";
   placeholderLogin = "Введите логин";
   placeholderPassword = "Введите пароль";
+
   constructor(private api: BaseApiService, private router: Router) {}
 
   ngOnInit() {
@@ -38,8 +33,8 @@ export class RegistrationComponent implements OnInit {
       surname: new FormControl("", [
         Validators.required
       ]),
-      organization: new FormControl("", [Validators.required]),
-      role: new FormControl("", [Validators.required]),
+      organization: new FormControl("", []),
+      role: new FormControl("", []),
       login: new FormControl("", [
         Validators.required
       ]),
@@ -53,45 +48,25 @@ export class RegistrationComponent implements OnInit {
     if (this.myForm.invalid) {
       if (this.myForm.value.name == "") {
           this.fieldRequired = false;
-          this.inputName = false;
           this.placeholderName="";
         }
       if (this.myForm.value.surname == "") {
             this.fieldRequired = false;
-            this.inputSurname = false;
             this.placeholderSurname="";
         } 
-      if (this.myForm.value.organization == "") {
-            this.fieldRequired = false;
-            this.inputOrganization= false;
-            this.placeholderOrganization="";
-        }
-      if (this.myForm.value.role == "") {
-          this.fieldRequired = false;
-          this.inputRole = false;
-          this.placeholderRole="";
-        }
+     
       if (this.myForm.value.login == "") {
           this.fieldRequired = false;
-          this.inputLogin = false;
           this.placeholderLogin="";
         }
       if (this.myForm.value.password == "") {
           this.fieldRequired = false;
-          this.inputPassword = false;
           this.placeholderPassword="";
         }
     } else {
       this.fieldRequired = true;
       this.loginExist = true;
-      this.inputName = true;
-      this.inputSurname = true;
-      this.inputOrganization = true;
-      this.inputRole = true;
-      this.inputLogin = true;
-      this.inputPassword = true;
-    
-      console.log("it was a click, wow");
+      
       let infoAboutNewUser;
       infoAboutNewUser = {
         name: this.myForm.value.name,
@@ -102,15 +77,12 @@ export class RegistrationComponent implements OnInit {
         role: this.myForm.value.role,
       };
       this.type = "password";
-      console.log(infoAboutNewUser);
       try {
         let registartionRes = await this.api.post(
         JSON.stringify(infoAboutNewUser), "/users");
-        console.log(registartionRes);
         if (registartionRes["token"]) {
           try {
             let userData = jwt.read(registartionRes["token"]).claim;
-            console.log(userData);
             localStorage.setItem("token", registartionRes["token"]);
             localStorage.setItem("userName", userData.firstname);
             localStorage.setItem("userSurname", userData.surname);
@@ -120,9 +92,10 @@ export class RegistrationComponent implements OnInit {
           }
           this.router.navigate(["/news"]);
         } else {
+          console.log('jhkjghkjhjkhjkhkjhkjhhkjkhj');
+          this.tryForLogin = this.myForm.value.login;
+          this.myForm.value.login = "";
           this.loginExist = false;
-          this.inputLogin = false;
-          this.placeholderPassword="";
         }
         } 
     catch (error) {
@@ -134,6 +107,8 @@ export class RegistrationComponent implements OnInit {
 
   onTogglePassword() {
     this.type = this.type == "password" ? "text" : "password";
-    console.log(this.type);
   }
-}
+ viewOldLogin(){
+  this.myForm.value.login = this.loginExist == false ? this.tryForLogin : "";
+ }
+  }
