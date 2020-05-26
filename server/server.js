@@ -9,8 +9,12 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const CONFIG = require("./secret.config.js");
 const morgan = require("morgan");
+const compression = require("compression");
 
 const app = express();
+
+// Промежуточный обработчик для сжатия gzip
+app.use(compression());
 
 // Парсинг json
 app.use(bodyParser.json());
@@ -66,7 +70,8 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 });
 
 const Materials = sequelize.define(
-  "materials", {
+  "materials",
+  {
     id_materials: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -93,14 +98,16 @@ const Materials = sequelize.define(
       type: Sequelize.TEXT,
       allowNull: false,
     },
-  }, {
+  },
+  {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
 );
 
 const Users = sequelize.define(
-  "users", {
+  "users",
+  {
     id_users: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -131,7 +138,8 @@ const Users = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-  }, {
+  },
+  {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
@@ -409,16 +417,19 @@ app.put("/api/posts/:id", async (req, res) => {
     //     }
     //   );
     // });
-    result = await Materials.update({
-      duration: req.body.duration,
-      date: req.body.content.time,
-      title: req.body.title,
-      content: JSON.stringify(req.body.content.blocks),
-    }, {
-      where: {
-        id_materials: req.params.id,
+    result = await Materials.update(
+      {
+        duration: req.body.duration,
+        date: req.body.content.time,
+        title: req.body.title,
+        content: JSON.stringify(req.body.content.blocks),
       },
-    });
+      {
+        where: {
+          id_materials: req.params.id,
+        },
+      }
+    );
     res.send(result);
   } catch (error) {
     console.log(error);
@@ -504,14 +515,16 @@ app.post("/api/users", async (req, res) => {
           },
         });
         console.log("Созданный пользователь: ", user);
-        let token = await jwt.sign({
+        let token = await jwt.sign(
+          {
             id_users: user.id_users,
             firstname: user.firstname,
             surname: user.surname,
             organization: user.organization,
             role: user.role,
           },
-          CONFIG.SECRET, {
+          CONFIG.SECRET,
+          {
             expiresIn: 86400, // токен на 24 часа
           }
         );
@@ -648,22 +661,24 @@ app.post("/api/login", async (req, res) => {
           message: "Неправильный логин или пароль",
         });
       } else {
-        jwt.sign({
+        jwt.sign(
+          {
             id_users: existUser.id_users,
             firstname: existUser.firstname,
             surname: existUser.surname,
             organization: existUser.organization,
             role: existUser.role,
           },
-          CONFIG.SECRET, {
+          CONFIG.SECRET,
+          {
             expiresIn: 86400, // токен на 24 часа
           },
           (err, token) => {
             if (err) {
               res.status(500).send({
                 status: 500,
-                message: "Ошибка сервера"
-              })
+                message: "Ошибка сервера",
+              });
             } else {
               res.send({
                 token,
