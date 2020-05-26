@@ -18,6 +18,8 @@ export class CommentViewerComponent implements OnInit {
   private subscription: Subscription;
   name: any;
   id: number;
+  now = moment();
+  flag = true;
   constructor(
     private api: BaseApiService,
     private fb: FormBuilder,
@@ -31,16 +33,16 @@ export class CommentViewerComponent implements OnInit {
   async ngOnInit() {
     this.initForm();
     let commentsarr = await this.getComments();
+    
     if (Array.isArray(commentsarr)) {
       commentsarr.forEach((element) => {
         let el = {
           id_comment: element.id_comment,
           name_commentator: element.name_commentator,
           text_comment: element.text_comment,
-          date_comment: element.date_comment,
+          date_comment: moment (element.date_comment).utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
           id_materials: element.id_materials,
         };
-        moment.locale("ru");
         this.comments.push(el);
       });
     }
@@ -53,7 +55,6 @@ export class CommentViewerComponent implements OnInit {
 
   async onSave() {
     let comment_add;
-    console.log();
     if (localStorage.getItem("userName") !== null) {
       this.name = localStorage.getItem("userName");
 
@@ -61,7 +62,8 @@ export class CommentViewerComponent implements OnInit {
         name_commentator: this.name,
         text_comment: this.myFirstReactiveForm.value.comment,
         id_materials: this.id,
-        date_comment: "Только что",
+        date_comment: this.now.utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
+        
       };
       try {
         let comm = await this.api.post(
@@ -73,7 +75,7 @@ export class CommentViewerComponent implements OnInit {
       } catch (error) {
         console.log(error);
       }
-    }
+    } else {this.flag = false }
   }
   async getComments() {
     let response;
