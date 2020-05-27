@@ -79,30 +79,30 @@ export class RegistrationComponent implements OnInit {
       };
       this.type = "password";
       try {
-        console.log('отправляем запрос');
+        // console.log('отправляем запрос');
         
         let registartionRes = await this.api.post(
         JSON.stringify(infoAboutNewUser), "/users");
-        console.log("запрос был отправлен, получаем ответ");
-        console.log(registartionRes);
+        // console.log("запрос был отправлен, получаем ответ");
+        // console.log(registartionRes);
         if (registartionRes["token"]) {
           try {
             let userData = jwt.read(registartionRes["token"]).claim;
             localStorage.setItem("token", registartionRes["token"]);
             localStorage.setItem("userName", userData.firstname);
             localStorage.setItem("userSurname", userData.surname);
-            console.log(userData.firstname);
-            console.log(userData.surname);
+            // console.log(userData.firstname);
+            // console.log(userData.surname);
           } 
           
           catch (error) {
             console.log(error);
           }
-          // this.router.navigate(["/news"]);
+          this.router.navigate(["/news"]);  
         } else {
-          console.log('jhkjghkjhjkhjkhkjhkjhhkjkhj');
+          // console.log('jhkjghkjhjkhjkhkjhkjhhkjkhj');
           this.memory =  this.myForm.value.login ;
-          console.log(this.memory);
+          // console.log(this.memory);
           this.myForm.patchValue({login: ''});
           this.placeholderLogin="";
           this.loginExist = false;

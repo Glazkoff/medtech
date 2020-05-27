@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import * as moment from "moment";
+import jwt from "jwt-client";
+
 
 @Component({
   selector: "app-comment-viewer",
@@ -56,6 +58,14 @@ export class CommentViewerComponent implements OnInit {
     console.log();
     if (localStorage.getItem("userName") !== null) {
       this.name = localStorage.getItem("userName");
+      //Наденька, в объекте userData лежит вся информация о пользователе, 
+      // в том числе и айди
+      // Получай его из объекта и делай с ним, что пожелаешь
+      let userData = jwt.read(localStorage.getItem("token")).claim;
+      console.log(userData);
+      
+
+
 
       comment_add = {
         name_commentator: this.name,
