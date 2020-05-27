@@ -105,4 +105,35 @@ Fullstack-программист
 | -------------------------- | ------------------ |
 | Кодировка всех таблиц в БД | utf8mb4_general_ci |
 
+## CSS-словарик селекторов
 
+| Селектор                   | Компонент(ы) использования |
+| -------------------------- | ---------------------------|
+| header                     | top-bar                    |
+| .top-bar                   | top-bar                    |
+| .minlogo                   | top-bar                    |
+| .devider                   | top-bar                    | 
+| .menu                      | top-bar                    |
+| .link                      | top-bar                    |
+| .active                    | top-bar                    |
+| .navbar-collapse           | top-bar                    |
+| .flex-wrap                 | top-bar                    |
+| .nav-link                  | top-bar                    |
+| .icon                      | top-bar                    |
+| .triangle                  | top-bar                    |
+| .add-menu                  | top-bar                    |
+| .image-for-user            | top-bar                    |
+| .dropdown-menu             | top-bar                    |
+| .devider-bottom            | top-bar                    |
+| .dropdown-item             | top-bar                    |
+| .center                    | top-bar                    |
+| .flex                      | registration               |
+| .wrap-flex                 | registration               |
+| .wrap-grid                 | registration               |
+| .wrap-flex2                | registration               |
+| .label                     | registration               |
+| .form-control              | registration               |
+| .btn                       | registration               |
+| .message                   | registration               |
+| .insideField               | registration               |
+| .input-form                | registration               |
