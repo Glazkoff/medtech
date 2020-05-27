@@ -56,7 +56,7 @@ export class NewsComponent implements OnInit {
           break;
       }
     });
-    console.log('html: ', html);
+    // console.log('html: ', html);
     // document.getElementById('paragraph_content' + this.posts[i].id).innerHTML = html;
     // };
   }

@@ -24,6 +24,7 @@ import { AuthGuard } from "./services/auth.guard";
 import { LoaderComponent } from './loader/loader.component';
 import { ModalComponent } from './modal/modal.component';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+import { MyDatePipePipe } from './shared/pipes/my-date-pipe.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
     PipeTimeCommentPipe,
     LoaderComponent,
     ModalComponent,
+    MyDatePipePipe,
   ],
   imports: [
     BrowserModule,

@@ -1,31 +1,12 @@
-@font-face {
-  font-family: "PT Root UI Web";
-  src: url("/assets/fonts/PT Root UI/PT Root UI_Regular/PT Root UI_Regular.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal;
-}
-@font-face {
-  font-family: "PT Root UI Web";
-  src: url("/assets/fonts/PT Root UI/PT Root UI_Light/PT Root UI_Light.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 300;
-}
-@font-face {
-  font-family: "PT Astra Sans";
-  src: url("/assets/fonts/PT Astra Sans/PT Astra Sans_Bold/PT Astra Sans_Bold.ttf") format("truetype");
-  font-style: normal;
-  font-weight: normal;
-}
-body{
+.body{
   background: #1D1D1D;
   margin: 0;
   padding: 0;
 }
+
 .logo_news img{
   padding-top: 46px;
   padding-bottom: 46px;
-
-
 }
 .logo_news{
   max-width: 1216px;
@@ -33,7 +14,6 @@ body{
   text-align: center;
 }
 .block_news{
-
   max-width: 1216px;
   margin: 0 auto;
   background: #EDEEDF;
@@ -52,7 +32,6 @@ body{
 
 }
 .content__item {
-
   padding: 15px;
 }
 .content__item img{
@@ -86,7 +65,7 @@ width: 704px;
 }
 #post_type{
   float: left;
-  font-family: PT Root UI;
+  font-family: PT Root UI Web;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
