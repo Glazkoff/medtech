@@ -13,6 +13,7 @@ export class RegistrationComponent implements OnInit {
   type = "password";
   myForm: FormGroup;
   values = "";
+  memory;
   fieldRequired = true;
   loginExist = true;
   tryForLogin=""
@@ -78,23 +79,32 @@ export class RegistrationComponent implements OnInit {
       };
       this.type = "password";
       try {
+        console.log('отправляем запрос');
+        
         let registartionRes = await this.api.post(
         JSON.stringify(infoAboutNewUser), "/users");
+        console.log("запрос был отправлен, получаем ответ");
+        console.log(registartionRes);
         if (registartionRes["token"]) {
           try {
             let userData = jwt.read(registartionRes["token"]).claim;
             localStorage.setItem("token", registartionRes["token"]);
             localStorage.setItem("userName", userData.firstname);
             localStorage.setItem("userSurname", userData.surname);
+            console.log(userData.firstname);
+            console.log(userData.surname);
           } 
+          
           catch (error) {
             console.log(error);
           }
-          this.router.navigate(["/news"]);
+          // this.router.navigate(["/news"]);
         } else {
           console.log('jhkjghkjhjkhjkhkjhkjhhkjkhj');
-          this.tryForLogin = this.myForm.value.login;
-          this.myForm.value.login = "";
+          this.memory =  this.myForm.value.login ;
+          console.log(this.memory);
+          this.myForm.patchValue({login: ''});
+          this.placeholderLogin="";
           this.loginExist = false;
         }
         } 
@@ -109,6 +119,11 @@ export class RegistrationComponent implements OnInit {
     this.type = this.type == "password" ? "text" : "password";
   }
  viewOldLogin(){
-  this.myForm.value.login = this.loginExist == false ? this.tryForLogin : "";
+   if (!this.loginExist){
+    this.myForm.patchValue({login: this.memory});
+   }
+  
+  //  this.tryForLogin = this.loginExist == false ? this.memory : ""
+  // this.myForm.value.login = this.loginExist == false ? this.tryForLogin : "";
  }
   }

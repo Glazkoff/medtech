@@ -646,20 +646,22 @@ app.post("/api/login", async (req, res) => {
       },
     });
     if (!existUser) {
-      res.status(404).send({
-        status: 404,
-        message: "Неправильный логин или пароль",
-      });
+      res.send("exist");
+      // res.status(404).send({
+      //   status: 404,
+      //   message: "Неправильный логин или пароль",
+      // });
     } else {
       let passwordCompare = await bcrypt.compare(
         req.body.password,
         existUser.password
       );
       if (!passwordCompare) {
-        res.status(404).send({
-          status: 404,
-          message: "Неправильный логин или пароль",
-        });
+        res.send("exist");
+        // res.status(404).send({
+        //   status: 404,
+        //   message: "Неправильный логин или пароль",
+        // });
       } else {
         jwt.sign(
           {
