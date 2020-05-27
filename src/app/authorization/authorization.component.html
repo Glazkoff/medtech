@@ -1,46 +1,34 @@
 <div class="flex">
-  <form class="form-login" [formGroup]="myForm">
-    <h1>Вход</h1>
-
-    <div class="input-form">
-      <input type="text"  (focus)="inputLogin=true; hideFlag()" [ngClass]="{'red': !inputLogin}" formControlName="login" class="form-control" placeholder="Введите логин" required>
-      <small *ngIf="(!inputLogin) && (!fieldRequired)" >Данное поле обязательное!</small>
-    </div>
-
-    <div class="input-form">
-      <input [type]="type" (focus)="inputPassword=true; hideFlag()" [ngClass]="{'red': !inputPassword}" formControlName="password"  class="form-control" placeholder="Введите пароль" required>
-      <small *ngIf="(!inputPassword) && (!fieldRequired)" >Данное поле обязательное!</small>
-      <small *ngIf="!flag">Неправильный логин или пароль!</small>
-    </div> 
-  
-    <div class=" icon insideField" (click)="onTogglePassword()">
-      <div *ngIf="type=='password'; else elseblock">
-        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye" role="img"
-          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 516">
-          <path fill="#a2a1a1"
-            d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"
-            class=""></path>
-        </svg>
+  <div class="wrap-flex">
+      <img src="/assets/midlogo.png" alt="Логотип" >
+      <h1>Войдите или зарегистрируйтесь, чтобы начать</h1>
+  </div>
+  <form [formGroup]="myForm" class="wrap-grid"> 
+      <div></div>
+      <div class="wrap-flex2"> 
+          <h2 class="active">Вход</h2>
+          <h2 [routerLink]="['/registration']">Регистрация</h2>
+      </div> 
+      <div class="label">Логин <span>*</span></div>
+      <div class="input-form" (click)="  loginNotRight=true; placeholderLogin='Введите логин'">
+        <input (keyup)=" loginNotRight=true; placeholderLogin='Введите логин'" type="text"  formControlName="login" class="form-control" [placeholder]="placeholderLogin">
+        <small *ngIf="!loginNotRight">Неверный логин или пароль!</small>
+        <small *ngIf="(placeholderLogin=='') && (!fieldRequired)" >Данное поле обязательное!</small>
       </div>
-      <ng-template #elseblock>
-        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye-slash" role="img"
-          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 516">
-          <path fill="#a2a1a1" d="M572.5,241.4C518.3,135.6,410.9,64,288,64S57.7,135.6,3.5,241.4c-4.6,9.2-4.6,20,0,29.2C57.7,376.4,165.1,448,288,448
-                      s230.3-71.6,284.5-177.4C577.2,261.4,577.2,250.6,572.5,241.4z M288,400c-79.5,0-144-64.5-144-144s64.5-144,144-144
-                      s144,64.5,144,144c0,79.5-64.4,144-143.9,144C288.1,400,288,400,288,400z" />
-          <path fill="#a2a1a1"
-            d="M288,420c0.1,0,0.1,0,0.2,0c90.5,0,163.9-73.5,163.8-164c0-90.6-73.4-164-164-164s-164,73.4-164,164S197.4,420,288,420z" />
-        </svg>
-      </ng-template>
-    </div>
-
-    <!-- <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me" formControl="rememberLoginControl">> Запомнить меня
-          </label>
-    </div> -->
-    
-    <button class="btn" (click)="onLogin()">Войти</button>
-    <p>Не зарегистрированы? <a [routerLink]="['/registration']">Регистрация</a></p>
+      <div class="label">Пароль <span>*</span></div>
+      <div class="input-form" (click)="loginNotRight=true; placeholderPassword='Введите пароль'">
+          <input (keyup)=" loginNotRight=true; placeholderPassword='Введите пароль'" [type]="type"  formControlName="password"  class="form-control" [placeholder]="placeholderPassword">
+          <small *ngIf="!loginNotRight">Неверный логин или пароль!</small>
+          <small *ngIf="(placeholderPassword=='') && (!fieldRequired)" >Данное поле обязательное!</small>
+          <div class="icon insideField" (click)="onTogglePassword()">
+              <img *ngIf="type=='password'" src="/assets/eye.png" alt="Показать/спрятать пароль">
+              <img *ngIf="type=='text'" src="/assets/eye-outline.png" alt="Показать/спрятать пароль">
+         </div>
+      </div>
+      <div></div>
+      <div>
+          <button class="btn" (click)="onLogin()" >Войти</button>
+          <p class="message "><span>*</span> - обязательные поля</p>
+     </div> 
   </form>
 </div>

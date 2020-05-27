@@ -7,7 +7,7 @@
     <form [formGroup]="myForm" class="wrap-grid"> 
         <div></div>
         <div class="wrap-flex2"> 
-            <h2 >Вход</h2>
+            <h2 [routerLink]="['/authorization']">Вход</h2>
             <h2 class="active">Регистрация</h2>
         </div> 
         <div class="label">Имя <span>*</span></div>
@@ -29,14 +29,14 @@
             <input type="text" formControlName="role" class="form-control" placeholder="Введите роль">
         </div>
         <div class="label">Логин <span>*</span></div>
-        <div class="input-form" (click)="viewOldLogin(); inputLogin=true;  loginExist=true; placeholderLogin='Введите логин'">
-            <input (keyup)="viewOldLogin(); inputLogin=true; loginExist=true; placeholderLogin='Введите логин'" type="text"  formControlName="login" class="form-control" [placeholder]="placeholderLogin" >
+        <div class="input-form" (click)="viewOldLogin();   loginExist=true; placeholderLogin='Введите логин'">
+            <input (keyup)="viewOldLogin();  loginExist=true; placeholderLogin='Введите логин'" type="text"  formControlName="login" class="form-control" [placeholder]="placeholderLogin" >
             <small *ngIf="!loginExist">Данный логин уже существует!</small>
             <small *ngIf="(placeholderLogin=='') && (!fieldRequired)" >Данное поле обязательное!</small>
         </div>
         <div class="label">Пароль <span>*</span></div>
-        <div class="input-form" (click)="inputPassword=true; placeholderPassword='Введите пароль'">
-            <input (keyup)="inputPassword=true; placeholderPassword='Введите пароль'" [type]="type"  formControlName="password"  class="form-control" [placeholder]="placeholderPassword">
+        <div class="input-form" (click)=" placeholderPassword='Введите пароль'">
+            <input (keyup)=" placeholderPassword='Введите пароль'" [type]="type"  formControlName="password"  class="form-control" [placeholder]="placeholderPassword">
             <small *ngIf="(placeholderPassword=='') && (!fieldRequired)" >Данное поле обязательное!</small>
             <div class="icon insideField" (click)="onTogglePassword()">
                 <img *ngIf="type=='password'" src="/assets/eye.png" alt="Показать/спрятать пароль">

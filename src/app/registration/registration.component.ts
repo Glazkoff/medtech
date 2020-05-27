@@ -122,8 +122,5 @@ export class RegistrationComponent implements OnInit {
    if (!this.loginExist){
     this.myForm.patchValue({login: this.memory});
    }
-  
-  //  this.tryForLogin = this.loginExist == false ? this.memory : ""
-  // this.myForm.value.login = this.loginExist == false ? this.tryForLogin : "";
- }
+  }
   }

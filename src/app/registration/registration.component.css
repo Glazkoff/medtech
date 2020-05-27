@@ -45,6 +45,7 @@
 
 .wrap-flex2 h2 {
     margin: 0;
+    outline: none;
     font-family: PT Root UI Web;
     font-style: normal;
     font-weight: bold;
