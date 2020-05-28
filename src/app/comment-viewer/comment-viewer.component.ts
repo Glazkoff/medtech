@@ -14,6 +14,7 @@ import jwt from "jwt-client";
   styleUrls: ["./comment-viewer.component.css"],
 })
 export class CommentViewerComponent implements OnInit {
+
   myFirstReactiveForm: FormGroup;
   @Input() comment;
   comments = [];
@@ -31,16 +32,19 @@ export class CommentViewerComponent implements OnInit {
       this.id = +params.id;
     });
   }
+  resolved(captchaResponse: string) {
+    console.log(`Resolved captcha with response: ${captchaResponse}`);
+  }
 
   async ngOnInit() {
     this.initForm();
     let commentsarr = await this.getComments();
-    
+    let userData = jwt.read(localStorage.getItem("token")).claim;
     if (Array.isArray(commentsarr)) {
       commentsarr.forEach((element) => {
         let el = {
           id_comment: element.id_comment,
-          name_commentator: element.name_commentator,
+          name_commentator: userData.firstname,
           text_comment: element.text_comment,
           date_comment: moment (element.date_comment).utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
           id_materials: element.id_materials,
@@ -59,21 +63,21 @@ export class CommentViewerComponent implements OnInit {
     let comment_add;
     if (localStorage.getItem("userName") !== null) {
       this.name = localStorage.getItem("userName");
-      //Наденька, в объекте userData лежит вся информация о пользователе, 
+      //Наденька, в объекте userData лежит вся информация о пользователе,
       // в том числе и айди
       // Получай его из объекта и делай с ним, что пожелаешь
       let userData = jwt.read(localStorage.getItem("token")).claim;
       console.log(userData);
-      
+
 
 
 
       comment_add = {
-        name_commentator: this.name,
+        name_commentator: userData.firstname,
         text_comment: this.myFirstReactiveForm.value.comment,
         id_materials: this.id,
         date_comment: this.now.utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
-        
+
       };
       try {
         let comm = await this.api.post(

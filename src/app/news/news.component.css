@@ -35,6 +35,8 @@
   padding: 15px;
 }
 .content__item img{
+  width: 306px;
+  height: 194px;
   border-radius: 2px 2px 0px 0px;
 
 }
@@ -56,8 +58,8 @@
   grid-row: auto;
 }
 .content__item:nth-child(5n+4) img{
-width: 704px;
-  height: 224px;
+width: 674px;
+  height: 194px;
 }
 .content__item:nth-child(5n+5) {
   grid-column: span 2;
@@ -92,7 +94,7 @@ width: 704px;
   color: #000000;
 }
 .content__item:hover{
-  border: #94624D 1px solid;
+  outline: 1px solid #94624D;
 }
 #post_duration{
   font-family: PT Root UI Web;
