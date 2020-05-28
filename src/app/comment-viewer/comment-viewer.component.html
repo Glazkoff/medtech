@@ -11,9 +11,20 @@
   <input type="submit"  value="Отправить">
 </form>
 <div class="comment" *ngFor="let comment of comments">
+  <div class="header-com">
+    <div class="user-com">
+  <div class="image-for-user-com"></div>
+  <h1 class="name-com">{{comment.name_commentator}}</h1>
+</div>
+  <p class="time-com">{{comment.date_comment }}</p>
+</div>
+  <p class="text-com">{{comment.text_comment}}</p>
+</div>
+<!-- <div class="commen" *ngFor="let comment of comments">
+  <div class="image-for-user-com"></div>
   <h1>{{comment.name_commentator}}</h1>
   <p class="time">{{comment.date_comment }}</p>
   <p>{{comment.text_comment}}</p>
-</div>
+</div> -->
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>

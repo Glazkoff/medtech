@@ -1,27 +1,3 @@
-.comment{
-    outline: 2px solid #000;
-    margin: 10px auto;
-    padding-left: 10px;
-    width: 600px;
-}
-h1{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 28px; 
-}
-.time{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    margin-top: -25px;
-    margin-left: 10px;
-    color: rgb(100, 100, 100);
-}
-p{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
-    margin-top: -10px;
-    padding-bottom: 5px;
-}
-
 form{
     outline: 2px solid #000;
     margin: 10px auto;
@@ -32,4 +8,65 @@ form{
 
 .dangerous{
     color: red;
+}
+
+/* новые стили */
+.comment{
+    margin: 1rem auto;
+    height: 10rem; 
+    width: 44.5rem;
+    background: #EEEEEE;
+    border-radius: 2px;  
+}
+.header-com{
+    display: flex;
+}
+
+.image-for-user-com{
+    width: 4rem;
+    min-height: 4rem;
+    border-radius: 50%;
+    background: #C4C4C4;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.name-com{
+    font-family: PT Astra Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px; 
+    margin-top: 0.3rem;
+    margin-left: 0.5rem;
+}
+
+.user-com{
+    display: flex;
+    width: 36rem;
+}
+
+.time-com{
+    font-family: PT Root UI Web;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    margin-top: 0.69rem;
+    /* margin-left: 17rem; */
+    right: 1rem;
+    color: #94624D;
+}
+
+.text-com{
+    font-family: PT Astra Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    margin: -2rem 11rem 1rem 5rem;
 }
