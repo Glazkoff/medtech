@@ -1,52 +1,52 @@
-<div class="flex">
-    <div class="wrap-flex">
-        <img src="/assets/midlogo.png" alt="Логотип" >
-        <h1>Войдите или зарегистрируйтесь, чтобы начать</h1>
-    </div>
+    <div class="flex">
+        <div class="wrap-flex">
+            <img src="/assets/midlogo.png" alt="Логотип" >
+            <h1>Войдите или зарегистрируйтесь, чтобы начать</h1>
+        </div>
 
-    <form [formGroup]="myForm" class="wrap-grid"> 
-        <div></div>
-        <div class="wrap-flex2"> 
-            <h2 [routerLink]="['/authorization']">Вход</h2>
-            <h2 class="active">Регистрация</h2>
-        </div> 
-        <div class="label">Имя <span>*</span></div>
-        <div class="input-form" (click)="inputName=true; placeholderName='Введите имя'" >
-            <input type="text" (keyup)="inputName=true; placeholderName='Введите имя'"  formControlName="name" class="form-control" [placeholder]="placeholderName" >
-            <small *ngIf="(placeholderName=='') && (!fieldRequired)" >Данное поле обязательное!</small>
-        </div>
-        <div class="label">Фамилия <span>*</span></div>
-        <div (click)="inputSurname=true; placeholderSurname='Введите фамилию'"  class="input-form">
-            <input (keyup)="inputSurname=true; placeholderSurname='Введите фамилию'" type="text"  formControlName="surname" class="form-control" [placeholder]="placeholderSurname" required>
-            <small *ngIf="(placeholderSurname=='') && (!fieldRequired)" >Данное поле обязательное!</small>
-        </div>
-        <div class="label">Организация</div>
-        <div class="input-form">
-            <input type="text" formControlName="organization" class="form-control" placeholder="Введите организацию">
-        </div>
-        <div class="label">Роль</div>
-        <div class="input-form">
-            <input type="text" formControlName="role" class="form-control" placeholder="Введите роль">
-        </div>
-        <div class="label">Логин <span>*</span></div>
-        <div class="input-form" (click)="viewOldLogin();   loginExist=true; placeholderLogin='Введите логин'">
-            <input (keyup)="viewOldLogin();  loginExist=true; placeholderLogin='Введите логин'" type="text"  formControlName="login" class="form-control" [placeholder]="placeholderLogin" >
-            <small *ngIf="!loginExist">Данный логин уже существует!</small>
-            <small *ngIf="(placeholderLogin=='') && (!fieldRequired)" >Данное поле обязательное!</small>
-        </div>
-        <div class="label">Пароль <span>*</span></div>
-        <div class="input-form" (click)=" placeholderPassword='Введите пароль'">
-            <input (keyup)=" placeholderPassword='Введите пароль'" [type]="type"  formControlName="password"  class="form-control" [placeholder]="placeholderPassword">
-            <small *ngIf="(placeholderPassword=='') && (!fieldRequired)" >Данное поле обязательное!</small>
-            <div class="icon insideField" (click)="onTogglePassword()">
-                <img *ngIf="type=='password'" src="/assets/eye.png" alt="Показать/спрятать пароль">
-                <img *ngIf="type=='text'" src="/assets/eye-outline.png" alt="Показать/спрятать пароль">
-           </div>
-        </div>
-        <div></div>
-        <div>
-            <button class="btn" (click)="onRegistr()" >Регистрация</button>
-            <p class="message "><span>*</span> - обязательные поля</p>
-        </div> 
-    </form>
-</div>
+        <form [formGroup]="myForm" class="wrap-grid"> 
+            <div></div>
+            <div class="wrap-flex2"> 
+                <h2 [routerLink]="['/authorization']">Вход</h2>
+                <h2 class="active">Регистрация</h2>
+            </div> 
+            <div class="label">Имя <span>*</span></div>
+            <div class="input-form" (click)="inputName=true; placeholderName='Введите имя'" >
+                <input type="text" (keyup)="inputName=true; placeholderName='Введите имя'"  formControlName="name" class="form-control" [placeholder]="placeholderName" >
+                <small *ngIf="(placeholderName=='') && (!fieldRequired)" >Данное поле обязательное!</small>
+            </div>
+            <div class="label">Фамилия <span>*</span></div>
+            <div (click)="inputSurname=true; placeholderSurname='Введите фамилию'"  class="input-form">
+                <input (keyup)="inputSurname=true; placeholderSurname='Введите фамилию'" type="text"  formControlName="surname" class="form-control" [placeholder]="placeholderSurname" required>
+                <small *ngIf="(placeholderSurname=='') && (!fieldRequired)" >Данное поле обязательное!</small>
+            </div>
+            <div class="label">Организация</div>
+            <div class="input-form">
+                <input type="text" formControlName="organization" class="form-control" placeholder="Введите организацию">
+            </div>
+            <div class="label">Роль</div>
+            <div class="input-form">
+                <input type="text" formControlName="role" class="form-control" placeholder="Введите роль">
+            </div>
+            <div class="label">Логин <span>*</span></div>
+            <div class="input-form" (click)="viewOldLogin();   loginExist=true; placeholderLogin='Введите логин'">
+                <input (keyup)="viewOldLogin();  loginExist=true; placeholderLogin='Введите логин'" type="text"  formControlName="login" class="form-control" [placeholder]="placeholderLogin" >
+                <small *ngIf="!loginExist">Данный логин уже существует!</small>
+                <small *ngIf="(placeholderLogin=='') && (!fieldRequired)" >Данное поле обязательное!</small>
+            </div>
+            <div class="label">Пароль <span>*</span></div>
+            <div class="input-form" (click)=" placeholderPassword='Введите пароль'">
+                <input (keyup)=" placeholderPassword='Введите пароль'" [type]="type"  formControlName="password"  class="form-control" [placeholder]="placeholderPassword">
+                <small *ngIf="(placeholderPassword=='') && (!fieldRequired)" >Данное поле обязательное!</small>
+                <div class="icon insideField" (click)="onTogglePassword()">
+                    <img *ngIf="type=='password'" src="/assets/eye.png" alt="Показать/спрятать пароль">
+                    <img *ngIf="type=='text'" src="/assets/eye-outline.png" alt="Показать/спрятать пароль">
+            </div>
+            </div>
+            <div></div>
+            <div>
+                <button class="btn" (click)="onRegistr()" >Регистрация</button>
+                <p class="message "><span>*</span> - обязательные поля</p>
+            </div> 
+        </form>
+    </div>

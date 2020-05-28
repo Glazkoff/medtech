@@ -1,0 +1,12 @@
+.dark-wrap{
+    background: #1D1D1D;
+    margin: 0;
+    padding: 0;
+    min-height: calc(100vh - 48px);
+}
+.light-wrap{
+    min-height: calc(100vh - 48px );
+    max-width: 1156px;
+    margin: 0 auto;
+    background: #EDEEDF;
+}
