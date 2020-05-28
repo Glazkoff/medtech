@@ -69,6 +69,33 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
 });
 
+// Модель Comments
+const Comments = sequelize.define("comments", {
+  id_comment: {
+    type: Sequelize.INTEGER(11),
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  name_commentator: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+  },
+  date_comment: {
+    type: Sequelize.DATE,
+    allowNull: false,
+  },
+  text_comment: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+  },
+  id_materials: {
+    type: Sequelize.INTEGER(11),
+    allowNull: false,
+  },
+});
+
+// Модель Materials
 const Materials = sequelize.define(
   "materials",
   {
@@ -104,7 +131,13 @@ const Materials = sequelize.define(
     collate: "utf8_unicode_ci",
   }
 );
+Materials.hasMany(Comments, {
+  onDelete: "cascade",
+  foreignKey: "id_materials",
+  sourceKey: "id_comment",
+});
 
+// Модель Users
 const Users = sequelize.define(
   "users",
   {
@@ -144,6 +177,7 @@ const Users = sequelize.define(
     collate: "utf8_unicode_ci",
   }
 );
+
 // Синхронизация Sequelize с удалённой БД
 sequelize
   .sync()
