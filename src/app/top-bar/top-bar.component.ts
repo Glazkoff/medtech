@@ -43,6 +43,8 @@ export class TopBarComponent implements OnInit {
 
   openDropdownMenu() {
     this.iconOfMenu = this.iconOfMenu == "chevron-down" ? "close" : "chevron-down";
+    // console.log(this.iconOfMenu);
+    
   }
   onLogOut() {
     this.logOut = !this.logOut;

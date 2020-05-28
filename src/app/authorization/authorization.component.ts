@@ -10,11 +10,13 @@ import jwt from "jwt-client";
   styleUrls: ["./authorization.component.css"],
 })
 export class AuthorizationComponent implements OnInit {
-  type = "password";
   flag = true;
+  
+  loginNotRight = true;
+  type = "password";
   myForm: FormGroup;
-  inputLogin = true;
-  inputPassword = true;
+  placeholderLogin = "Введите логин";
+  placeholderPassword = "Введите пароль";
   fieldRequired = true;
   user = {
     id: 1,
@@ -40,15 +42,15 @@ export class AuthorizationComponent implements OnInit {
   async onLogin() {
     if (this.myForm.invalid) {
       if (this.myForm.value.login == "") {
-          this.fieldRequired = false;
-          this.inputLogin = false;
-        }
+        this.fieldRequired = false;
+        this.placeholderLogin="";
+      }
       if (this.myForm.value.password == "") {
-            this.fieldRequired = false;
-            this.inputPassword = false;
-        }
+        this.fieldRequired = false;
+        this.placeholderPassword="";
+      }
       } else {
-        console.log("it was a click, wow");
+        // console.log("it was a click, wow");
         let infoAboutUser;
         infoAboutUser = {
           login: this.myForm.value.login,
@@ -59,17 +61,21 @@ export class AuthorizationComponent implements OnInit {
           let response = await this.api.post(
             JSON.stringify(infoAboutUser),
             "/login"
+            
           );
+          console.log(response);
           if (response["token"]) {
             localStorage.setItem("token", response["token"]);
             let userData = jwt.read(response["token"]).claim;
             console.log(userData);
-            this.flag = true;
             localStorage.setItem("userName", userData.firstname);
             localStorage.setItem("userSurname", userData.surname);
            this.router.navigate(["/news"]);
           } else {
-            this.flag = false;
+            this.myForm.patchValue({login: '', password: ''});
+            this.placeholderLogin="";
+            this.placeholderPassword="";
+            this.loginNotRight = false;
           }
         } catch (error) {
           console.log(error);
@@ -77,11 +83,8 @@ export class AuthorizationComponent implements OnInit {
       }
 
   }
-  hideFlag() {
-    this.flag = true;
-  }
+ 
   onTogglePassword() {
     this.type = this.type == "password" ? "text" : "password";
-    console.log(this.type);
   }
 }
