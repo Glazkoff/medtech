@@ -10,15 +10,15 @@
           <h2 [routerLink]="['/registration']">Регистрация</h2>
       </div> 
       <div class="label">Логин <span>*</span></div>
-      <div class="input-form" (click)="  loginNotRight=true; placeholderLogin='Введите логин'">
-        <input (keyup)=" loginNotRight=true; placeholderLogin='Введите логин'" type="text"  formControlName="login" class="form-control" [placeholder]="placeholderLogin">
-        <small *ngIf="!loginNotRight">Неверный логин или пароль!</small>
+      <div class="input-form" (click)=" placeholderLogin='Введите логин'">
+        <input (keyup)="  placeholderLogin='Введите логин'" type="text"  formControlName="login" class="form-control" [placeholder]="placeholderLogin">
+        <small *ngIf="(!loginNotRight) && (placeholderLogin=='')">Неверный логин или пароль!</small>
         <small *ngIf="(placeholderLogin=='') && (!fieldRequired)" >Данное поле обязательное!</small>
       </div>
       <div class="label">Пароль <span>*</span></div>
-      <div class="input-form" (click)="loginNotRight=true; placeholderPassword='Введите пароль'">
-          <input (keyup)=" loginNotRight=true; placeholderPassword='Введите пароль'" [type]="type"  formControlName="password"  class="form-control" [placeholder]="placeholderPassword">
-          <small *ngIf="!loginNotRight">Неверный логин или пароль!</small>
+      <div class="input-form" (click)=" placeholderPassword='Введите пароль'">
+          <input (keyup)=" placeholderPassword='Введите пароль'" [type]="type"  formControlName="password"  class="form-control" [placeholder]="placeholderPassword">
+          <small *ngIf="(!loginNotRight) && (placeholderPassword=='')">Неверный логин или пароль!</small>
           <small *ngIf="(placeholderPassword=='') && (!fieldRequired)" >Данное поле обязательное!</small>
           <div class="icon insideField" (click)="onTogglePassword()">
               <img *ngIf="type=='password'" src="/assets/eye.png" alt="Показать/спрятать пароль">

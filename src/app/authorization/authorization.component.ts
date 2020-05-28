@@ -61,9 +61,9 @@ export class AuthorizationComponent implements OnInit {
           let response = await this.api.post(
             JSON.stringify(infoAboutUser),
             "/login"
-            
           );
-          console.log(response);
+          
+          
           if (response["token"]) {
             localStorage.setItem("token", response["token"]);
             let userData = jwt.read(response["token"]).claim;
@@ -72,12 +72,16 @@ export class AuthorizationComponent implements OnInit {
             localStorage.setItem("userSurname", userData.surname);
            this.router.navigate(["/news"]);
           } else {
-            this.myForm.patchValue({login: '', password: ''});
+            // this.myForm.patchValue({login: '', password: ''});
+            // this.placeholderLogin="";
+            // this.placeholderPassword="";
+            // this.loginNotRight = false;
+          }
+        } catch (error) {
+          this.myForm.patchValue({login: '', password: ''});
             this.placeholderLogin="";
             this.placeholderPassword="";
             this.loginNotRight = false;
-          }
-        } catch (error) {
           console.log(error);
         }
       }

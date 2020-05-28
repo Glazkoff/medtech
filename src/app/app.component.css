@@ -5,7 +5,7 @@
     min-height: calc(100vh - 48px);
 }
 .light-wrap{
-    min-height: calc(100vh - 48px );
+    min-height: calc(100vh - 48px);
     max-width: 1156px;
     margin: 0 auto;
     background: #EDEEDF;
