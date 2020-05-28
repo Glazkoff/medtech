@@ -76,6 +76,7 @@ const Comments = sequelize.define("comments", {
     autoIncrement: true,
     primaryKey: true,
     allowNull: false,
+    unique: true
   },
   name_commentator: {
     type: Sequelize.TEXT,
@@ -93,12 +94,15 @@ const Comments = sequelize.define("comments", {
     type: Sequelize.INTEGER(11),
     allowNull: false,
   },
+  author_id: {
+    type: Sequelize.INTEGER(11),
+    allowNull: false
+  },
 });
 
 // Модель Materials
 const Materials = sequelize.define(
-  "materials",
-  {
+  "materials", {
     id_materials: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -125,22 +129,15 @@ const Materials = sequelize.define(
       type: Sequelize.TEXT,
       allowNull: false,
     },
-  },
-  {
+  }, {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
 );
-Materials.hasMany(Comments, {
-  onDelete: "cascade",
-  foreignKey: "id_materials",
-  sourceKey: "id_comment",
-});
 
 // Модель Users
 const Users = sequelize.define(
-  "users",
-  {
+  "users", {
     id_users: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -171,16 +168,37 @@ const Users = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-  },
-  {
+  }, {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
 );
 
+// Реляции таблиц
+Materials.hasMany(Comments, {
+  onDelete: "cascade",
+  foreignKey: "id_materials",
+  as: "Comments"
+});
+Comments.belongsTo(Materials, {
+  foreignKey: "id_materials",
+  as: "material"
+});
+Users.hasMany(Comments, {
+  onDelete: "cascade",
+  foreignKey: "author_id",
+  as: "comments"
+});
+Comments.belongsTo(Users, {
+  foreignKey: "author_id",
+  as: "user"
+});
 // Синхронизация Sequelize с удалённой БД
 sequelize
-  .sync()
+  // .sync()
+  .sync({
+    alter: true
+  })
   .then((result) => {
     console.log("[Sequelize] Всё ОК");
   })
@@ -451,19 +469,16 @@ app.put("/api/posts/:id", async (req, res) => {
     //     }
     //   );
     // });
-    result = await Materials.update(
-      {
-        duration: req.body.duration,
-        date: req.body.content.time,
-        title: req.body.title,
-        content: JSON.stringify(req.body.content.blocks),
+    result = await Materials.update({
+      duration: req.body.duration,
+      date: req.body.content.time,
+      title: req.body.title,
+      content: JSON.stringify(req.body.content.blocks),
+    }, {
+      where: {
+        id_materials: req.params.id,
       },
-      {
-        where: {
-          id_materials: req.params.id,
-        },
-      }
-    );
+    });
     res.send(result);
   } catch (error) {
     console.log(error);
@@ -549,16 +564,14 @@ app.post("/api/users", async (req, res) => {
           },
         });
         console.log("Созданный пользователь: ", user);
-        let token = await jwt.sign(
-          {
+        let token = await jwt.sign({
             id_users: user.id_users,
             firstname: user.firstname,
             surname: user.surname,
             organization: user.organization,
             role: user.role,
           },
-          CONFIG.SECRET,
-          {
+          CONFIG.SECRET, {
             expiresIn: 86400, // токен на 24 часа
           }
         );
@@ -697,16 +710,14 @@ app.post("/api/login", async (req, res) => {
         //   message: "Неправильный логин или пароль",
         // });
       } else {
-        jwt.sign(
-          {
+        jwt.sign({
             id_users: existUser.id_users,
             firstname: existUser.firstname,
             surname: existUser.surname,
             organization: existUser.organization,
             role: existUser.role,
           },
-          CONFIG.SECRET,
-          {
+          CONFIG.SECRET, {
             expiresIn: 86400, // токен на 24 часа
           },
           (err, token) => {
@@ -782,65 +793,94 @@ app.post("/api/login", async (req, res) => {
   // );
 });
 
-app.get("/api/courses", function (req, res) {
+// app.get("/api/courses", function (req, res) {
+//   try {
+//     connection.query("SELECT * FROM `courses`", function (
+//       error,
+//       results,
+//       fields
+//     ) {
+//       if (error) {
+//         res.status(500).send("Ошибка сервера при получении названия курса");
+//         console.log(error);
+//       }
+//       console.log("РЕЗУЛЬТАТЫ");
+//       console.log(results);
+//       res.json(results);
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+// Получение комментариев
+app.get("/api/comments/:id", async (req, res) => {
   try {
-    connection.query("SELECT * FROM `courses`", function (
-      error,
-      results,
-      fields
-    ) {
-      if (error) {
-        res.status(500).send("Ошибка сервера при получении названия курса");
-        console.log(error);
-      }
-      console.log("РЕЗУЛЬТАТЫ");
-      console.log(results);
-      res.json(results);
+    let comments = await Comments.findAll({
+      where: {
+        id_materials: req.params.id
+      },
+      include: [{
+        association: "user",
+        attributes: ["firstname", "surname"]
+      }]
+    })
+    res.send(comments);
+    // connection.query(
+    //   "SELECT * FROM `comments` WHERE id_materials=?",
+    //   [req.params.id],
+    //   function (error, results, fields) {
+    //     if (error) {
+    //       res.status(500).send("Ошибка сервера при получении комментариев");
+    //       console.log(error);
+    //     }
+    //     res.json(results);
+    //     console.log(results);
+    //   }
+    // );
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера при получении комментариев"
     });
-  } catch (error) {
     console.log(error);
   }
 });
 
-//comments
-app.get("/api/comments/:id", function (req, res) {
-  try {
-    connection.query(
-      "SELECT * FROM `comments` WHERE id_materials=?",
-      [req.params.id],
-      function (error, results, fields) {
-        if (error) {
-          res.status(500).send("Ошибка сервера при получении комментариев");
-          console.log(error);
-        }
-        res.json(results);
-        console.log(results);
-      }
-    );
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-app.post("/api/comments", (req, res) => {
+app.post("/api/comments", async (req, res) => {
   // res.sendFile(__dirname, "../dist/index.html");
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл POST запрос для комментариев:");
   console.log(req.body);
-  connection.query(
-    "INSERT INTO `comments` (`id_comment`, `name_commentator`, `date_comment`, `text_comment`, `id_materials`) VALUES (NULL, ?, CURRENT_TIMESTAMP, ?, ?);",
-    [req.body.name_commentator, req.body.text_comment, req.body.id_materials],
-    function (err, results) {
-      console.log("БД результаты:");
-      if (err) {
-        console.log("Ошибка записи в БД!");
-        console.warn(err);
-      } else {
-        console.log(results);
-        res.json(results);
-      }
-    }
-  );
+  try {
+    let create = Comments.create({
+      text_comment: req.body.text_comment,
+      id_materials: req.body.id_materials,
+      author_id: req.body.author_id
+    })
+    res.send(create);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера при создании комментария"
+    });
+  }
+
+  // connection.query(
+  //   "INSERT INTO `comments` (`id_comment`, `name_commentator`, `date_comment`, `text_comment`, `id_materials`) VALUES (NULL, ?, CURRENT_TIMESTAMP, ?, ?);",
+  //   [req.body.name_commentator, req.body.text_comment, req.body.id_materials],
+  //   function (err, results) {
+  //     console.log("БД результаты:");
+  //     if (err) {
+  //       console.log("Ошибка записи в БД!");
+  //       console.warn(err);
+  //     } else {
+  //       console.log(results);
+  //       res.json(results);
+  //     }
+  //   }
+  // );
 });
 // app.put('/api/comments/:id', function (req, res) {
 //   console.log('PUT /', );
@@ -863,23 +903,40 @@ app.post("/api/comments", (req, res) => {
 //   }
 // });
 
-app.delete("/api/comments", function (req, res) {
+app.delete("/api/comments/:id", async (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл delete запрос для комментариев:");
   console.log(req.body);
-  connection.query(
-    "DELETE FROM `comments` WHERE `id_comment`= ?",
-    [req.body.id_comment],
-    function (err, results) {
-      console.log("БД результаты:");
-      if (err) {
-        console.log("Ошибка записи в БД!");
-        console.warn(err);
-      } else {
-        console.log(results);
+  try {
+    let destroy = await Comments.destroy({
+      where: {
+        id_comment: req.params.id
       }
-    }
-  );
+    })
+    res.send({
+      status: 200,
+      message: `Комментарий #${req.params.id} удалён`
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера при удалении комментария"
+    });
+  }
+  // connection.query(
+  //   "DELETE FROM `comments` WHERE `id_comment`= ?",
+  //   [req.body.id_comment],
+  //   function (err, results) {
+  //     console.log("БД результаты:");
+  //     if (err) {
+  //       console.log("Ошибка записи в БД!");
+  //       console.warn(err);
+  //     } else {
+  //       console.log(results);
+  //     }
+  //   }
+  // );
 });
 app.post("/api/token_validate", (req, res) => {
   let token = req.body.recaptcha;
