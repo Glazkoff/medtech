@@ -2,23 +2,24 @@ import { Component, OnInit } from "@angular/core";
 // import {NewsService} from '../add/news.service';
 import { NewsGet } from "../add/news.get";
 import { BaseApiService } from "../services/base-api.service";
+import * as moment from "moment";
 @Component({
   selector: "app-news",
   templateUrl: "./news.component.html",
   styleUrls: ["./news.component.css"],
 })
 export class NewsComponent implements OnInit {
-  posts: NewsGet[] = [];
+  posts = [];
   constructor(private api: BaseApiService) {}
 
   async ngOnInit() {
     let postsarr = await this.getPosts();
     if (Array.isArray(postsarr)) {
       postsarr.forEach((element) => {
-        let el: NewsGet = {
+        let el = {
           id: element.id_materials,
           title: element.title,
-          date: element.date,
+          date: moment (parseInt(element.date)).utcOffset("+0300").format(' DD.MM.YYYY'),
           duration: element.duration,
           type: element.type,
           content: element.content,
@@ -56,7 +57,7 @@ export class NewsComponent implements OnInit {
           break;
       }
     });
-    console.log('html: ', html);
+    // console.log('html: ', html);
     // document.getElementById('paragraph_content' + this.posts[i].id).innerHTML = html;
     // };
   }

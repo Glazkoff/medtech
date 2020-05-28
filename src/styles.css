@@ -54,17 +54,6 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   /* background-color: #1D1D1D; */
 }
-/* криво косо написано, костыль просто, специально так сделала, чтобы верстать свое, потом вмесете доработаем это*/
-/* .wrap-for-main{
-  height: calc(100vh - 48px);
-  position: absolute;
-  top: 48px;
-  width: 100%;
-  max-width: 1156px;
-  left:25%;
-  margin-left: -17.5%;
-  background: #EDEEDF;
-} */
 
 a {
   color: black;
