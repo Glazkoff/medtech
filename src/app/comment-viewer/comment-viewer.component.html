@@ -1,7 +1,7 @@
 <h1 class="title-com">Комментарии</h1>
 <form class="form-com" [formGroup]="myFirstReactiveForm"(submit)="onSave()">
-  <input class= "input-com" type="text" id="comment" formControlName="comment" />
-  <p *ngIf="!flag" class="dangerous">Авторизируйтесь, чтобы оставить комментарий</p>
+  <input class= "input-com" type="text" id="comment" formControlName="comment" placeholderComment="Ваш комментарий" [placeholder]="placeholderComment"/>
+  <small *ngIf="!flag && (placeholderComment=='')" class="dangerous">Авторизируйтесь, чтобы оставить комментарий</small>
   <!-- <div>
   <re-captcha (resolved)="resolved($event)"
               formControlName="recaptchaReactive"

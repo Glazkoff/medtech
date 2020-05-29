@@ -23,6 +23,7 @@ export class CommentViewerComponent implements OnInit {
   id: number;
   now = moment();
   flag = true;
+  placeholderComment="Ваш комментарий"
   constructor(
     private api: BaseApiService,
     private fb: FormBuilder,
@@ -89,8 +90,13 @@ export class CommentViewerComponent implements OnInit {
       } catch (error) {
         console.log(error);
       }
-    } else {this.flag = false }
+    } else {
+      this.flag = false;
+      this.placeholderComment= "";
+      this.myFirstReactiveForm.patchValue({comment: ''});
+     }
   }
+
   async getComments() {
     let response;
     try {
