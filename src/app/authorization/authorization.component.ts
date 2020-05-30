@@ -10,8 +10,6 @@ import jwt from "jwt-client";
   styleUrls: ["./authorization.component.css"],
 })
 export class AuthorizationComponent implements OnInit {
-  flag = true;
-  
   loginNotRight = true;
   type = "password";
   myForm: FormGroup;
@@ -50,6 +48,7 @@ export class AuthorizationComponent implements OnInit {
         this.placeholderPassword="";
       }
       } else {
+        this.fieldRequired = true;
         // console.log("it was a click, wow");
         let infoAboutUser;
         infoAboutUser = {
@@ -62,28 +61,31 @@ export class AuthorizationComponent implements OnInit {
             JSON.stringify(infoAboutUser),
             "/login"
           );
-          
-          
           if (response["token"]) {
             localStorage.setItem("token", response["token"]);
-            let userData = jwt.read(response["token"]).claim;
-            console.log(userData);
+            
+            let userData = await jwt.read(response["token"]);
+            userData = userData.claim;
+            console.log("UserData ",userData);
             localStorage.setItem("userName", userData.firstname);
             localStorage.setItem("userSurname", userData.surname);
            this.router.navigate(["/news"]);
           } else {
-            // this.myForm.patchValue({login: '', password: ''});
-            // this.placeholderLogin="";
-            // this.placeholderPassword="";
-            // this.loginNotRight = false;
+            
           }
         } catch (error) {
+          console.log(error);
           this.myForm.patchValue({login: '', password: ''});
             this.placeholderLogin="";
             this.placeholderPassword="";
             this.loginNotRight = false;
-          console.log(error);
         }
+        
+        this.loginNotRight = true;
+        this.type = "password";
+        this.placeholderLogin = "Введите логин";
+        this.placeholderPassword = "Введите пароль";
+        this.fieldRequired = true;
       }
 
   }
