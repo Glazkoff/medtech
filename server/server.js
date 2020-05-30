@@ -49,7 +49,7 @@ app.use(function (req, res, next) {
 
 // Подключение к БД через Sequelize
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  dialect: "mysql",
+  dialect: dbConfig.DIALECT,
   host: dbConfig.HOST,
   define: {
     dialectOptions: {
