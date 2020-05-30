@@ -204,11 +204,11 @@ Comments.belongsTo(Users, {
 
 // Синхронизация Sequelize с удалённой БД
 sequelize
-  .sync()
+  // .sync()
   // Вариант для изменений в таблицах
-  // .sync({
-  //   alter: true
-  // })
+  .sync({
+    alter: true,
+  })
   .then((result) => {
     console.log("[Sequelize] Всё ОК");
   })
