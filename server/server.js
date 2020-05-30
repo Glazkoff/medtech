@@ -47,26 +47,55 @@ app.use(function (req, res, next) {
   next();
 });
 
-// Подключение к БД через Sequelize
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  dialect: dbConfig.DIALECT,
-  host: dbConfig.HOST,
-  port: dbConfig.PORT,
-  define: {
-    dialectOptions: {
-      charset: "UTF8",
-      collate: "utf8_unicode_ci",
-    },
-    timestamps: true,
-  },
-  pool: {
-    max: 10,
-    min: 1,
-    acquire: 30000,
-    idle: 10000,
-  },
-  isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
-});
+if (process.env.PORT) {
+  // Подключение к БД через Sequelize
+  const sequelize = new Sequelize(
+    dbConfig.PROD.DB,
+    dbConfig.PROD.USER,
+    dbConfig.PROD.PASSWORD,
+    {
+      dialect: dbConfig.PROD.DIALECT,
+      define: {
+        dialectOptions: {
+          charset: "UTF8",
+          collate: "utf8_unicode_ci",
+        },
+        timestamps: true,
+      },
+      pool: {
+        max: 10,
+        min: 1,
+        acquire: 30000,
+        idle: 10000,
+      },
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }
+  );
+} else {
+  // Подключение к БД через Sequelize
+  const sequelize = new Sequelize(
+    dbConfig.DB,
+    dbConfig.USER,
+    dbConfig.PASSWORD,
+    {
+      dialect: dbConfig.DIALECT,
+      define: {
+        dialectOptions: {
+          charset: "UTF8",
+          collate: "utf8_unicode_ci",
+        },
+        timestamps: true,
+      },
+      pool: {
+        max: 10,
+        min: 1,
+        acquire: 30000,
+        idle: 10000,
+      },
+      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+    }
+  );
+}
 
 // Модель Comments
 const Comments = sequelize.define(
@@ -231,10 +260,10 @@ let salt = bcrypt.genSaltSync(10);
 //   res.sendFile(path.join(__dirname, "../dist/index.html"));
 // });
 //
-// // При корневом пути возвращать index.html из папки dist
-// app.get("/", (req, res) => {
-//   res.sendFile(__dirname, "../dist/index.html");
-// });
+// При корневом пути возвращать index.html из папки dist
+app.get("/admin", (req, res) => {
+  res.sendFile(__dirname, "../dist/medtech/index.html");
+});
 
 /******************************************************************** */
 /** CRUD для новостных постов */
