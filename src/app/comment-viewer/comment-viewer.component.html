@@ -1,16 +1,14 @@
-<form [formGroup]="myFirstReactiveForm"(submit)="onSave()">
-  <h1>Оставить комментарий</h1>
-  <label for="comment">Комментарий</label> <br>
-  <input type="text" id="comment" formControlName="comment" />
-  <br/><br/>
-  <p *ngIf="!flag" class="dangerous">Авторизируйтесь, чтобы оставить комментарий</p>
-  <div>
+<h1 class="title-com">Комментарии</h1>
+<form class="form-com" [formGroup]="myFirstReactiveForm"(submit)="onSave()">
+  <input class= "input-com" type="text" id="comment" formControlName="comment" placeholderComment="Ваш комментарий" [placeholder]="placeholderComment"/>
+  <small *ngIf="!flag && (placeholderComment=='')" class="dangerous">Авторизируйтесь, чтобы оставить комментарий</small>
+  <!-- <div>
   <re-captcha (resolved)="resolved($event)"
               formControlName="recaptchaReactive"
               siteKey="6Lcd5PMUAAAAAC86xKhg5Ow0Y1ikl27UkBnLknuZ">
   </re-captcha>
-  </div>
-  <input type="submit"  value="Отправить">
+  </div> -->
+  <input class="btn-com" type="submit"  value="Отправить">
 </form>
 <div class="comment" *ngFor="let comment of comments">
   <div class="header-com">
@@ -22,11 +20,5 @@
 </div>
   <p class="text-com">{{comment.text_comment}}</p>
 </div>
-<!-- <div class="commen" *ngFor="let comment of comments">
-  <div class="image-for-user-com"></div>
-  <h1>{{comment.name_commentator}}</h1>
-  <p class="time">{{comment.date_comment }}</p>
-  <p>{{comment.text_comment}}</p>
-</div> -->
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
