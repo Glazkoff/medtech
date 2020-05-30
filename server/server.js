@@ -604,6 +604,6 @@ app.post("/api/token_validate", (req, res) => {
 });
 
 // Прослушка порта веб-сервера
-app.listen(3001, () => {
-  console.log("Сервер запущен на http://localhost:3001");
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`Сервер запущен на http://localhost:${process.env.PORT || 3001}`);
 });
