@@ -46,15 +46,16 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
+let sequelize;
 if (process.env.PORT) {
   // Подключение к БД через Sequelize
-  const sequelize = new Sequelize(
+  sequelize = new Sequelize(
     dbConfig.PROD.DB,
     dbConfig.PROD.USER,
     dbConfig.PROD.PASSWORD,
     {
       dialect: dbConfig.PROD.DIALECT,
+      host: dbConfig.PROD.HOST,
       define: {
         dialectOptions: {
           charset: "UTF8",
@@ -73,28 +74,24 @@ if (process.env.PORT) {
   );
 } else {
   // Подключение к БД через Sequelize
-  const sequelize = new Sequelize(
-    dbConfig.DB,
-    dbConfig.USER,
-    dbConfig.PASSWORD,
-    {
-      dialect: dbConfig.DIALECT,
-      define: {
-        dialectOptions: {
-          charset: "UTF8",
-          collate: "utf8_unicode_ci",
-        },
-        timestamps: true,
+  sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+    dialect: dbConfig.DIALECT,
+    host: dbConfig.HOST,
+    define: {
+      dialectOptions: {
+        charset: "UTF8",
+        collate: "utf8_unicode_ci",
       },
-      pool: {
-        max: 10,
-        min: 1,
-        acquire: 30000,
-        idle: 10000,
-      },
-      isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
-    }
-  );
+      timestamps: true,
+    },
+    pool: {
+      max: 10,
+      min: 1,
+      acquire: 30000,
+      idle: 10000,
+    },
+    isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+  });
 }
 
 // Модель Comments
@@ -261,10 +258,14 @@ let salt = bcrypt.genSaltSync(10);
 // });
 //
 // При корневом пути возвращать index.html из папки dist
-app.get("/admin", (req, res) => {
-  res.sendFile(__dirname, "../dist/medtech/index.html");
+app.all("/admin", (req, res) => {
+  res.sendFile("index.html", { root: __dirname + "/../dist/medtech/" });
 });
 
+// app.all("/*", function (req, res, next) {
+//   // Just send the index.html for other files to support HTML5Mode
+//   res.sendFile("index.html", { root: __dirname + "/../dist/medtech/" });
+// });
 /******************************************************************** */
 /** CRUD для новостных постов */
 
