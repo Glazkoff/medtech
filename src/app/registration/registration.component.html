@@ -11,13 +11,13 @@
                 <h2 class="active">Регистрация</h2>
             </div> 
             <div class="label">Имя <span>*</span></div>
-            <div class="input-form" (click)="inputName=true; placeholderName='Введите имя'" >
-                <input type="text" (keyup)="inputName=true; placeholderName='Введите имя'"  formControlName="name" class="form-control" [placeholder]="placeholderName" >
+            <div class="input-form" (click)="placeholderName='Введите имя'" >
+                <input type="text" (keyup)="placeholderName='Введите имя'"  formControlName="name" class="form-control" [placeholder]="placeholderName" >
                 <small *ngIf="(placeholderName=='') && (!fieldRequired)" >Данное поле обязательное!</small>
             </div>
             <div class="label">Фамилия <span>*</span></div>
-            <div (click)="inputSurname=true; placeholderSurname='Введите фамилию'"  class="input-form">
-                <input (keyup)="inputSurname=true; placeholderSurname='Введите фамилию'" type="text"  formControlName="surname" class="form-control" [placeholder]="placeholderSurname" required>
+            <div (click)="placeholderSurname='Введите фамилию'"  class="input-form">
+                <input (keyup)="placeholderSurname='Введите фамилию'" type="text"  formControlName="surname" class="form-control" [placeholder]="placeholderSurname" required>
                 <small *ngIf="(placeholderSurname=='') && (!fieldRequired)" >Данное поле обязательное!</small>
             </div>
             <div class="label">Организация</div>
