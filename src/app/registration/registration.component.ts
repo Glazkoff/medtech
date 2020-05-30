@@ -16,7 +16,7 @@ export class RegistrationComponent implements OnInit {
   memory;
   fieldRequired = true;
   loginExist = true;
-  tryForLogin=""
+  tryForLogin = "";
   placeholderName = "Введите имя";
   placeholderSurname = "Введите фамилию";
   placeholderOrganization = "Введите организацию";
@@ -28,46 +28,38 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.myForm = new FormGroup({
-      name: new FormControl("", [
-        Validators.required
-      ]),
-      surname: new FormControl("", [
-        Validators.required
-      ]),
+      name: new FormControl("", [Validators.requiredx]),
+      surname: new FormControl("", [Validators.required]),
       organization: new FormControl("", []),
       role: new FormControl("", []),
-      login: new FormControl("", [
-        Validators.required
-      ]),
-      password: new FormControl("", [
-        Validators.required,
-      ]),
+      login: new FormControl("", [Validators.required]),
+      password: new FormControl("", [Validators.required]),
     });
   }
 
   async onRegistr() {
     if (this.myForm.invalid) {
       if (this.myForm.value.name == "") {
-          this.fieldRequired = false;
-          this.placeholderName="";
-        }
+        this.fieldRequired = false;
+        this.placeholderName = "";
+      }
       if (this.myForm.value.surname == "") {
-            this.fieldRequired = false;
-            this.placeholderSurname="";
-        } 
-     
+        this.fieldRequired = false;
+        this.placeholderSurname = "";
+      }
+
       if (this.myForm.value.login == "") {
-          this.fieldRequired = false;
-          this.placeholderLogin="";
-        }
+        this.fieldRequired = false;
+        this.placeholderLogin = "";
+      }
       if (this.myForm.value.password == "") {
-          this.fieldRequired = false;
-          this.placeholderPassword="";
-        }
+        this.fieldRequired = false;
+        this.placeholderPassword = "";
+      }
     } else {
       this.fieldRequired = true;
       this.loginExist = true;
-      
+
       let infoAboutNewUser;
       infoAboutNewUser = {
         name: this.myForm.value.name,
@@ -80,9 +72,11 @@ export class RegistrationComponent implements OnInit {
       this.type = "password";
       try {
         // console.log('отправляем запрос');
-        
+
         let registartionRes = await this.api.post(
-        JSON.stringify(infoAboutNewUser), "/users");
+          JSON.stringify(infoAboutNewUser),
+          "/users"
+        );
         // console.log("запрос был отправлен, получаем ответ");
         // console.log(registartionRes);
         if (registartionRes["token"]) {
@@ -93,34 +87,30 @@ export class RegistrationComponent implements OnInit {
             localStorage.setItem("userSurname", userData.surname);
             // console.log(userData.firstname);
             // console.log(userData.surname);
-          } 
-          
-          catch (error) {
+          } catch (error) {
             console.log(error);
           }
-          this.router.navigate(["/news"]);  
+          this.router.navigate(["/news"]);
         } else {
           // console.log('jhkjghkjhjkhjkhkjhkjhhkjkhj');
-          this.memory =  this.myForm.value.login ;
+          this.memory = this.myForm.value.login;
           // console.log(this.memory);
-          this.myForm.patchValue({login: ''});
-          this.placeholderLogin="";
+          this.myForm.patchValue({ login: "" });
+          this.placeholderLogin = "";
           this.loginExist = false;
         }
-        } 
-    catch (error) {
+      } catch (error) {
         console.log(error);
       }
     }
-    
   }
 
   onTogglePassword() {
     this.type = this.type == "password" ? "text" : "password";
   }
- viewOldLogin(){
-   if (!this.loginExist){
-    this.myForm.patchValue({login: this.memory});
-   }
+  viewOldLogin() {
+    if (!this.loginExist) {
+      this.myForm.patchValue({ login: this.memory });
+    }
   }
-  }
+}
