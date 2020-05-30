@@ -68,39 +68,46 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 });
 
 // Модель Comments
-const Comments = sequelize.define("comments", {
-  id_comment: {
-    type: Sequelize.INTEGER(11),
-    autoIncrement: true,
-    primaryKey: true,
-    allowNull: false,
-    unique: true
+const Comments = sequelize.define(
+  "comments",
+  {
+    id_comment: {
+      type: Sequelize.INTEGER(11),
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
+      unique: true,
+    },
+    name_commentator: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+    },
+    date_comment: {
+      type: Sequelize.DATE,
+      allowNull: false,
+    },
+    text_comment: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+    },
+    id_materials: {
+      type: Sequelize.INTEGER(11),
+      allowNull: false,
+    },
+    author_id: {
+      type: Sequelize.INTEGER(11),
+      allowNull: false,
+    },
   },
-  name_commentator: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-  },
-  date_comment: {
-    type: Sequelize.DATE,
-    allowNull: false,
-  },
-  text_comment: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-  },
-  id_materials: {
-    type: Sequelize.INTEGER(11),
-    allowNull: false,
-  },
-  author_id: {
-    type: Sequelize.INTEGER(11),
-    allowNull: false
-  },
-});
+  {
+    timestamps: false,
+  }
+);
 
 // Модель Materials
 const Materials = sequelize.define(
-  "materials", {
+  "materials",
+  {
     id_materials: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -127,7 +134,8 @@ const Materials = sequelize.define(
       type: Sequelize.TEXT,
       allowNull: false,
     },
-  }, {
+  },
+  {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
@@ -135,7 +143,8 @@ const Materials = sequelize.define(
 
 // Модель Users
 const Users = sequelize.define(
-  "users", {
+  "users",
+  {
     id_users: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -166,7 +175,8 @@ const Users = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-  }, {
+  },
+  {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
@@ -176,26 +186,26 @@ const Users = sequelize.define(
 Materials.hasMany(Comments, {
   onDelete: "cascade",
   foreignKey: "id_materials",
-  as: "Comments"
+  as: "Comments",
 });
 Comments.belongsTo(Materials, {
   foreignKey: "id_materials",
-  as: "material"
+  as: "material",
 });
 Users.hasMany(Comments, {
   onDelete: "cascade",
   foreignKey: "author_id",
-  as: "comments"
+  as: "comments",
 });
 Comments.belongsTo(Users, {
   foreignKey: "author_id",
-  as: "user"
+  as: "user",
 });
 
 // Синхронизация Sequelize с удалённой БД
 sequelize
   .sync()
-  // Вариант для изменений в таблицах 
+  // Вариант для изменений в таблицах
   // .sync({
   //   alter: true
   // })
@@ -208,49 +218,6 @@ sequelize.afterConnect((connect) => {
     console.log("Set names", res);
   });
 });
-
-// создаем соединение с нашей базой данных
-// const connection = mysql.createPool({
-//   connectionLimit: 10,
-//   host: dbConfig.HOST,
-//   user: dbConfig.USER,
-//   password: dbConfig.PASSWORD,
-//   database: dbConfig.DB,
-//   charset: "utf8_general_ci",
-// });
-// connection.getConnection((err, connection) => {
-//   if (err) {
-//     if (err.code === "PROTOCOL_CONNECTION_LOST") {
-//       console.error("Database connection was closed.");
-//     }
-//     if (err.code === "ER_CON_COUNT_ERROR") {
-//       console.error("Database has too many connections.");
-//     }
-//     if (err.code === "ECONNREFUSED") {
-//       console.error("Database connection was refused.");
-//     }
-//   } else {
-//     connection.query('SET NAMES "utf8"');
-//     connection.query('SET CHARACTER SET "utf8"');
-//     connection.query('SET SESSION collation_connection = "utf8_general_ci"');
-//     console.log("Успешно соединено с БД");
-//   }
-//   if (connection) connection.release();
-// });
-// try {
-//   connection.connect((err) => {
-//     if (err) {
-//       console.warn(err);
-//     } else {
-//       console.log("Успешно соединено с базой данных");
-//       connection.query('SET NAMES "utf8"');
-//       connection.query('SET CHARACTER SET "utf8"');
-//       connection.query('SET SESSION collation_connection = "utf8_general_ci"');
-//     }
-//   });
-// } catch (err) {
-//   console.warn(err);
-// }
 
 let salt = bcrypt.genSaltSync(10);
 
@@ -352,16 +319,19 @@ app.put("/api/posts/:id", async (req, res) => {
   console.log(req.body);
   let result;
   try {
-    result = await Materials.update({
-      duration: req.body.duration,
-      date: req.body.content.time,
-      title: req.body.title,
-      content: JSON.stringify(req.body.content.blocks),
-    }, {
-      where: {
-        id_materials: req.params.id,
+    result = await Materials.update(
+      {
+        duration: req.body.duration,
+        date: req.body.content.time,
+        title: req.body.title,
+        content: JSON.stringify(req.body.content.blocks),
       },
-    });
+      {
+        where: {
+          id_materials: req.params.id,
+        },
+      }
+    );
     res.send(result);
   } catch (error) {
     console.log(error);
@@ -427,14 +397,16 @@ app.post("/api/users", async (req, res) => {
           },
         });
         console.log("Созданный пользователь: ", user);
-        let token = await jwt.sign({
+        let token = await jwt.sign(
+          {
             id_users: user.id_users,
             firstname: user.firstname,
             surname: user.surname,
             organization: user.organization,
             role: user.role,
           },
-          CONFIG.SECRET, {
+          CONFIG.SECRET,
+          {
             expiresIn: 86400, // токен на 24 часа
           }
         );
@@ -484,14 +456,16 @@ app.post("/api/login", async (req, res) => {
         //   message: "Неправильный логин или пароль",
         // });
       } else {
-        jwt.sign({
+        jwt.sign(
+          {
             id_users: existUser.id_users,
             firstname: existUser.firstname,
             surname: existUser.surname,
             organization: existUser.organization,
             role: existUser.role,
           },
-          CONFIG.SECRET, {
+          CONFIG.SECRET,
+          {
             expiresIn: 86400, // токен на 24 часа
           },
           (err, token) => {
@@ -522,18 +496,20 @@ app.get("/api/comments/:id", async (req, res) => {
   try {
     let comments = await Comments.findAll({
       where: {
-        id_materials: req.params.id
+        id_materials: req.params.id,
       },
-      include: [{
-        association: "user",
-        attributes: ["firstname", "surname"]
-      }]
-    })
+      include: [
+        {
+          association: "user",
+          attributes: ["firstname", "surname"],
+        },
+      ],
+    });
     res.send(comments);
   } catch (error) {
     res.status(500).send({
       status: 500,
-      message: "Ошибка сервера при получении комментариев"
+      message: "Ошибка сервера при получении комментариев",
     });
     console.log(error);
   }
@@ -547,14 +523,14 @@ app.post("/api/comments", async (req, res) => {
     let create = Comments.create({
       text_comment: req.body.text_comment,
       id_materials: req.body.id_materials,
-      author_id: req.body.author_id
-    })
+      author_id: req.body.author_id,
+    });
     res.send(create);
   } catch (error) {
     console.log(error);
     res.status(500).send({
       status: 500,
-      message: "Ошибка сервера при создании комментария"
+      message: "Ошибка сервера при создании комментария",
     });
   }
 });
@@ -570,18 +546,18 @@ app.delete("/api/comments/:id", async (req, res) => {
   try {
     let destroy = await Comments.destroy({
       where: {
-        id_comment: req.params.id
-      }
-    })
+        id_comment: req.params.id,
+      },
+    });
     res.send({
       status: 200,
-      message: `Комментарий #${req.params.id} удалён`
-    })
+      message: `Комментарий #${req.params.id} удалён`,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       status: 500,
-      message: "Ошибка сервера при удалении комментария"
+      message: "Ошибка сервера при удалении комментария",
     });
   }
 });
