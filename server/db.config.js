@@ -10,4 +10,5 @@ module.exports = {
   PASSWORD: "b531284b9179fa77bd6cf801fc81d692379cb1402baf2030315cb8863a4cf351",
   DB: "d6ta4mffadoi2d",
   DIALECT: "postgres",
+  PORT: 5432,
 };

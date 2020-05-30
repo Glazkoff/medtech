@@ -51,6 +51,7 @@ app.use(function (req, res, next) {
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   dialect: dbConfig.DIALECT,
   host: dbConfig.HOST,
+  port: dbConfig.PORT,
   define: {
     dialectOptions: {
       charset: "UTF8",
