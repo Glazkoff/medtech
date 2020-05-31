@@ -26,8 +26,8 @@ export class AdminArticlesComponent implements OnInit {
         });
       if (!this.id) {
         let resp = await this.api.get("/posts");
+        this.loading = false;
         if (await resp.hasOwnProperty(length)) {
-          this.loading = false;
           // tslint:disable-next-line: no-string-literal
           for (let index = 0; index < resp["length"]; index++) {
             console.log(resp[index]);
