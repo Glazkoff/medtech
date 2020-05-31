@@ -261,6 +261,12 @@ let salt = bcrypt.genSaltSync(10);
 app.all("/admin", (req, res) => {
   res.sendFile("index.html", { root: __dirname + "/../dist/medtech/" });
 });
+app.all("/admin/*", (req, res) => {
+  res.sendFile("index.html", { root: __dirname + "/../dist/medtech/" });
+});
+app.all("/news", (req, res) => {
+  res.sendFile("index.html", { root: __dirname + "/../dist/medtech/" });
+});
 
 // app.all("/*", function (req, res, next) {
 //   // Just send the index.html for other files to support HTML5Mode
@@ -270,7 +276,7 @@ app.all("/admin", (req, res) => {
 /** CRUD для новостных постов */
 
 // Создание новостного поста
-app.post("/api/posts", async (req, res) => {
+app.post("  ", async (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл POST запрос для постов:");
   console.log(req.body);
