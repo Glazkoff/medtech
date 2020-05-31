@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: "http://medtech-v-1.herokuapp.com/api",
+  baseUrl: "https://medtech-v-1.herokuapp.com/api",
 };
