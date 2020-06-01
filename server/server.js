@@ -103,13 +103,10 @@ const Comments = sequelize.define(
       allowNull: false,
       unique: true,
     },
-    name_commentator: {
-      type: Sequelize.TEXT,
-      allowNull: false,
-    },
     date_comment: {
       type: Sequelize.DATE,
       allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     },
     text_comment: {
       type: Sequelize.TEXT,
