@@ -45,10 +45,11 @@ export class CommentViewerComponent implements OnInit {
       commentsarr.forEach((element) => {
         let el = {
           id_comment: element.id_comment,
-          name_commentator: userData.firstname,
-          text_comment: element.text_comment,
           date_comment: moment (element.date_comment).utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
+          text_comment: element.text_comment,
           id_materials: element.id_materials,
+          author_id: element.author_id,
+          name_commentator: element.user.firstname,
         };
         this.comments.push(el);
       });
@@ -62,6 +63,7 @@ export class CommentViewerComponent implements OnInit {
 
   async onSave() {
     let comment_add;
+    let comment_add_array;
     if (localStorage.getItem("userName") !== null) {
       this.name = localStorage.getItem("userName");
       //Наденька, в объекте userData лежит вся информация о пользователе,
@@ -69,23 +71,25 @@ export class CommentViewerComponent implements OnInit {
       // Получай его из объекта и делай с ним, что пожелаешь
       let userData = jwt.read(localStorage.getItem("token")).claim;
       console.log(userData);
-
-
-
-
-      comment_add = {
+      comment_add_array = {
         name_commentator: userData.firstname,
+        author_id: userData.id_users,
         text_comment: this.myFirstReactiveForm.value.comment,
         id_materials: this.id,
         date_comment: this.now.utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
-
+      };
+      comment_add = {
+        author_id: userData.id_users,
+        text_comment: this.myFirstReactiveForm.value.comment,
+        id_materials: this.id,
+        // date_comment: this.now.utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
       };
       try {
         let comm = await this.api.post(
           JSON.stringify(comment_add),
           "/comments"
         );
-        this.comments.push(comment_add);
+        this.comments.push(comment_add_array);
         console.log(this.comments);
         this.myFirstReactiveForm.patchValue({comment: ''});
       } catch (error) {
