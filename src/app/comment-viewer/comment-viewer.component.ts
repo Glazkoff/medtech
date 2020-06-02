@@ -87,6 +87,7 @@ export class CommentViewerComponent implements OnInit {
         );
         this.comments.push(comment_add);
         console.log(this.comments);
+        this.myFirstReactiveForm.patchValue({comment: ''});
       } catch (error) {
         console.log(error);
       }
