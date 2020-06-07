@@ -21,7 +21,8 @@ body {
 }
 
 .mainpanel {
-  width: 82vw;
+  /* width: 82vw; */
+  /* width: 100%; */
   margin-left: 18vw;
 }
 

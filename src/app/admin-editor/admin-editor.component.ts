@@ -9,6 +9,10 @@ import { Router } from "@angular/router";
 import SimpleImage from "@editorjs/simple-image";
 import Embed from "@editorjs/embed";
 import Quote from "@editorjs/quote";
+import { FileUploader } from "ng2-file-upload/ng2-file-upload";
+import { environment } from "../../environments/environment";
+
+const URL = environment.baseUrl + "/posts/photos";
 
 let editor;
 @Component({
@@ -27,6 +31,10 @@ export class AdminEditorComponent implements OnInit {
   editorData = {
     blocks: [],
   };
+  public uploader: FileUploader = new FileUploader({
+    url: URL,
+    itemAlias: "image",
+  });
   async ngOnInit() {
     console.log("DATAONINIT: ", this.data);
     if (this.data !== undefined) {
@@ -65,6 +73,13 @@ export class AdminEditorComponent implements OnInit {
     } catch (reason) {
       console.log(`Editor.js загрузка сломалась по причине ${reason}`);
     }
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+    };
+    this.uploader.onCompleteItem = (item: any, status: any) => {
+      console.log("Uploaded File Details:", item);
+      // this.toastr.success("File successfully uploaded!");
+    };
   }
   async ngOnChanges(changes: SimpleChanges) {
     console.log("DATAONINIT: ", this.data);

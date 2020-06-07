@@ -2,7 +2,7 @@
 const express = require("express");
 const serveStatic = require("serve-static");
 const bodyParser = require("body-parser");
-const mysql = require("mysql2");
+// const mysql = require("mysql2");
 const path = require("path");
 const dbConfig = require("./db.config.js");
 const jwt = require("jsonwebtoken");
@@ -11,8 +11,30 @@ const CONFIG = require("./secret.config.js");
 const morgan = require("morgan");
 const compression = require("compression");
 const Sequelize = require("sequelize");
+const multer = require("multer");
 
 const app = express();
+
+// Путь папки для загрузки
+let DIR = "./server/uploads";
+
+// Определяем правила загрузки файлов на сервер
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, DIR);
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+// Определяем тип
+let upload = multer({
+  storage: storage,
+});
 
 // Промежуточный обработчик для сжатия gzip
 app.use(compression());
@@ -52,7 +74,8 @@ if (process.env.PORT) {
   sequelize = new Sequelize(
     dbConfig.PROD.DB,
     dbConfig.PROD.USER,
-    dbConfig.PROD.PASSWORD, {
+    dbConfig.PROD.PASSWORD,
+    {
       dialect: dbConfig.PROD.DIALECT,
       host: dbConfig.PROD.HOST,
       define: {
@@ -95,7 +118,8 @@ if (process.env.PORT) {
 
 // Модель Comments
 const Comments = sequelize.define(
-  "comments", {
+  "comments",
+  {
     id_comment: {
       type: Sequelize.INTEGER(11),
       autoIncrement: true,
@@ -106,7 +130,7 @@ const Comments = sequelize.define(
     date_comment: {
       type: Sequelize.DATE,
       allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+      defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
     },
     text_comment: {
       type: Sequelize.TEXT,
@@ -120,14 +144,16 @@ const Comments = sequelize.define(
       type: Sequelize.INTEGER(11),
       allowNull: false,
     },
-  }, {
+  },
+  {
     timestamps: false,
   }
 );
 
 // Модель Materials
 const Materials = sequelize.define(
-  "materials", {
+  "materials",
+  {
     id_materials: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -154,7 +180,8 @@ const Materials = sequelize.define(
       type: Sequelize.TEXT,
       allowNull: false,
     },
-  }, {
+  },
+  {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
@@ -162,7 +189,8 @@ const Materials = sequelize.define(
 
 // Модель Users
 const Users = sequelize.define(
-  "users", {
+  "users",
+  {
     id_users: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -193,7 +221,8 @@ const Users = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-  }, {
+  },
+  {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
@@ -250,17 +279,17 @@ let salt = bcrypt.genSaltSync(10);
 // При корневом пути возвращать index.html из папки dist
 app.all("/admin", (req, res) => {
   res.sendFile("index.html", {
-    root: __dirname + "/../dist/medtech/"
+    root: __dirname + "/../dist/medtech/",
   });
 });
 app.all("/admin/*", (req, res) => {
   res.sendFile("index.html", {
-    root: __dirname + "/../dist/medtech/"
+    root: __dirname + "/../dist/medtech/",
   });
 });
 app.all("/news", (req, res) => {
   res.sendFile("index.html", {
-    root: __dirname + "/../dist/medtech/"
+    root: __dirname + "/../dist/medtech/",
   });
 });
 
@@ -268,6 +297,22 @@ app.all("/news", (req, res) => {
 //   // Just send the index.html for other files to support HTML5Mode
 //   res.sendFile("index.html", { root: __dirname + "/../dist/medtech/" });
 // });
+
+// Загрузка фото
+app.post("/api/posts/photos", upload.single("image"), async (req, res) => {
+  if (!req.file) {
+    console.log("Нет доступного файла");
+    return res.send({
+      success: false,
+    });
+  } else {
+    console.log("Файл доступен!");
+    return res.send({
+      success: true,
+    });
+  }
+});
+
 /******************************************************************** */
 /** CRUD для новостных постов */
 
@@ -352,16 +397,19 @@ app.put("/api/posts/:id", async (req, res) => {
   console.log(req.body);
   let result;
   try {
-    result = await Materials.update({
-      duration: req.body.duration,
-      date: req.body.content.time,
-      title: req.body.title,
-      content: JSON.stringify(req.body.content.blocks),
-    }, {
-      where: {
-        id_materials: req.params.id,
+    result = await Materials.update(
+      {
+        duration: req.body.duration,
+        date: req.body.content.time,
+        title: req.body.title,
+        content: JSON.stringify(req.body.content.blocks),
       },
-    });
+      {
+        where: {
+          id_materials: req.params.id,
+        },
+      }
+    );
     res.send(result);
   } catch (error) {
     console.log(error);
@@ -427,14 +475,16 @@ app.post("/api/users", async (req, res) => {
           },
         });
         console.log("Созданный пользователь: ", user);
-        let token = await jwt.sign({
+        let token = await jwt.sign(
+          {
             id_users: user.id_users,
             firstname: user.firstname,
             surname: user.surname,
             organization: user.organization,
             role: user.role,
           },
-          CONFIG.SECRET, {
+          CONFIG.SECRET,
+          {
             expiresIn: 86400, // токен на 24 часа
           }
         );
@@ -484,14 +534,16 @@ app.post("/api/login", async (req, res) => {
         //   message: "Неправильный логин или пароль",
         // });
       } else {
-        jwt.sign({
+        jwt.sign(
+          {
             id_users: existUser.id_users,
             firstname: existUser.firstname,
             surname: existUser.surname,
             organization: existUser.organization,
             role: existUser.role,
           },
-          CONFIG.SECRET, {
+          CONFIG.SECRET,
+          {
             expiresIn: 86400, // токен на 24 часа
           },
           (err, token) => {
@@ -524,10 +576,12 @@ app.get("/api/comments/:id", async (req, res) => {
       where: {
         id_materials: req.params.id,
       },
-      include: [{
-        association: "user",
-        attributes: ["firstname", "surname"],
-      }, ],
+      include: [
+        {
+          association: "user",
+          attributes: ["firstname", "surname"],
+        },
+      ],
     });
     res.send(comments);
   } catch (error) {

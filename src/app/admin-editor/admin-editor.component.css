@@ -1,11 +1,12 @@
 .editor-background {
-  max-width: 850px;
-  margin: 20px auto;
+  max-width: 90%;
+  margin: 0px auto;
   border-radius: 100px;
-  padding: 70px 60px;
-  padding-top: 90px;
-  background: #eef5fa;
+  /* padding: 70px 60px; */
+  /* padding-top: 90px; */
+  /* background: #eef5fa; */
   position: relative;
+  padding-bottom: 1rem;
 }
 
 .editor-wrap {
@@ -14,15 +15,22 @@
   box-shadow: 0 24px 24px -18px rgba(69, 104, 129, .33),
     0 9px 45px 0 rgba(114, 119, 160, .12);
   margin: 0 auto;
+  box-sizing: border-box;
   background-color: #fff;
 }
 
 .editor-btn-wrap {
-  position: absolute;
+  /* position: absolute; */
   top: 18px;
   /* left: calc(50% - 50px); */
   right: 60px;
   display: flex;
+  flex-direction: column;
+  padding-bottom: 1rem;
+}
+
+.editor-btn-wrap>* {
+  margin-bottom: 0.5rem;
 }
 
 .editor-btn,
