@@ -74,8 +74,7 @@ if (process.env.PORT) {
   sequelize = new Sequelize(
     dbConfig.PROD.DB,
     dbConfig.PROD.USER,
-    dbConfig.PROD.PASSWORD,
-    {
+    dbConfig.PROD.PASSWORD, {
       dialect: dbConfig.PROD.DIALECT,
       host: dbConfig.PROD.HOST,
       define: {
@@ -118,8 +117,7 @@ if (process.env.PORT) {
 
 // Модель Comments
 const Comments = sequelize.define(
-  "comments",
-  {
+  "comments", {
     id_comment: {
       type: Sequelize.INTEGER(11),
       autoIncrement: true,
@@ -144,16 +142,14 @@ const Comments = sequelize.define(
       type: Sequelize.INTEGER(11),
       allowNull: false,
     },
-  },
-  {
+  }, {
     timestamps: false,
   }
 );
 
 // Модель Materials
 const Materials = sequelize.define(
-  "materials",
-  {
+  "materials", {
     id_materials: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -180,8 +176,11 @@ const Materials = sequelize.define(
       type: Sequelize.TEXT,
       allowNull: false,
     },
-  },
-  {
+    main_image: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+    }
+  }, {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
@@ -189,8 +188,7 @@ const Materials = sequelize.define(
 
 // Модель Users
 const Users = sequelize.define(
-  "users",
-  {
+  "users", {
     id_users: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -221,8 +219,7 @@ const Users = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-  },
-  {
+  }, {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
@@ -298,6 +295,27 @@ app.all("/news", (req, res) => {
 //   res.sendFile("index.html", { root: __dirname + "/../dist/medtech/" });
 // });
 
+// Отправка фото
+app.get("/api/uploads/:filename", (req, res) => {
+  if (req.params.filename) {
+    res.sendFile(path.join(__dirname, 'uploads', req.params.filename), function (err) {
+      if (err) {
+        console.log(err);
+        res.status(err.status).send({
+          status: err.status
+        });
+      } else {
+        console.log('Sent:', req.params.filename);
+      }
+    })
+  } else {
+    res.status(400).send({
+      status: 400
+    });
+  }
+
+})
+
 // Загрузка фото
 app.post("/api/posts/photos", upload.single("image"), async (req, res) => {
   if (!req.file) {
@@ -309,6 +327,7 @@ app.post("/api/posts/photos", upload.single("image"), async (req, res) => {
     console.log("Файл доступен!");
     return res.send({
       success: true,
+      filename: req.file.filename
     });
   }
 });
@@ -329,6 +348,7 @@ app.post("/api/posts", async (req, res) => {
       type: "news",
       title: req.body.title,
       content: JSON.stringify(req.body.content.blocks),
+      main_image: req.body.main_image
     });
     res.send(result);
   } catch (error) {
@@ -397,19 +417,17 @@ app.put("/api/posts/:id", async (req, res) => {
   console.log(req.body);
   let result;
   try {
-    result = await Materials.update(
-      {
-        duration: req.body.duration,
-        date: req.body.content.time,
-        title: req.body.title,
-        content: JSON.stringify(req.body.content.blocks),
+    result = await Materials.update({
+      duration: req.body.duration,
+      date: req.body.content.time,
+      title: req.body.title,
+      content: JSON.stringify(req.body.content.blocks),
+      main_image: req.body.main_image
+    }, {
+      where: {
+        id_materials: req.params.id,
       },
-      {
-        where: {
-          id_materials: req.params.id,
-        },
-      }
-    );
+    });
     res.send(result);
   } catch (error) {
     console.log(error);
@@ -475,16 +493,14 @@ app.post("/api/users", async (req, res) => {
           },
         });
         console.log("Созданный пользователь: ", user);
-        let token = await jwt.sign(
-          {
+        let token = await jwt.sign({
             id_users: user.id_users,
             firstname: user.firstname,
             surname: user.surname,
             organization: user.organization,
             role: user.role,
           },
-          CONFIG.SECRET,
-          {
+          CONFIG.SECRET, {
             expiresIn: 86400, // токен на 24 часа
           }
         );
@@ -534,16 +550,14 @@ app.post("/api/login", async (req, res) => {
         //   message: "Неправильный логин или пароль",
         // });
       } else {
-        jwt.sign(
-          {
+        jwt.sign({
             id_users: existUser.id_users,
             firstname: existUser.firstname,
             surname: existUser.surname,
             organization: existUser.organization,
             role: existUser.role,
           },
-          CONFIG.SECRET,
-          {
+          CONFIG.SECRET, {
             expiresIn: 86400, // токен на 24 часа
           },
           (err, token) => {
@@ -576,12 +590,10 @@ app.get("/api/comments/:id", async (req, res) => {
       where: {
         id_materials: req.params.id,
       },
-      include: [
-        {
-          association: "user",
-          attributes: ["firstname", "surname"],
-        },
-      ],
+      include: [{
+        association: "user",
+        attributes: ["firstname", "surname"],
+      }, ],
     });
     res.send(comments);
   } catch (error) {

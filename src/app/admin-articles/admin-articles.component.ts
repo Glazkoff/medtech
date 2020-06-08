@@ -40,7 +40,7 @@ export class AdminArticlesComponent implements OnInit {
         this.data = {
           title: resp[0].title,
           blocks: JSON.parse(resp[0].content),
-          duration: resp[0].duration,
+          main_image: resp[0].main_image,
         };
       }
     } catch (error) {

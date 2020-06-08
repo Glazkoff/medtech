@@ -26,6 +26,7 @@ import { ModalComponent } from "./modal/modal.component";
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
 import { MyDatePipePipe } from "./shared/pipes/my-date-pipe.pipe";
 import { FileSelectDirective } from "ng2-file-upload";
+// import { FileUploadModule } from "ng2-file-upload";
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +57,7 @@ import { FileSelectDirective } from "ng2-file-upload";
     HttpClientModule,
     RecaptchaModule, //this is the recaptcha main module
     RecaptchaFormsModule, //this is the module for form incase form validation
+    // FileUploadModule,
   ],
   providers: [
     {

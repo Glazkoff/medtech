@@ -1,23 +1,24 @@
 <div class="body">
-<div class="logo_news">
-  <img  src="../../assets/logo_news.png" alt="">
-</div>
-<div class="block_news">
+  <div class="logo_news">
+    <img src="../../assets/logo_news.png" alt="">
+  </div>
+  <div class="block_news">
 
-  <div class="content">
-    <div class="content__item" *ngFor="let post of posts">
-    <a [routerLink]="['/new', post.id]">
-      <img src="../../assets/example1.png" alt="">
-      <div>
-  <span id="post_type">{{post.type}}</span>
-    <span id="post_date">{{post.date}}</span></div>
-      <br>
-      <div id="post_title">{{post.title}}</div>
-      <span id="post_duration">{{post.duration}}</span>
-<!--      <div id="paragraph_content"+post.id>-->
-<!--      </div>-->
-    </a>
+    <div class="content">
+      <div class="content__item" *ngFor="let post of posts">
+        <a [routerLink]="['/new', post.id]">
+          <img [src]="env.baseUrl + '/uploads/'+post.main_image" alt="" *ngIf="post.main_image !== undefined">
+          <img src="../../assets/example1.png" alt="" *ngIf="!post.main_image">
+          <div>
+            <span id="post_type">{{post.type}}</span>
+            <span id="post_date">{{post.date}}</span></div>
+          <br>
+          <div id="post_title">{{post.title}}</div>
+          <span id="post_duration">{{post.duration}}</span>
+          <!--      <div id="paragraph_content"+post.id>-->
+          <!--      </div>-->
+        </a>
+      </div>
     </div>
   </div>
-</div>
 </div>

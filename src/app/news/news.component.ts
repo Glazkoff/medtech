@@ -3,6 +3,8 @@ import { Component, OnInit } from "@angular/core";
 import { NewsGet } from "../add/news.get";
 import { BaseApiService } from "../services/base-api.service";
 import * as moment from "moment";
+import { environment } from "../../environments/environment";
+
 @Component({
   selector: "app-news",
   templateUrl: "./news.component.html",
@@ -11,7 +13,7 @@ import * as moment from "moment";
 export class NewsComponent implements OnInit {
   posts = [];
   constructor(private api: BaseApiService) {}
-
+  env = environment;
   async ngOnInit() {
     let postsarr = await this.getPosts();
     if (Array.isArray(postsarr)) {
@@ -19,17 +21,20 @@ export class NewsComponent implements OnInit {
         let el = {
           id: element.id_materials,
           title: element.title,
-          date: moment (parseInt(element.date)).utcOffset("+0300").format(' DD.MM.YYYY'),
+          date: moment(parseInt(element.date))
+            .utcOffset("+0300")
+            .format(" DD.MM.YYYY"),
           duration: element.duration,
           type: element.type,
           content: element.content,
+          main_image: element.main_image,
         };
         this.posts.push(el);
       });
-     for (let i = 0; i <= postsarr.length; i++) {
-       console.log(postsarr.length);
-       this.jsonParse(JSON.parse(postsarr[i].content));
-     };
+      for (let i = 0; i <= postsarr.length; i++) {
+        console.log(postsarr.length);
+        this.jsonParse(JSON.parse(postsarr[i].content));
+      }
     }
   }
 
@@ -48,11 +53,11 @@ export class NewsComponent implements OnInit {
     return response;
   }
   async jsonParse(cont) {
-    let html = '';
+    let html = "";
     // for (let i = 0; i <= this.posts.length; i++) {
-      cont.forEach((content) => {
+    cont.forEach((content) => {
       switch (content.type) {
-        case 'paragraph':
+        case "paragraph":
           html += `<p>${content.data.text}</p>`;
           break;
       }
