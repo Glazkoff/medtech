@@ -24,16 +24,23 @@ export class NewsComponent implements OnInit {
           date: moment(parseInt(element.date))
             .utcOffset("+0300")
             .format(" DD.MM.YYYY"),
-          duration: element.duration,
+          // duration: element.duration,
           type: element.type,
           content: element.content,
           main_image: element.main_image,
+          author: element.author,
         };
         this.posts.push(el);
       });
       for (let i = 0; i <= postsarr.length; i++) {
         console.log(postsarr.length);
-        this.jsonParse(JSON.parse(postsarr[i].content));
+        try {
+          if (postsarr[i] !== undefined) {
+            this.jsonParse(JSON.parse(postsarr[i].content));
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   }

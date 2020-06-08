@@ -7,14 +7,14 @@
     <div class="content">
       <div class="content__item" *ngFor="let post of posts">
         <a [routerLink]="['/new', post.id]">
-          <img [src]="env.baseUrl + '/uploads/'+post.main_image" alt="" *ngIf="post.main_image !== undefined">
+          <img [src]="env.baseUrl + '/uploads/'+post.main_image" alt="" *ngIf="post.main_image !== ''">
           <img src="../../assets/example1.png" alt="" *ngIf="!post.main_image">
           <div>
-            <span id="post_type">{{post.type}}</span>
+            <span id="post_type">Автор: {{post.author}}</span>
             <span id="post_date">{{post.date}}</span></div>
           <br>
           <div id="post_title">{{post.title}}</div>
-          <span id="post_duration">{{post.duration}}</span>
+          <!-- <span id="post_duration">{{post.duration}}</span> -->
           <!--      <div id="paragraph_content"+post.id>-->
           <!--      </div>-->
         </a>

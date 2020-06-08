@@ -179,7 +179,11 @@ const Materials = sequelize.define(
     main_image: {
       type: Sequelize.TEXT,
       allowNull: false,
-    }
+    },
+    author: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
   }, {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
@@ -337,18 +341,21 @@ app.post("/api/posts/photos", upload.single("image"), async (req, res) => {
 
 // Создание новостного поста
 app.post("/api/posts", async (req, res) => {
+  console.log('TOKEN DECODE', jwt.decode(req.headers.authorization));
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл POST запрос для постов:");
   console.log(req.body);
   let result;
   try {
+    let decoded = await jwt.decode(req.headers.authorization)
     result = await Materials.create({
       duration: req.body.duration,
       date: req.body.content.time,
       type: "news",
       title: req.body.title,
       content: JSON.stringify(req.body.content.blocks),
-      main_image: req.body.main_image
+      main_image: req.body.main_image,
+      author: decoded.firstname + ' ' + decoded.surname
     });
     res.send(result);
   } catch (error) {
