@@ -29,6 +29,8 @@
 
 [Ссылка на макет/мокап в Figma](https://www.figma.com/file/qVGQ2iN2clPqCpwPKdMOVk/%D0%9C%D0%B5%D0%B4LMS?node-id=0%3A1 "Figma")
 
+[Ссылка на User Story Map](https://miro.com/app/board/o9J_ksUctIA=/ "User Story Map")
+
 ---
 
 ## Цель проекта
@@ -107,33 +109,33 @@ Fullstack-программист
 
 ## CSS-словарик селекторов
 
-| Селектор                   | Компонент(ы) использования |
-| -------------------------- | ---------------------------|
-| header                     | top-bar                    |
-| .top-bar                   | top-bar                    |
-| .minlogo                   | top-bar                    |
-| .devider                   | top-bar                    | 
-| .menu                      | top-bar                    |
-| .link                      | top-bar                    |
-| .active                    | top-bar                    |
-| .navbar-collapse           | top-bar                    |
-| .flex-wrap                 | top-bar                    |
-| .nav-link                  | top-bar                    |
-| .icon                      | top-bar                    |
-| .triangle                  | top-bar                    |
-| .add-menu                  | top-bar                    |
-| .image-for-user            | top-bar                    |
-| .dropdown-menu             | top-bar                    |
-| .devider-bottom            | top-bar                    |
-| .dropdown-item             | top-bar                    |
-| .center                    | top-bar                    |
-| .flex                      | registration               |
-| .wrap-flex                 | registration               |
-| .wrap-grid                 | registration               |
-| .wrap-flex2                | registration               |
-| .label                     | registration               |
-| .form-control              | registration               |
-| .btn                       | registration               |
-| .message                   | registration               |
-| .insideField               | registration               |
-| .input-form                | registration               |
+| Селектор         | Компонент(ы) использования |
+| ---------------- | -------------------------- |
+| header           | top-bar                    |
+| .top-bar         | top-bar                    |
+| .minlogo         | top-bar                    |
+| .devider         | top-bar                    |
+| .menu            | top-bar                    |
+| .link            | top-bar                    |
+| .active          | top-bar                    |
+| .navbar-collapse | top-bar                    |
+| .flex-wrap       | top-bar                    |
+| .nav-link        | top-bar                    |
+| .icon            | top-bar                    |
+| .triangle        | top-bar                    |
+| .add-menu        | top-bar                    |
+| .image-for-user  | top-bar                    |
+| .dropdown-menu   | top-bar                    |
+| .devider-bottom  | top-bar                    |
+| .dropdown-item   | top-bar                    |
+| .center          | top-bar                    |
+| .flex            | registration               |
+| .wrap-flex       | registration               |
+| .wrap-grid       | registration               |
+| .wrap-flex2      | registration               |
+| .label           | registration               |
+| .form-control    | registration               |
+| .btn             | registration               |
+| .message         | registration               |
+| .insideField     | registration               |
+| .input-form      | registration               |
