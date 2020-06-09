@@ -26,6 +26,7 @@ import { ModalComponent } from "./modal/modal.component";
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
 import { MyDatePipePipe } from "./shared/pipes/my-date-pipe.pipe";
 import { FileSelectDirective } from "ng2-file-upload";
+import { FavouritesComponent } from './favourites/favourites.component';
 // import { FileUploadModule } from "ng2-file-upload";
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { FileSelectDirective } from "ng2-file-upload";
     ModalComponent,
     MyDatePipePipe,
     FileSelectDirective,
+    FavouritesComponent,
   ],
   imports: [
     BrowserModule,

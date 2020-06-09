@@ -6,12 +6,12 @@
       <div class="menu">
         <a [routerLink]="[ '/news' ]" routerLinkActive="active" class="link">главная</a>
         <a class="link">курсы</a>
-        <a class="link">избранное</a>
+        <a  [routerLink]="['/favourites']" class="link">избранное</a>
         <a class="link">статьи</a>
         <a class="link">актуальное</a>
       </div>
-      
-      
+
+
     <div *ngIf="logOut; else blockLogIn">
       <div class="flex-wrap">
         <a class="nav-link">Здравствуйте,<br>  {{name}} {{surname}}!</a>
@@ -36,7 +36,7 @@
       <div class="flex-wrap">
         <a class="nav-link center" [routerLink]="['/authorization']">Войти или <br> зарегистрироваться</a>
       </div>
-    </ng-template> 
+    </ng-template>
 
     </div>
   </nav>
@@ -47,4 +47,4 @@
 
 
 
-  
+

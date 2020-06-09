@@ -1,19 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-// import {NewsService} from '../add/news.service';
-import { NewsGet } from "../add/news.get";
+import { Component, OnInit } from '@angular/core';
 import { BaseApiService } from "../services/base-api.service";
 import * as moment from "moment";
 import { environment } from "../../environments/environment";
-
 @Component({
-  selector: "app-news",
-  templateUrl: "./news.component.html",
-  styleUrls: ["./news.component.css"],
+  selector: 'app-favourites',
+  templateUrl: './favourites.component.html',
+  styleUrls: ['./favourites.component.css']
 })
-export class NewsComponent implements OnInit {
+export class FavouritesComponent implements OnInit {
   posts = [];
   constructor(private api: BaseApiService) {}
   env = environment;
+  postsarr: any;
   async ngOnInit() {
     let postsarr = await this.getPosts();
     if (Array.isArray(postsarr)) {
@@ -58,6 +56,8 @@ export class NewsComponent implements OnInit {
       console.log(error);
     }
     return response;
+  }
+  async deleteFavourite() {
   }
   // async jsonParse(cont) {
   //   let html = "";
