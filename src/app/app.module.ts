@@ -27,6 +27,7 @@ import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
 import { MyDatePipePipe } from "./shared/pipes/my-date-pipe.pipe";
 import { FileSelectDirective } from "ng2-file-upload";
 import { FavouritesComponent } from './favourites/favourites.component';
+import { AdminCommentsComponent } from './admin-comments/admin-comments.component';
 // import { FileUploadModule } from "ng2-file-upload";
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { FavouritesComponent } from './favourites/favourites.component';
     MyDatePipePipe,
     FileSelectDirective,
     FavouritesComponent,
+    AdminCommentsComponent,
   ],
   imports: [
     BrowserModule,

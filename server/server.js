@@ -299,6 +299,34 @@ app.all("/news", (req, res) => {
 //   res.sendFile("index.html", { root: __dirname + "/../dist/medtech/" });
 // });
 
+// Удаление конкретного комментария
+app.delete("/api/comments/:id", async (req, res) => {
+  let result = await Comments.destroy({
+    where: {
+      id_comment: req.params.id
+    }
+  });
+  res.status(200).send({
+    status: 200,
+    message: 'OK'
+  })
+})
+
+// Получение списка всех комментариев
+app.get("/api/comments/all", async (req, res) => {
+  let comments = await Comments.findAll({
+    order: [
+      ['date_comment', 'DESC'],
+    ],
+    include: [{
+      model: Materials,
+      as: 'material',
+      attributes: ['id_materials', 'title']
+    }]
+  });
+  res.send(comments);
+})
+
 // Отправка фото
 app.get("/api/uploads/:filename", (req, res) => {
   if (req.params.filename) {

@@ -1,6 +1,6 @@
 <div class="sidepanel">
   <a class="admin-menu-point" [routerLink]="['/admin']" routerLinkActive="router-link-active"
-    [ngClass]="{'menu-point-active': path === ''}">Главная</a>
+    [ngClass]="{'menu-point-active': path === ''}">Последние комментарии</a>
   <a class="admin-menu-point" [routerLink]="['/admin', 'newarticle']" routerLinkActive="router-link-active"
     [ngClass]="{'menu-point-active': path === 'newarticle'}">Создать
     статью</a>
@@ -10,7 +10,7 @@
 </div>
 <div id="admin-wrap">
   <div class="mainpanel">
-    <h1 *ngIf="path === ''">Административная панель</h1>
+    <app-admin-comments *ngIf="path === ''"></app-admin-comments>
     <app-admin-editor *ngIf="path === 'newarticle'"></app-admin-editor>
     <app-admin-articles *ngIf="path === 'editarticle'" [path]="path">
     </app-admin-articles>
