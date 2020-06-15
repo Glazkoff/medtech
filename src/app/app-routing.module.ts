@@ -14,25 +14,13 @@ const routes: Routes = [
   { path: "authorization", component: AuthorizationComponent },
   { path: "registration", component: RegistrationComponent },
   { path: "admin", component: AdminComponent, canActivate: [AuthAdminGuard] },
-  {
-    path: "admin/:adminpart",
-    component: AdminComponent,
-    canActivate: [AuthAdminGuard],
-  },
-  {
-    path: "admin/:adminpart/:id",
-    component: AdminComponent,
-    canActivate: [AuthAdminGuard],
-  },
-  {
-    path: "my-courses",
-    component: MyCoursesComponent,
-    canActivate: [AuthGuard],
-  },
+  { path: "admin/:adminpart", component: AdminComponent, canActivate: [AuthAdminGuard] },
+  { path: "admin/:adminpart/:id", component: AdminComponent, canActivate: [AuthAdminGuard] },
+  { path: "my-courses", component: MyCoursesComponent, canActivate: [AuthGuard] },
   { path: "course-viewer", component: CourseViewerComponent },
   { path: "", component: NewsComponent },
   { path: "new/:id", component: NewComponent },
-  { path: "favourites", component: FavouritesComponent },
+  { path: "favourites", component: FavouritesComponent,  canActivate: [AuthGuard] },
 ];
 
 @NgModule({
