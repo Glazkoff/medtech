@@ -57,9 +57,12 @@ header{
 .active{
     font-weight: normal;
 }
-
+.menu .link:hover, .mobile-menu a:hover{
+    font-weight: normal;
+}
 .navbar-collapse{
     display: flex;
+    justify-content: flex-start;
     flex-basis: auto;
     flex-grow: 1;
     align-items: center;
@@ -98,9 +101,9 @@ header{
     top: -15px;
     left: 174px;
 }
-.add-menu{
+/* .add-menu{
     margin-right: 1.5rem;
-}
+} */
 
 .image-for-user{
     width: 2.5rem;
@@ -116,8 +119,8 @@ header{
 .dropdown-menu{
     position: absolute;
     float: none;
-    top: 48px;
-    right: 40px;
+    top: 41px;
+    right: -33px;
     z-index: 1000;
     width: 14.5rem;
     padding: 1rem;
@@ -156,3 +159,60 @@ header{
     text-align: right;
     padding: 0;
 }
+.icon-menu{
+    display: none;
+}
+.mobile-menu{
+    display: none;
+}
+.mobile{
+    display: none;
+}
+@media (max-width: 950px) {
+    .menu{
+        display: none;
+    }
+    .flex-wrap{
+        display: none;
+    }
+    .devider{
+        display: none;
+    }
+    .icon-menu{
+        display: block;
+        cursor: pointer;
+        width: 1.35rem;
+        height: 1.35rem;
+        outline: none;
+    }
+    .navbar-collapse{
+        justify-content: flex-end;
+    }
+    .mobile-menu.open{
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        align-items: center;
+        background: #944545;
+        height: calc(100vh - 3rem);
+        position: absolute;
+        z-index: 1029;
+    }
+    .mobile-menu a{
+        font-family: PT Root UI Web;
+        font-style: normal;
+        margin-bottom: 16px;
+        font-weight: normal;
+        font-size: 2.25rem;
+        text-align: center;
+        cursor: pointer;
+        color: #000000;
+    }
+    .mobile-menu a:first-child{
+        margin-top: 8px;
+    }
+    .mobile{
+        display: block;
+    }
+    
+} 

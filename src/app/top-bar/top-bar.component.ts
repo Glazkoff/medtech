@@ -8,6 +8,7 @@ import { Router } from "@angular/router";
 })
 export class TopBarComponent implements OnInit {
   iconOfMenu = "chevron-down";
+  mobileMenu = false;
   logOut = true;
   name = "";
   surname = "";
@@ -51,5 +52,9 @@ export class TopBarComponent implements OnInit {
     localStorage.clear();
     this.iconOfMenu = "chevron-down";
     this.router.navigate(["/news"]);
+  }
+
+  openMobileMenu(){
+    
   }
 }
