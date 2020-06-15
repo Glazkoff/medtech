@@ -17,6 +17,7 @@ export class FavouritesComponent implements OnInit {
   // *** ГОТОВО
   async ngOnInit() {
     let postsarr = await this.getPosts();
+    console.log('Получение статей в некрасивый массив');
     if (Array.isArray(postsarr)) {
       postsarr.forEach((element) => {
         let el = {
@@ -31,7 +32,10 @@ export class FavouritesComponent implements OnInit {
           main_image: element.main_image,
           author: element.author,
         };
+        console.log(el);
+        console.log('Получение статей в красивый массив'); 
         this.posts.push(el);
+        console.log(this.posts);
       });
      
     } else {
@@ -49,10 +53,12 @@ export class FavouritesComponent implements OnInit {
       response = await this.api.get(`/favourite-materials`);
       console.log("Получение избранных статей: ");
       console.log(response);
+      // console.log(response[0]);
+      console.log(response[0].materials);
     } catch (error) {
       console.log(error);
     }
-    return response;
+    return response[0].materials;
   }
 // ****
 

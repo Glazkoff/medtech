@@ -1,10 +1,10 @@
   <h2 class="headers2">Избранное</h2>
 
-  <div *ngIf="notfound" class="padd">
+  <div *ngIf="notfound; else anotherBlock " class="padd">
     <p>К сожалению, Вы еще ничего не добавили в избранное :( </p>
   </div>
   
-  <ng-template>
+  <ng-template #anotherBlock>
     <div class="block_news">
       <div class="content">
         <div class="content__item" *ngFor="let post of posts">
