@@ -1,6 +1,6 @@
 <header>
-  <nav class="top-bar" >
-    <img src="/assets/minlogo.png" [routerLink]="[ '/news' ]" class="minlogo" alt="Логотип">
+  <nav class="top-bar">
+    <img src="/assets/minlogo.png" [routerLink]="[ '/' ]" class="minlogo" alt="Логотип">
     <!-- <div class="devider"></div> -->
     <div class="navbar-collapse">
       <div class="menu">
@@ -10,55 +10,48 @@
         <a class="link">статьи</a>
         <a class="link">актуальное</a> -->
       </div>
-      
-    <div *ngIf="logOut; else blockLogIn">
-      <div class="flex-wrap">
-        <a class="nav-link">Здравствуйте,<br>  {{name}} {{surname}}!</a>
-        <div *ngIf="iconOfMenu=='close'">
-          <div class="dropdown-menu">
-            <img src="/assets/menu-up.png" class="icon triangle">
-            <a class="dropdown-item" >личный кабинет</a>
-            <a class="dropdown-item" >избранное</a>
-            <div class="devider-bottom"></div>
-            <a class="dropdown-item" (click)="onLogOut()">выйти</a>
-          </div>
-        </div>
-        <div class="image-for-user"></div>
-        <img (click)="openDropdownMenu()" [src]="'/assets/'+iconOfMenu+'.png'" alt="Доп. меню" class="icon add-menu">
-        <!-- <div class="devider"></div> -->
-        <!-- <img src="/assets/search.png" alt="Поиск" class="icon"> -->
-      </div>
-    </div>
 
-    <ng-template #blockLogIn>
-      <div class="flex-wrap">
-        <a class="nav-link center" [routerLink]="['/authorization']">Войти или <br> зарегистрироваться</a>
+      <div *ngIf="logOut; else blockLogIn">
+        <div class="flex-wrap">
+          <a class="nav-link">Здравствуйте,<br> {{name}} {{surname}}!</a>
+          <div *ngIf="iconOfMenu=='close'">
+            <div class="dropdown-menu">
+              <img src="/assets/menu-up.png" class="icon triangle">
+              <a class="dropdown-item">личный кабинет</a>
+              <a class="dropdown-item">избранное</a>
+              <div class="devider-bottom"></div>
+              <a class="dropdown-item" (click)="onLogOut()">выйти</a>
+            </div>
+          </div>
+          <div class="image-for-user"></div>
+          <img (click)="openDropdownMenu()" [src]="'/assets/'+iconOfMenu+'.png'" alt="Доп. меню" class="icon add-menu">
+          <!-- <div class="devider"></div> -->
+          <!-- <img src="/assets/search.png" alt="Поиск" class="icon"> -->
+        </div>
       </div>
-    </ng-template> 
-    
-    <div class="mobile">
-      <div *ngIf="logOut; else blockLogInMobile" >
-        <img src="/assets/profile-menu.png" alt="Меню" class="icon-menu" (click)="mobileMenu=!mobileMenu">
-      </div>
-  
-      <ng-template #blockLogInMobile>
+
+      <ng-template #blockLogIn>
+        <div class="flex-wrap">
           <a class="nav-link center" [routerLink]="['/authorization']">Войти или <br> зарегистрироваться</a>
-      </ng-template> 
-    </div>
+        </div>
+      </ng-template>
+
+      <div class="mobile">
+        <div *ngIf="logOut; else blockLogInMobile">
+          <img src="/assets/profile-menu.png" alt="Меню" class="icon-menu" (click)="mobileMenu=!mobileMenu">
+        </div>
+
+        <ng-template #blockLogInMobile>
+          <a class="nav-link center" [routerLink]="['/authorization']">Войти или <br> зарегистрироваться</a>
+        </ng-template>
+      </div>
     </div>
   </nav>
 </header>
 
 
 <div [ngClass]="{'open': mobileMenu==true}" class="mobile-menu">
-  <a class="dropdown-item" (click)="mobileMenu=false" >личный кабинет</a>
-  <a class="dropdown-item" (click)="mobileMenu=false" >избранное</a>   
+  <a class="dropdown-item" (click)="mobileMenu=false">личный кабинет</a>
+  <a class="dropdown-item" (click)="mobileMenu=false">избранное</a>
   <a class="dropdown-item" (click)="onLogOut(); mobileMenu=false">выйти</a>
 </div>
-
-
-
-
-
-
-  

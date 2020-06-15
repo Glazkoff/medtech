@@ -1,6 +1,6 @@
 .modal-wrap {
   position: fixed;
-  z-index: 9998;
+  z-index: 9999;
   top: 0;
   left: 0;
   width: 100%;
@@ -88,4 +88,11 @@ button:hover.closeBtn {
 button:active.closeBtn {
   background-color: transparent;
   box-shadow: none;
+}
+
+@media screen and (max-width: 830px) {
+  .outer {
+    max-width: 90vw;
+    max-height: 90vh;
+  }
 }

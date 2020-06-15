@@ -9,6 +9,10 @@
       [ngClass]="{'menu-point-active': path ===
       'editarticle'}">Редактировать
       статью</a>
+    <a class="admin-menu-point" [routerLink]="['/admin', 'editusers']" routerLinkActive="router-link-active" [ngClass]="{'menu-point-active': path ===
+      'editusers'}">Редактировать
+      пользователей</a>
+
   </div>
   <div id="admin-wrap">
     <div class="mainpanel">
@@ -16,6 +20,7 @@
       <app-admin-editor *ngIf="path === 'newarticle'"></app-admin-editor>
       <app-admin-articles *ngIf="path === 'editarticle'" [path]="path">
       </app-admin-articles>
+      <app-admin-users *ngIf="path === 'editusers'"></app-admin-users>
     </div>
   </div>
 </div>
