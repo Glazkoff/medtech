@@ -119,7 +119,7 @@ header{
 .dropdown-menu{
     position: absolute;
     float: none;
-    top: 41px;
+    top: 35px;
     right: -33px;
     z-index: 1000;
     width: 14.5rem;
@@ -161,6 +161,13 @@ header{
 }
 .icon-menu{
     display: none;
+}
+.icon-user {
+  display: block;
+  cursor: pointer;
+  width: 1.35rem;
+  height: 1.35rem;
+  outline: none;
 }
 .mobile-menu{
     display: none;

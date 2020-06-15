@@ -51,7 +51,7 @@ export class TopBarComponent implements OnInit {
     this.logOut = !this.logOut;
     localStorage.clear();
     this.iconOfMenu = "chevron-down";
-    this.router.navigate(["/news"]);
+    this.router.navigate(["/"]);
   }
 
   openMobileMenu(){

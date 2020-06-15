@@ -17,13 +17,14 @@
           <div *ngIf="iconOfMenu=='close'">
             <div class="dropdown-menu">
               <img src="/assets/menu-up.png" class="icon triangle">
-              <a class="dropdown-item">личный кабинет</a>
-              <a class="dropdown-item">избранное</a>
+              <a class="dropdown-item" (click)="openDropdownMenu()">личный кабинет</a>
+              <a class="dropdown-item" (click)="openDropdownMenu()"  [routerLink]="['/favourites']"
+                routerLinkActive="active">избранное</a>
               <div class="devider-bottom"></div>
               <a class="dropdown-item" (click)="onLogOut()">выйти</a>
             </div>
           </div>
-          <div class="image-for-user"></div>
+          <img (click)="openDropdownMenu()" src="/assets/profile-menu.png" alt="Меню" class="icon-user">
           <img (click)="openDropdownMenu()" [src]="'/assets/'+iconOfMenu+'.png'" alt="Доп. меню" class="icon add-menu">
           <!-- <div class="devider"></div> -->
           <!-- <img src="/assets/search.png" alt="Поиск" class="icon"> -->
@@ -53,6 +54,7 @@
 
 <div [ngClass]="{'open': mobileMenu==true}" class="mobile-menu">
   <a class="dropdown-item" (click)="mobileMenu=false">личный кабинет</a>
-  <a class="dropdown-item" (click)="mobileMenu=false">избранное</a>
+  <a class="dropdown-item" [routerLink]="['/favourites']" routerLinkActive="active"
+     (click)="mobileMenu=false">избранное</a>
   <a class="dropdown-item" (click)="onLogOut(); mobileMenu=false">выйти</a>
 </div>

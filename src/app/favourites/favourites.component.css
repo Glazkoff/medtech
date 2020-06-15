@@ -85,16 +85,28 @@
   line-height: 16px;
   color: #94624D;
 }
-#deleteFavourite{
-    cursor: pointer;
-    padding: 2px;
-    color:#EDEEDF ;
-    text-decoration: none;
-    border-radius: 2px;
-    background: #944545;
-  }
-#deleteFavourite:hover{
-  color:#000 ;
+#deleteFavourite {
+  /* margin-top: 2px;
+  margin-bottom: 5px; */
+  height: 40px;
+  cursor: pointer;
+  display: block;
+  /* width: 256px; */
+  background: #94624D;
+  border-radius: 2px;
+  font-family: PT Root UI Web;
+  font-style: normal;
+  font-weight: 700;
+  border: none;
+  font-size: 18px;
+  line-height: 16px;
+  color: #EDEEDF;
+}
+
+
+
+#deleteFavourite:focus {
+  overflow: none;
 }
 .headers2{
   color: #944545 ;

@@ -1,6 +1,15 @@
 
 <body><div class="block_new">
-  <span id="post_title">{{post[0]}}</span><br>
+  <div class="flex">
+    <span id="post_title">{{post[0]}}</span>
+    <div *ngIf="favourOrNot; else deleteBlock">
+      <button id="deleteFavourite" (click)="addFavourite()">Добавить в избранное</button>
+    </div>
+    <ng-template #deleteBlock>
+       <button id="deleteFavourite" (click)="deleteFavourite()">Удалить из избранного</button>
+    </ng-template>
+  </div>
+  
   <span id="post_date">{{post[1]}}</span>
   <div class="card_img"><img src="../../assets/example1.png" alt=""></div>
   <div class="card_block">
