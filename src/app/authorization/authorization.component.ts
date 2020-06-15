@@ -66,9 +66,15 @@ export class AuthorizationComponent implements OnInit {
           console.log("UserData ", userData);
           localStorage.setItem("userName", userData.firstname);
           localStorage.setItem("userSurname", userData.surname);
+          
           this.router.navigate(["/"]);
         } else {
         }
+        this.loginNotRight = true;
+        this.type = "password";
+        this.placeholderLogin = "Введите логин";
+        this.placeholderPassword = "Введите пароль";
+        this.fieldRequired = true;
       } catch (error) {
         console.log(error);
         this.myForm.patchValue({ login: "", password: "" });
@@ -77,11 +83,7 @@ export class AuthorizationComponent implements OnInit {
         this.loginNotRight = false;
       }
 
-      this.loginNotRight = true;
-      this.type = "password";
-      this.placeholderLogin = "Введите логин";
-      this.placeholderPassword = "Введите пароль";
-      this.fieldRequired = true;
+      
     }
   }
 

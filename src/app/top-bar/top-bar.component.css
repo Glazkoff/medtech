@@ -195,7 +195,7 @@ header{
         align-items: center;
         background: #944545;
         height: calc(100vh - 3rem);
-        position: absolute;
+        position: fixed;
         z-index: 1029;
     }
     .mobile-menu a{
