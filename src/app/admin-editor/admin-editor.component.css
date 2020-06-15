@@ -2,9 +2,6 @@
   max-width: 90%;
   margin: 0px auto;
   border-radius: 100px;
-  /* padding: 70px 60px; */
-  /* padding-top: 90px; */
-  /* background: #eef5fa; */
   position: relative;
   padding-bottom: 1rem;
 }
@@ -21,9 +18,7 @@
 }
 
 .editor-btn-wrap {
-  /* position: absolute; */
   top: 18px;
-  /* left: calc(50% - 50px); */
   right: 60px;
   display: flex;
   flex-direction: column;
@@ -55,10 +50,6 @@
   width: 100%;
   font-size: 1.8rem;
   box-sizing: border-box;
-}
-
-.editor-input:first-child {
-  /* width: 100%; */
 }
 
 .input-secondary {

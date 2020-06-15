@@ -21,6 +21,7 @@ import { PipeTimeCommentPipe } from "./pipes/pipe-time-comment.pipe";
 import { AuthErrorHandler } from "./services/auth-error-handler";
 import { ErrorHandler } from "@angular/core";
 import { AuthGuard } from "./services/auth.guard";
+import { AuthAdminGuard } from "./services/auth-admin.guard";
 import { LoaderComponent } from "./loader/loader.component";
 import { ModalComponent } from "./modal/modal.component";
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
@@ -29,6 +30,7 @@ import { FileSelectDirective } from "ng2-file-upload";
 import { FavouritesComponent } from "./favourites/favourites.component";
 import { AdminCommentsComponent } from "./admin-comments/admin-comments.component";
 import { FileUploadModule } from "ng2-file-upload";
+import { AdminUsersComponent } from './admin-users/admin-users.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +53,7 @@ import { FileUploadModule } from "ng2-file-upload";
     MyDatePipePipe,
     FavouritesComponent,
     AdminCommentsComponent,
+    AdminUsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,8 +61,8 @@ import { FileUploadModule } from "ng2-file-upload";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RecaptchaModule, //this is the recaptcha main module
-    RecaptchaFormsModule, //this is the module for form incase form validation
+    RecaptchaModule, // this is the recaptcha main module
+    RecaptchaFormsModule, // this is the module for form incase form validation
     FileUploadModule,
   ],
   providers: [
@@ -68,6 +71,7 @@ import { FileUploadModule } from "ng2-file-upload";
       useClass: AuthErrorHandler,
     },
     AuthGuard,
+    AuthAdminGuard,
   ],
   bootstrap: [AppComponent],
 })

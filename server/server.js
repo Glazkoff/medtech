@@ -223,6 +223,9 @@ const Users = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
+    is_admin: {
+      type: Sequelize.BOOLEAN
+    }
   }, {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
@@ -254,8 +257,8 @@ sequelize
   // .sync()
   // Вариант для изменений в таблицах
   .sync({
-    // alter: true,
-    force: process.env.PORT !== null
+    alter: true,
+    // force: process.env.PORT !== null
   })
   .then((result) => {
     console.log("[Sequelize] Всё ОК");
@@ -300,6 +303,41 @@ app.all("/news", (req, res) => {
 //   res.sendFile("index.html", { root: __dirname + "/../dist/medtech/" });
 // });
 
+// Получение списка всех пользователей
+app.get("/api/users/all", async (req, res) => {
+  let result = await Users.findAll({
+    attributes: ['id_users', 'login', 'firstname', 'surname', 'createdAt', 'is_admin'],
+    order: [
+      ['createdAt', 'DESC'],
+      ['id_users', 'DESC'],
+    ],
+  });
+  res.status(200).send(result);
+})
+
+// Изменение прав администратора пользователя
+app.put("/api/users/setadmin/:id", async (req, res) => {
+  console.log('!!!!!!!!!', req.body);
+  let result = await Users.update({
+    is_admin: req.body.is_admin
+  }, {
+    where: {
+      id_users: req.params.id
+    }
+  });
+  res.status(200).send(result);
+})
+
+// Удаление конкретного пользователя
+app.delete("/api/users/:id", async (req, res) => {
+  let result = await Users.destroy({
+    where: {
+      id_users: req.params.id
+    }
+  });
+  res.status(200).send(result);
+})
+
 // Удаление конкретного комментария
 app.delete("/api/comments/:id", async (req, res) => {
   let result = await Comments.destroy({
@@ -325,7 +363,9 @@ app.get("/api/comments/all", async (req, res) => {
       attributes: ['id_materials', 'title']
     }]
   });
-  res.send(comments);
+  setTimeout(() => {
+    res.send(comments);
+  }, 300);
 })
 
 // Отправка фото
@@ -391,7 +431,7 @@ app.post("/api/posts", async (req, res) => {
     console.log(error);
     res.status(500).send({
       status: 500,
-      message: "Ошибка сервера",
+      message: "Ошибка сервера: " + error,
     });
   }
 });
@@ -535,6 +575,7 @@ app.post("/api/users", async (req, res) => {
             surname: user.surname,
             organization: user.organization,
             role: user.role,
+            is_admin: user.is_admin
           },
           CONFIG.SECRET, {
             expiresIn: 86400, // токен на 24 часа
@@ -592,6 +633,7 @@ app.post("/api/login", async (req, res) => {
             surname: existUser.surname,
             organization: existUser.organization,
             role: existUser.role,
+            is_admin: existUser.is_admin
           },
           CONFIG.SECRET, {
             expiresIn: 86400, // токен на 24 часа

@@ -86,7 +86,7 @@ export class RegistrationComponent implements OnInit {
           } catch (error) {
             console.log(error);
           }
-          this.router.navigate(["/news"]);
+          this.router.navigate(["/"]);
         } else {
           this.memory = this.myForm.value.login;
           // console.log(this.memory);

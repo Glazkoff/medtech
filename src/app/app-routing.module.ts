@@ -8,13 +8,22 @@ import { CourseViewerComponent } from "./course-viewer/course-viewer.component";
 import { NewsComponent } from "./news/news.component";
 import { NewComponent } from "./new/new.component";
 import { AuthGuard } from "./services/auth.guard";
+import { AuthAdminGuard } from "./services/auth-admin.guard";
 import { FavouritesComponent } from "./favourites/favourites.component";
 const routes: Routes = [
   { path: "authorization", component: AuthorizationComponent },
   { path: "registration", component: RegistrationComponent },
-  { path: "admin", component: AdminComponent },
-  { path: "admin/:adminpart", component: AdminComponent },
-  { path: "admin/:adminpart/:id", component: AdminComponent },
+  { path: "admin", component: AdminComponent, canActivate: [AuthAdminGuard] },
+  {
+    path: "admin/:adminpart",
+    component: AdminComponent,
+    canActivate: [AuthAdminGuard],
+  },
+  {
+    path: "admin/:adminpart/:id",
+    component: AdminComponent,
+    canActivate: [AuthAdminGuard],
+  },
   {
     path: "my-courses",
     component: MyCoursesComponent,
