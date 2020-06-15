@@ -37,12 +37,13 @@ export class AdminUsersComponent implements OnInit {
     }
   }
   async setAdminStatus(user) {
-    this.users.find((user) => user.id_users === user.id_users).is_admin = true;
+    // let userObj = this.users.find((user) => user.id_users === user.id_users)
+    user.is_admin = true;
     await this.api.put({ is_admin: true }, "/users/setadmin/" + user.id_users);
   }
   async unsetAdminStatus(user) {
     console.log("unsetAdminStatus: ", user.id_users);
-    this.users.find((user) => user.id_users === user.id_users).is_admin = null;
+    user.is_admin = null;
     await this.api.put({ is_admin: null }, "/users/setadmin/" + user.id_users);
   }
   onDeleteUser(user) {

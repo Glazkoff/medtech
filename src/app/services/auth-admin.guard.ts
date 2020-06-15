@@ -8,12 +8,17 @@ export class AuthAdminGuard implements CanActivate {
 
   canActivate() {
     let token = localStorage.getItem("token");
-    let userData = jwt.read(token).claim;
-    if (userData) {
-      return true;
+    if (token) {
+      let userData = jwt.read(token).claim;
+      if (userData.is_admin) {
+        return true;
+      } else {
+        console.log("Нет ничего!");
+        this.router.navigate(["/"]);
+        return false;
+      }
     } else {
-      console.log("Нет ничего!");
-      this.router.navigate(["/"]);
+      this.router.navigate(["/authorization"]);
       return false;
     }
   }
