@@ -26,9 +26,9 @@ import { ModalComponent } from "./modal/modal.component";
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
 import { MyDatePipePipe } from "./shared/pipes/my-date-pipe.pipe";
 import { FileSelectDirective } from "ng2-file-upload";
-import { FavouritesComponent } from './favourites/favourites.component';
-import { AdminCommentsComponent } from './admin-comments/admin-comments.component';
-// import { FileUploadModule } from "ng2-file-upload";
+import { FavouritesComponent } from "./favourites/favourites.component";
+import { AdminCommentsComponent } from "./admin-comments/admin-comments.component";
+import { FileUploadModule } from "ng2-file-upload";
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +49,6 @@ import { AdminCommentsComponent } from './admin-comments/admin-comments.componen
     LoaderComponent,
     ModalComponent,
     MyDatePipePipe,
-    FileSelectDirective,
     FavouritesComponent,
     AdminCommentsComponent,
   ],
@@ -61,7 +60,7 @@ import { AdminCommentsComponent } from './admin-comments/admin-comments.componen
     HttpClientModule,
     RecaptchaModule, //this is the recaptcha main module
     RecaptchaFormsModule, //this is the module for form incase form validation
-    // FileUploadModule,
+    FileUploadModule,
   ],
   providers: [
     {
