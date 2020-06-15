@@ -254,7 +254,8 @@ sequelize
   // .sync()
   // Вариант для изменений в таблицах
   .sync({
-    alter: true,
+    // alter: true,
+    force: process.env.PORT !== null
   })
   .then((result) => {
     console.log("[Sequelize] Всё ОК");
