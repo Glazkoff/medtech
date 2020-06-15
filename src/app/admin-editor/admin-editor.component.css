@@ -1,28 +1,37 @@
 .editor-background {
-  max-width: 850px;
-  margin: 20px auto;
+  max-width: 90%;
+  margin: 0px auto;
   border-radius: 100px;
-  padding: 70px 60px;
-  padding-top: 90px;
-  background: #eef5fa;
+  /* padding: 70px 60px; */
+  /* padding-top: 90px; */
+  /* background: #eef5fa; */
   position: relative;
+  padding-bottom: 1rem;
 }
 
 .editor-wrap {
   padding: 70px 50px;
   border-radius: 8px;
-  box-shadow: 0 24px 24px -18px rgba(69, 104, 129, .33),
-    0 9px 45px 0 rgba(114, 119, 160, .12);
+  box-shadow: 0 24px 24px -18px rgba(69, 104, 129, 0.33),
+    0 9px 45px 0 rgba(114, 119, 160, 0.12);
   margin: 0 auto;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
   background-color: #fff;
 }
 
 .editor-btn-wrap {
-  position: absolute;
+  /* position: absolute; */
   top: 18px;
   /* left: calc(50% - 50px); */
   right: 60px;
   display: flex;
+  flex-direction: column;
+  padding-bottom: 1rem;
+}
+
+.editor-btn-wrap>* {
+  margin-bottom: 0.5rem;
 }
 
 .editor-btn,
@@ -32,18 +41,9 @@
   padding: 10px 15px;
   color: #fff;
   border-radius: 4px;
-  font-family: -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    "Noto Sans",
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol",
-    "Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   cursor: pointer;
   transition: 0.15s ease-out;
 }
@@ -51,9 +51,10 @@
 .editor-input {
   color: #000;
   margin-right: 16px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, .2);
-  width: 400px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
   font-size: 1.8rem;
+  box-sizing: border-box;
 }
 
 .editor-input:first-child {
@@ -67,6 +68,8 @@
 
 .editor-btn {
   user-select: none;
+  width: 100%;
+  font-size: 1.3rem;
 }
 
 .editor-btn:focus {
@@ -84,22 +87,42 @@
 
 .btn-info {
   background-color: #20a9e9;
-  box-shadow: 2px 2px 20px #20a9e9;
+  box-shadow: 2px 2px 10px #20a9e9;
 }
 
 .btn-normal:hover {
   background-color: #606ee7;
-  box-shadow: 1px 1px 10px #606ee7;
+  box-shadow: 1px 1px 6px #606ee7;
+}
+
+[disabled].btn-normal {
+  background-color: #8b93d6;
+  box-shadow: 1px 1px 6px #8b93d6;
 }
 
 .btn-danger {
   background-color: #e92020;
-  box-shadow: 2px 2px 20px #e92020;
+  box-shadow: 2px 2px 10px #e92020;
 }
 
 .btn-danger:hover {
   background-color: #e76060;
-  box-shadow: 1px 1px 10px #e92020;
+  box-shadow: 1px 1px 6px #e92020;
+}
+
+.btn-upload {
+  background-color: #13cf02;
+  box-shadow: 1px 1px 6px #13cf02;
+}
+
+.btn-upload:hover {
+  background-color: #11b103;
+  box-shadow: 1px 1px 6px #0e9102;
+}
+
+[disabled].btn-upload {
+  background-color: #73e968;
+  box-shadow: 1px 1px 6px #68ec5c;
 }
 
 h2 {

@@ -9,6 +9,10 @@ import { Router } from "@angular/router";
 import SimpleImage from "@editorjs/simple-image";
 import Embed from "@editorjs/embed";
 import Quote from "@editorjs/quote";
+import { FileUploader } from "ng2-file-upload";
+import { environment } from "../../environments/environment";
+
+const URL = environment.baseUrl + "/posts/photos";
 
 let editor;
 @Component({
@@ -21,12 +25,18 @@ export class AdminEditorComponent implements OnInit {
   @Input() data;
   @Input() id;
   @Input() fromList: boolean;
+  env = environment;
   title = "";
+  filepath = "";
   duration = "30 минут";
   modal = false;
   editorData = {
     blocks: [],
   };
+  public uploader: FileUploader = new FileUploader({
+    url: URL,
+    itemAlias: "image",
+  });
   async ngOnInit() {
     console.log("DATAONINIT: ", this.data);
     if (this.data !== undefined) {
@@ -65,6 +75,13 @@ export class AdminEditorComponent implements OnInit {
     } catch (reason) {
       console.log(`Editor.js загрузка сломалась по причине ${reason}`);
     }
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+    };
+    this.uploader.onCompleteItem = async (item: any, status: any) => {
+      console.log("Uploaded File Details:", item, status);
+      this.filepath = JSON.parse(status).filename;
+    };
   }
   async ngOnChanges(changes: SimpleChanges) {
     console.log("DATAONINIT: ", this.data);
@@ -73,6 +90,7 @@ export class AdminEditorComponent implements OnInit {
         blocks: this.data.blocks,
       };
       this.title = this.data.title;
+      this.filepath = this.data.main_image;
       this.duration = this.data.duration;
       document.getElementById("editorjs").innerHTML = "";
       editor = new EditorJS({
@@ -115,6 +133,7 @@ export class AdminEditorComponent implements OnInit {
           title: this.title,
           duration: this.duration,
           content: outputData,
+          main_image: this.filepath,
         };
         this.api.post(JSON.stringify(postData), "/posts");
         this.router.navigate(["/admin"]);
@@ -132,6 +151,7 @@ export class AdminEditorComponent implements OnInit {
           title: this.title,
           duration: this.duration,
           content: outputData,
+          main_image: this.filepath,
         };
         await this.api.put(JSON.stringify(postData), "/posts/" + this.id);
         this.router.navigate(["/admin", "editarticle"]);

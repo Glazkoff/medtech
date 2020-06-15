@@ -2,7 +2,7 @@
 const express = require("express");
 const serveStatic = require("serve-static");
 const bodyParser = require("body-parser");
-const mysql = require("mysql2");
+// const mysql = require("mysql2");
 const path = require("path");
 const dbConfig = require("./db.config.js");
 const jwt = require("jsonwebtoken");
@@ -11,8 +11,30 @@ const CONFIG = require("./secret.config.js");
 const morgan = require("morgan");
 const compression = require("compression");
 const Sequelize = require("sequelize");
+const multer = require("multer");
 
 const app = express();
+
+// Путь папки для загрузки
+let DIR = "./server/uploads";
+
+// Определяем правила загрузки файлов на сервер
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, DIR);
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+// Определяем тип
+let upload = multer({
+  storage: storage,
+});
 
 // Промежуточный обработчик для сжатия gzip
 app.use(compression());
@@ -106,7 +128,7 @@ const Comments = sequelize.define(
     date_comment: {
       type: Sequelize.DATE,
       allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+      defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
     },
     text_comment: {
       type: Sequelize.TEXT,
@@ -152,6 +174,14 @@ const Materials = sequelize.define(
     },
     content: {
       type: Sequelize.TEXT,
+      allowNull: false,
+    },
+    main_image: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+    },
+    author: {
+      type: Sequelize.STRING,
       allowNull: false,
     },
   }, {
@@ -224,7 +254,8 @@ sequelize
   // .sync()
   // Вариант для изменений в таблицах
   .sync({
-    alter: true,
+    // alter: true,
+    force: process.env.PORT !== null
   })
   .then((result) => {
     console.log("[Sequelize] Всё ОК");
@@ -250,17 +281,17 @@ let salt = bcrypt.genSaltSync(10);
 // При корневом пути возвращать index.html из папки dist
 app.all("/admin", (req, res) => {
   res.sendFile("index.html", {
-    root: __dirname + "/../dist/medtech/"
+    root: __dirname + "/../dist/medtech/",
   });
 });
 app.all("/admin/*", (req, res) => {
   res.sendFile("index.html", {
-    root: __dirname + "/../dist/medtech/"
+    root: __dirname + "/../dist/medtech/",
   });
 });
 app.all("/news", (req, res) => {
   res.sendFile("index.html", {
-    root: __dirname + "/../dist/medtech/"
+    root: __dirname + "/../dist/medtech/",
   });
 });
 
@@ -268,22 +299,92 @@ app.all("/news", (req, res) => {
 //   // Just send the index.html for other files to support HTML5Mode
 //   res.sendFile("index.html", { root: __dirname + "/../dist/medtech/" });
 // });
+
+// Удаление конкретного комментария
+app.delete("/api/comments/:id", async (req, res) => {
+  let result = await Comments.destroy({
+    where: {
+      id_comment: req.params.id
+    }
+  });
+  res.status(200).send({
+    status: 200,
+    message: 'OK'
+  })
+})
+
+// Получение списка всех комментариев
+app.get("/api/comments/all", async (req, res) => {
+  let comments = await Comments.findAll({
+    order: [
+      ['date_comment', 'DESC'],
+    ],
+    include: [{
+      model: Materials,
+      as: 'material',
+      attributes: ['id_materials', 'title']
+    }]
+  });
+  res.send(comments);
+})
+
+// Отправка фото
+app.get("/api/uploads/:filename", (req, res) => {
+  if (req.params.filename) {
+    res.sendFile(path.join(__dirname, 'uploads', req.params.filename), function (err) {
+      if (err) {
+        console.log(err);
+        res.status(err.status).send({
+          status: err.status
+        });
+      } else {
+        console.log('Sent:', req.params.filename);
+      }
+    })
+  } else {
+    res.status(400).send({
+      status: 400
+    });
+  }
+
+})
+
+// Загрузка фото
+app.post("/api/posts/photos", upload.single("image"), async (req, res) => {
+  if (!req.file) {
+    console.log("Нет доступного файла");
+    return res.send({
+      success: false,
+    });
+  } else {
+    console.log("Файл доступен!");
+    return res.send({
+      success: true,
+      filename: req.file.filename
+    });
+  }
+});
+
 /******************************************************************** */
 /** CRUD для новостных постов */
 
 // Создание новостного поста
 app.post("/api/posts", async (req, res) => {
+  console.log('TOKEN DECODE', jwt.decode(req.headers.authorization));
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл POST запрос для постов:");
   console.log(req.body);
   let result;
   try {
+    let decoded = await jwt.decode(req.headers.authorization)
     result = await Materials.create({
       duration: req.body.duration,
       date: req.body.content.time,
       type: "news",
       title: req.body.title,
       content: JSON.stringify(req.body.content.blocks),
+      main_image: req.body.main_image,
+      author: decoded.firstname + ' ' + decoded.surname
     });
     res.send(result);
   } catch (error) {
@@ -314,7 +415,7 @@ app.get("/api/posts", async (req, res) => {
     console.log(error);
     res.status(500).send({
       status: 500,
-      message: "Ошибка сервера",
+      message: "Ошибка сервера: " + error,
     });
   }
 });
@@ -357,6 +458,7 @@ app.put("/api/posts/:id", async (req, res) => {
       date: req.body.content.time,
       title: req.body.title,
       content: JSON.stringify(req.body.content.blocks),
+      main_image: req.body.main_image
     }, {
       where: {
         id_materials: req.params.id,

@@ -8,6 +8,7 @@ import { CourseViewerComponent } from "./course-viewer/course-viewer.component";
 import { NewsComponent } from "./news/news.component";
 import { NewComponent } from "./new/new.component";
 import { AuthGuard } from "./services/auth.guard";
+import { FavouritesComponent } from "./favourites/favourites.component";
 const routes: Routes = [
   { path: "authorization", component: AuthorizationComponent },
   { path: "registration", component: RegistrationComponent },
@@ -20,8 +21,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: "course-viewer", component: CourseViewerComponent },
-  { path: "news", component: NewsComponent },
+  { path: "", component: NewsComponent },
   { path: "new/:id", component: NewComponent },
+  { path: "favourites", component: FavouritesComponent },
 ];
 
 @NgModule({

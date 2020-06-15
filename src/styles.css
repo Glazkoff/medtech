@@ -1,42 +1,45 @@
 @font-face {
-  font-family: "PT Root UI Web"; 
-  src: url("/assets/fonts/PT Root UI/PT Root UI_Bold/PT Root UI_Bold.ttf") format("truetype"); 
+  font-family: "PT Root UI Web";
+  src: url("/assets/fonts/PT Root UI/PT Root UI_Bold/PT Root UI_Bold.ttf") format("truetype");
   font-style: normal;
   font-weight: 700;
 }
+
 @font-face {
-  font-family: "PT Root UI Web"; 
-  src: url("/assets/fonts/PT Root UI/PT Root UI_Regular/PT Root UI_Regular.ttf") format("truetype"); 
+  font-family: "PT Root UI Web";
+  src: url("/assets/fonts/PT Root UI/PT Root UI_Regular/PT Root UI_Regular.ttf") format("truetype");
   font-style: normal;
   font-weight: 500;
-}  
+}
+
 @font-face {
-  font-family: "PT Root UI Web"; 
-  src: url("/assets/fonts/PT Root UI/PT Root UI_Light/PT Root UI_Light.ttf") format("truetype"); 
+  font-family: "PT Root UI Web";
+  src: url("/assets/fonts/PT Root UI/PT Root UI_Light/PT Root UI_Light.ttf") format("truetype");
   font-style: normal;
   font-weight: 300;
-} 
+}
 
 
 @font-face {
-  font-family: "PT Astra Sans"; 
-  src: url("/assets/fonts/PT Astra Sans/PT Astra Sans_Bold/PT Astra Sans_Bold.ttf") format("truetype"); 
+  font-family: "PT Astra Sans";
+  src: url("/assets/fonts/PT Astra Sans/PT Astra Sans_Bold/PT Astra Sans_Bold.ttf") format("truetype");
   font-style: normal;
   font-weight: 700;
-} 
-@font-face {
-  font-family: "PT Astra Sans"; 
-  src: url("/assets/fonts/PT Astra Sans/PT Astra Sans_Regular/PT Astra Sans_Regular.ttf") format("truetype"); 
-  font-style: normal;
-  font-weight: 500;
-} 
+}
 
 @font-face {
-  font-family: "PT Astra Serif"; 
-  src: url("/assets/fonts/PT Astra Serif/PT Astra Serif_Regular/PT Astra Serif_Regular.ttf") format("truetype"); 
+  font-family: "PT Astra Sans";
+  src: url("/assets/fonts/PT Astra Sans/PT Astra Sans_Regular/PT Astra Sans_Regular.ttf") format("truetype");
   font-style: normal;
   font-weight: 500;
-} 
+}
+
+@font-face {
+  font-family: "PT Astra Serif";
+  src: url("/assets/fonts/PT Astra Serif/PT Astra Serif_Regular/PT Astra Serif_Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+}
 
 
 body {
@@ -60,4 +63,41 @@ a {
   text-decoration: none;
   background-color: transparent;
   font-size: 1rem;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1D1D1D;
+}
+
+@media screen and (max-width: 830px) {
+  .admin-screen .table-wrap {
+    width: 100vw;
+    overflow-x: scroll;
+    box-sizing: border-box;
+    padding: 1rem;
+  }
+
+  .admin-screen .sidepanel {
+    position: sticky;
+    top: 0px;
+  }
+
+  .admin-screen h2 {
+    position: sticky;
+    top: 48px;
+    background-color: #EDEEDF;
+    z-index: 9999;
+    text-align: center;
+  }
 }

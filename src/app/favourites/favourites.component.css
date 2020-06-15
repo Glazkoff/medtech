@@ -1,0 +1,126 @@
+.body{
+  background: #1D1D1D;
+  margin: 0;
+  padding: 0;
+}
+
+.logo_news img{
+  padding-top: 46px;
+  padding-bottom: 46px;
+}
+.logo_news{
+  max-width: 1216px;
+  margin: 0 auto;
+  text-align: center;
+}
+.block_news{
+  max-width: 1216px;
+  margin: 0 auto;
+  background: #EDEEDF;
+}
+.content {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, 160px);
+  grid-template-rows: repeat(auto-fill, 80px);
+  justify-content: center;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  counter-reset: item 0;
+  padding-top: 56px;
+  padding-bottom: 56px;
+
+}
+.content__item {
+  padding: 15px;
+}
+.content__item img{
+  width: 306px;
+  height: 194px;
+  border-radius: 2px 2px 0px 0px;
+
+}
+.content__item:nth-child(n) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+#post_type{
+  float: left;
+  font-family: PT Root UI Web;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  color: #94624D;
+}
+
+#post_date{
+  float: right;
+  font-family: PT Root UI Web;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: right;
+  color: #94624D;
+}
+#post_title{
+  font-family: PT Astra Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 24px;
+  color: #000000;
+  margin-bottom: 15px;
+}
+.content__item:hover{
+  outline: 1px solid #94624D;
+}
+#post_duration{
+  font-family: PT Root UI Web;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #94624D;
+}
+#deleteFavourite{
+    padding: 2px;
+    color:#EDEEDF ;
+    text-decoration: none;
+    border-radius: 2px;
+    background: #944545;
+  }
+#deleteFavourite:hover{
+  color:#944545 ;
+  background: none;
+
+}
+/*@media (max-width: 1075px) {*/
+/*  .content__item:nth-child(n) img{*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    border-radius: 2px 2px 0px 0px;*/
+/*  }*/
+/*  .logo_news{*/
+/*    display: none;*/
+/*  }*/
+
+/*  .content {*/
+/*    display: grid;*/
+/*    width: 100%;*/
+/*    grid-template-columns: repeat(auto-fill, 1fr);*/
+/*    grid-template-rows: repeat(auto-fill,  1fr);*/
+/*    justify-content: center;*/
+/*  }*/
+/*  .content__item:nth-child(n) {*/
+/*    grid-column: span 2;*/
+/*    grid-row: span 2;*/
+/*  }*/
+/*  .block_news{*/
+/*    margin-left: 20px;*/
+/*    margin-right: 20px;*/
+
+/*  }*/
+/*}*/

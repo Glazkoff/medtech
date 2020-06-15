@@ -1,5 +1,30 @@
 .block_new{
-  max-width: 900px;
-  margin: 0 auto;
-}
+  margin-right: 72px;
+  margin-left: 72px;
 
+}
+.card_block {
+  background: #EEEEEE;
+  padding: 32px 36px;
+}
+.card_img img{
+  width: 1011px;
+  height: 144px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+#post_date{
+   font-family: PT Root UI Web;
+   font-style: normal;
+   font-weight: bold;
+   font-size: 14px;
+   line-height: 16px;
+   color: #94624D;
+ }
+#post_title{
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 38px;
+  color: #000000;
+}

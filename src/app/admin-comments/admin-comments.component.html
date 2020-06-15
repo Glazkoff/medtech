@@ -1,0 +1,42 @@
+<app-modal *ngIf="modal"
+  [title]="'Вы уверены, что хотите безвозвратно удалить комментарий #' + deleteComment.id_comment + '?'"
+  (closeModal)="onCloseModal()">
+  <p>Вы не сможете восстановить изменения</p>
+  <p>Содержание комментария: <br><em>{{deleteComment.text_comment}}</em></p>
+  <div class="modal-btn-wrap">
+    <button class="editor-btn btn-danger" type="button" (click)="onDelete()">
+      Удалить комментарий
+    </button>
+  </div>
+</app-modal>
+<h2>Последние комментарии</h2>
+<div class="loader-wrap" *ngIf="loading; else afterLoading">
+  <app-loader></app-loader>
+</div>
+<ng-template #afterLoading>
+  <div class="table-wrap">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>ID</th>
+          <th>Дата</th>
+          <th>Содержание комментария</th>
+          <th>ID статьи</th>
+          <th>Заголовок статьи</th>
+          <th>Действия</th>
+          <!-- <th>Длительность</th> -->
+        </tr>
+        <tr *ngFor="let comment of comments">
+          <td>{{comment.id_comment}}</td>
+          <td>{{comment.date_comment}}</td>
+          <td>{{comment.text_comment}}</td>
+          <td>{{comment.material.id_materials}}</td>
+          <td>{{comment.material.title}}</td>
+          <td> <button class="editor-btn btn-danger" type="button" (click)="preClose(comment)">
+              &times;
+            </button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>

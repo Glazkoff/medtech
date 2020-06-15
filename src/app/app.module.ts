@@ -21,10 +21,14 @@ import { PipeTimeCommentPipe } from "./pipes/pipe-time-comment.pipe";
 import { AuthErrorHandler } from "./services/auth-error-handler";
 import { ErrorHandler } from "@angular/core";
 import { AuthGuard } from "./services/auth.guard";
-import { LoaderComponent } from './loader/loader.component';
-import { ModalComponent } from './modal/modal.component';
-import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
-import { MyDatePipePipe } from './shared/pipes/my-date-pipe.pipe';
+import { LoaderComponent } from "./loader/loader.component";
+import { ModalComponent } from "./modal/modal.component";
+import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
+import { MyDatePipePipe } from "./shared/pipes/my-date-pipe.pipe";
+import { FileSelectDirective } from "ng2-file-upload";
+import { FavouritesComponent } from "./favourites/favourites.component";
+import { AdminCommentsComponent } from "./admin-comments/admin-comments.component";
+import { FileUploadModule } from "ng2-file-upload";
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +49,8 @@ import { MyDatePipePipe } from './shared/pipes/my-date-pipe.pipe';
     LoaderComponent,
     ModalComponent,
     MyDatePipePipe,
+    FavouritesComponent,
+    AdminCommentsComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,8 +58,9 @@ import { MyDatePipePipe } from './shared/pipes/my-date-pipe.pipe';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RecaptchaModule,  //this is the recaptcha main module
+    RecaptchaModule, //this is the recaptcha main module
     RecaptchaFormsModule, //this is the module for form incase form validation
+    FileUploadModule,
   ],
   providers: [
     {

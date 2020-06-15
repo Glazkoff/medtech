@@ -1,27 +1,24 @@
 body {
   overflow-x: hidden;
   max-width: 100vw;
+
 }
 
 #admin-wrap {
   box-sizing: border-box;
   max-width: 100vw;
-  /* display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: 1fr; */
-
+  font-family: "PT Root UI Web", sans-serif;
 }
 
 .sidepanel {
   border-right: 1px solid #000;
   position: fixed;
   z-index: 20;
-  height: calc(100vh - 50px - 1rem);
+  height: calc(100vh - 50px);
   width: 18vw;
 }
 
 .mainpanel {
-  width: 82vw;
   margin-left: 18vw;
 }
 
@@ -38,6 +35,74 @@ h1 {
   padding: 10px 20px;
 }
 
+h2 {
+  margin: 0;
+  padding: 15px 20px;
+}
+
 .menu-point-active {
   font-weight: bold;
+}
+
+.loader-wrap {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  height: 10rem;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1D1D1D;
+}
+
+
+
+@media screen and (max-width: 830px) {
+  .admin-screen {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .admin-screen>.sidepanel {
+    width: 100vw;
+    height: auto;
+    display: flex;
+    position: relative;
+    overflow-y: visible;
+    overflow-x: scroll;
+  }
+
+  .admin-screen>.sidepanel a {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .admin-screen>.sidepanel a:not(:last-child) {
+    border-right: 1px solid #000;
+  }
+
+  .admin-screen .mainpanel {
+    margin-left: 0;
+  }
+
+  .admin-screen .table-wrap {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 830px) and (orientation: portrait) {
+  .admin-screen>.sidepanel {
+    min-height: 12vh;
+  }
 }

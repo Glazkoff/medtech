@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { AppService} from "../services/app.service";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-new',
@@ -14,7 +15,7 @@ import { AppService} from "../services/app.service";
 })
 
 export class NewComponent implements OnInit {
-  post: any;
+  post = [];
   private subscription: Subscription;
   constructor(private api: BaseApiService, private activateRoute: ActivatedRoute) {
 
@@ -30,12 +31,14 @@ export class NewComponent implements OnInit {
     if (this.id) {
       const postsarr = await this.getPost();
       // if ( await postsarr.id === this.id) {
-      //   const el: NewGet = {
+      //   const el = {
       //     title: await postsarr.title,
       //     id: await postsarr.id_materials,
       //     content: await postsarr.content,
       //   };
-      //   this.post = el;
+      //   this.post.push(el);
+      //   console.log("RESPONSEeee");
+      //   console.log(this.post);
       // }
     }
 
@@ -43,11 +46,19 @@ export class NewComponent implements OnInit {
 
   async getPost() {
     let response;
+    let title_new;
+    let date_new;
     try {
       response = await this.api.get("/posts/"+this.id);
       console.log("RESPONSE");
       console.log(response);
       this.jsonParse(JSON.parse(response[0].content));
+        title_new = response[0].title;
+      date_new = moment (parseInt(response[0].date)).utcOffset("+0300").format(' DD.MM.YYYY');
+      this.post.push(title_new);
+      this.post.push(date_new);
+      console.log("post");
+      console.log(this.post[0]);
     } catch (error) {
       console.log(error);
     }
@@ -58,10 +69,10 @@ export class NewComponent implements OnInit {
     cont.forEach((content) => {
       switch (content.type) {
         case 'header':
-          html += `<h${content.data.level}>${content.data.text}</h${content.data.level}>`;
+          html += `<h${content.data.level} style="font-style: normal; font-weight: bold; font-size: 32px; line-height: 32px; color: #944545;">${content.data.text}</h${content.data.level}>`;
           break;
         case 'paragraph':
-          html += `<p>${content.data.text}</p>`;
+          html += `<p style="font-family: PT Astra Serif; font-style: normal; font-weight: normal; font-size: 20px; line-height: 24px; color: #000000;">${content.data.text}</p>`;
           break;
         case 'delimiter':
           html += '<hr />';

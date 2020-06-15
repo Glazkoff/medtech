@@ -60,6 +60,7 @@
 .content__item:nth-child(5n+4) img{
 width: 674px;
   height: 194px;
+  object-fit: cover;
 }
 .content__item:nth-child(5n+5) {
   grid-column: span 2;
@@ -103,4 +104,31 @@ width: 674px;
   font-size: 12px;
   line-height: 16px;
   color: #94624D;
+}
+@media (max-width: 1075px) {
+  .content__item:nth-child(n) img{
+    width: 100%;
+    height: 100%;
+    border-radius: 2px 2px 0px 0px;
+  }
+  .logo_news{
+    display: none;
+  }
+
+  .content {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-template-rows: repeat(auto-fill,  1fr);
+    justify-content: center;
+  }
+  .content__item:nth-child(n) {
+       grid-column: span 2;
+       grid-row: span 2;
+     }
+  .block_news{
+    margin-left: 20px;
+    margin-right: 20px;
+
+  }
 }
