@@ -393,6 +393,29 @@ app.get("/api/favourite-materials", async (req, res) => {
   }
 })
 
+// Получение избранных записей
+app.delete("/api/favourite-materials/:id_materials", async (req, res) => {
+  try {
+    let decode = await jwt.decode(req.headers.authorization)
+    console.log(decode);
+    if (decode) {
+      let result = await UsersHasMaterials.destroy({
+        where: {
+          id_materials: req.params.id_materials,
+          id_users: decode.id_users
+        }
+      })
+      res.send(result)
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: error
+    })
+  }
+})
+
 // Получение списка всех пользователей
 app.get("/api/users/all", async (req, res) => {
   let result = await Users.findAll({
