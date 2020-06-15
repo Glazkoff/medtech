@@ -163,11 +163,15 @@ td>.editor-btn:not(:last-child) {
   padding: 10px 15px;
   color: #fff;
   border-radius: 4px;
-  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
   cursor: pointer;
   transition: 0.15s ease-out;
+}
+
+.loader-wrap {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  height: 10rem;
 }
 
 .admin-screen h2 {
