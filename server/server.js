@@ -414,7 +414,7 @@ app.get("/api/posts", async (req, res) => {
     console.log(error);
     res.status(500).send({
       status: 500,
-      message: "Ошибка сервера",
+      message: "Ошибка сервера: " + error,
     });
   }
 });
