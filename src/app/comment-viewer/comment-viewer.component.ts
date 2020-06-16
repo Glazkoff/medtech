@@ -6,7 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import * as moment from "moment";
 import jwt from "jwt-client";
-
+import * as jwt_decode from "jwt-decode";
 
 @Component({
   selector: "app-comment-viewer",
@@ -40,7 +40,12 @@ export class CommentViewerComponent implements OnInit {
   async ngOnInit() {
     this.initForm();
     let commentsarr = await this.getComments();
-    let userData = jwt.read(localStorage.getItem("token")).claim;
+    // зачем нужен этот кусок?
+    // if (localStorage.getItem("token") !== null) { 
+    //   let userData = jwt_decode(localStorage.getItem("token"));
+    //   // let userData = jwt.read(localStorage.getItem("token")).claim;
+    // }
+    
     if (Array.isArray(commentsarr)) {
       commentsarr.forEach((element) => {
         let el = {
@@ -55,6 +60,7 @@ export class CommentViewerComponent implements OnInit {
       });
     }
   }
+
   initForm() {
     this.myFirstReactiveForm = this.fb.group({
       comment: [""],
@@ -69,8 +75,10 @@ export class CommentViewerComponent implements OnInit {
       //Наденька, в объекте userData лежит вся информация о пользователе,
       // в том числе и айди
       // Получай его из объекта и делай с ним, что пожелаешь
-      let userData = jwt.read(localStorage.getItem("token")).claim;
+      let userData = jwt_decode(localStorage.getItem("token"));
+      // let userData = jwt.read(localStorage.getItem("token")).claim;
       console.log(userData);
+      localStorage.getItem("token");
       comment_add_array = {
         name_commentator: userData.firstname,
         author_id: userData.id_users,

@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { BaseApiService } from "../services/base-api.service";
 import { Router } from "@angular/router";
-import jwt from "jwt-client";
+// import jwt from "jwt-client";
+import * as jwt_decode from "jwt-decode";
 
 @Component({
   selector: "app-registration",
@@ -77,9 +78,10 @@ export class RegistrationComponent implements OnInit {
         );
         if (registartionRes["token"]) {
           try {
-            let userData = jwt.read(registartionRes["token"]).claim;
-            console.log(jwt.read(registartionRes["token"]).claim);
-
+            // let userData = jwt.read(registartionRes["token"]).claim;
+            // console.log(jwt.read(registartionRes["token"]).claim);
+            let userData = jwt_decode(registartionRes["token"]);
+            // console.log('Userdata - ', userData ); 
             localStorage.setItem("token", registartionRes["token"]);
             localStorage.setItem("userName", userData.firstname);
             localStorage.setItem("userSurname", userData.surname);

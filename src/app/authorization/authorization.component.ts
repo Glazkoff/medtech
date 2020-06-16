@@ -2,7 +2,8 @@ import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { BaseApiService } from "../services/base-api.service";
 import { Router } from "@angular/router";
-import jwt from "jwt-client";
+// import jwt from "jwt-client";
+import * as jwt_decode from "jwt-decode";
 
 @Component({
   selector: "app-authorization",
@@ -60,9 +61,10 @@ export class AuthorizationComponent implements OnInit {
         );
         if (response["token"]) {
           localStorage.setItem("token", response["token"]);
-
-          let userData = await jwt.read(response["token"]);
-          userData = userData.claim;
+          let userData = jwt_decode(response["token"]);
+          // let userData = await jwt.read(response["token"]);
+          
+          // userData = userData.claim;
           console.log("UserData ", userData);
           localStorage.setItem("userName", userData.firstname);
           localStorage.setItem("userSurname", userData.surname);

@@ -15,8 +15,10 @@ import * as moment from "moment";
 })
 export class NewComponent implements OnInit {
   post = [];
+  showBtnFavour = false;
   favourOrNot = true;
   private subscription: Subscription;
+  id: number;
   constructor(
     private api: BaseApiService,
     private activateRoute: ActivatedRoute
@@ -25,31 +27,32 @@ export class NewComponent implements OnInit {
       this.id = params.id;
     });
   }
-  id: number;
 
   async ngOnInit() {
     if (this.id) {
       const postsarr = await this.getPost();
-      let response;
-      try {
-        response = await this.api.get(`/favourite-materials`);
-        let all = response[0].materials;
-        console.log(all);
-        
-        let index = all.findIndex((el) => {
-          return el.id_materials == this.id;
-        });
-        console.log('index');
-        console.log(index);
-        if (index == -1) { 
-          this.favourOrNot = true;
-        }
-        else this.favourOrNot = false; 
-      } catch (error) {
-        console.log(error);
-      }
-     
+      if (localStorage.getItem("token") !== null) {
+        this.showBtnFavour = true;
+        let response;
+        try {
+          response = await this.api.get(`/favourite-materials`);
+          let all = response[0].materials;
+          console.log(all);
 
+          let index = all.findIndex((el) => {
+            return el.id_materials == this.id;
+          });
+          console.log("index");
+          console.log(index);
+          if (index == -1) {
+            this.favourOrNot = true;
+          } else this.favourOrNot = false;
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        this.showBtnFavour = false;
+      }
 
       // if ( await postsarr.id === this.id) {
       //   const el = {
@@ -153,8 +156,7 @@ export class NewComponent implements OnInit {
     console.log("Зашли в функцию добавление статьи в избранное");
     try {
       console.log("Отправили запрос на добавление статьи в избранное");
-      let result = await this.api
-        .post([], `/favourite-materials/${this.id}`);
+      let result = await this.api.post([], `/favourite-materials/${this.id}`);
       this.favourOrNot = false;
     } catch (error) {
       console.log(error);
