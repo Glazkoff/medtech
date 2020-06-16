@@ -123,7 +123,7 @@
     font-weight: normal;
     font-size: 14px;
     line-height: 16px;
-    margin: -2rem 11rem 0 5rem;
+    margin: 0rem 11rem 0 1.5rem;
     padding-bottom: 1rem;
 }
 
@@ -150,14 +150,10 @@
         height: 1.5rem;
         font-size: 10px;
     }
-       /*Доделать этот класс  */
+      
     .dangerous{
-        font-weight: 700;
-        text-align: left;
-        display: block;
-        position: absolute;
-        width: 100%;
-        margin-top: -2.3rem;
+        width: 15rem;
+        margin-top: -1.4rem;
         margin-left: 0.5rem;
     }
     
@@ -172,7 +168,9 @@
         width: 18rem;
         min-height: 6.5rem;
         background: #EDEEDF;
+        /* background: #e7f712; */
         margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
     }
     
     .image-for-user-com{
@@ -193,9 +191,14 @@
         width: 14.5rem;
     }
     /* Доделать */
+    .header-com{
+        display: flex;
+
+    }
+
     .time-com{
-        font-size: 14px;
-        line-height: 16px;
+        font-size: 9px;
+        line-height: 9px;
         margin-top: 0.69rem;
         right: 1rem;
     }
@@ -203,7 +206,7 @@
     .text-com{
         font-size: 12px;
         line-height: 12px;
-        margin: -2rem 11rem 0 2rem;
+        margin: -1rem 11rem 0 1rem;
         padding-bottom: 1rem;
     }
 }
