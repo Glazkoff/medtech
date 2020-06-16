@@ -1,7 +1,7 @@
-
-<body><div class="block_new">
+<div class="block_new">
+  <div *ngFor="let post of posts">
   <div class="flex">
-    <span id="post_title">{{post[0]}}</span>
+    <span id="post_title">{{post.title}}</span><br>
     <div *ngIf="showBtnFavour">
       <div *ngIf="favourOrNot; else deleteBlock">
         <button id="deleteFavourite" (click)="addFavourite()">Добавить в избранное</button>
@@ -11,16 +11,15 @@
       </ng-template>
     </div>
   </div>
-  
-  <span id="post_date">{{post[1]}}</span>
-  <div class="card_img"><img src="../../assets/example1.png" alt=""></div>
+
+  <span id="post_date">{{post.date}}</span>
+    <span id="post_author"> • Автор: {{post.author}}</span>
+    <div class="card_img"><img [src]="env.baseUrl + '/uploads/'+post.main_image" alt="" *ngIf="post.main_image !== ''">
+      <img src="../../assets/example1.png" alt="" *ngIf="!post.main_image"></div></div>
   <div class="card_block">
 
-<div id="article_content">
-</div>
+    <div id="article_content">
+    </div>
   </div>
 </div>
 <app-comment-viewer></app-comment-viewer>
-
-
-
