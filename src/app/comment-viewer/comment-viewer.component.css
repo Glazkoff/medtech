@@ -113,7 +113,6 @@
     font-size: 14px;
     line-height: 16px;
     margin-top: 0.69rem;
-    /* margin-left: 17rem; */
     right: 1rem;
     color: #94624D;
 }
@@ -124,6 +123,90 @@
     font-weight: normal;
     font-size: 14px;
     line-height: 16px;
-    margin: -2rem 11rem 0 5rem;
+    margin: 0rem 11rem 0 1.5rem;
     padding-bottom: 1rem;
+}
+
+@media (max-width: 420px) {
+    .title-com{
+        font-size: 22px;
+        line-height: 24px;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.25rem;
+        width: 18rem;
+    }
+    /* Форма */
+    .form-com{
+        margin: 0 auto;
+        width: 18rem;
+        height: 4rem;
+    }
+    
+    .btn-com{
+        margin-top: 0.1rem;
+        margin-left: 13.6rem;
+        width: 4rem;
+        height: 1.5rem;
+        font-size: 10px;
+    }
+      
+    .dangerous{
+        width: 15rem;
+        margin-top: -1.4rem;
+        margin-left: 0.5rem;
+    }
+    
+    .input-com{
+        height: 1.2rem;
+        width: 16.5rem;
+        margin: 0.7rem 0 0 0.5rem;
+    }
+      /* Вывод комментариев */
+    .comment{
+        margin: 0 auto;
+        width: 18rem;
+        min-height: 6.5rem;
+        background: #EDEEDF;
+        /* background: #e7f712; */
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .image-for-user-com{
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-top: 0.5rem;
+        margin-left: 0.1rem;
+    }
+    
+    .name-com{
+        font-size: 14px;
+        line-height: 16px;
+        margin-top: 0.3rem;
+        margin-left: 0.5rem;
+    }
+    
+    .user-com{
+        width: 14.5rem;
+    }
+    /* Доделать */
+    .header-com{
+        display: flex;
+
+    }
+
+    .time-com{
+        font-size: 9px;
+        line-height: 9px;
+        margin-top: 0.69rem;
+        right: 1rem;
+    }
+    
+    .text-com{
+        font-size: 12px;
+        line-height: 12px;
+        margin: -1rem 11rem 0 1rem;
+        padding-bottom: 1rem;
+    }
 }

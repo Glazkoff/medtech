@@ -7,6 +7,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { AppService} from "../services/app.service";
 import * as moment from "moment";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: "app-new",
@@ -14,11 +15,12 @@ import * as moment from "moment";
   styleUrls: ["./new.component.css"],
 })
 export class NewComponent implements OnInit {
-  post = [];
+  posts = [];
   showBtnFavour = false;
   favourOrNot = true;
   private subscription: Subscription;
   id: number;
+  env = environment;
   constructor(
     private api: BaseApiService,
     private activateRoute: ActivatedRoute
@@ -54,18 +56,25 @@ export class NewComponent implements OnInit {
       } else {
         this.showBtnFavour = false;
       }
-
-      // if ( await postsarr.id === this.id) {
-      //   const el = {
-      //     title: await postsarr.title,
-      //     id: await postsarr.id_materials,
-      //     content: await postsarr.content,
-      //   };
-      //   this.post.push(el);
-      //   console.log("RESPONSEeee");
-      //   console.log(this.post);
-      // }
+      if (Array.isArray(postsarr)) {
+        postsarr.forEach((element) => {
+          let el = {
+            id: element.id_materials,
+            title: element.title,
+            date: moment(parseInt(element.date))
+              .utcOffset("+0300")
+              .format(" DD.MM.YYYY"),
+            // duration: element.duration,
+            type: element.type,
+            content: element.content,
+            main_image: element.main_image,
+            author: element.author,
+          };
+          this.posts.push(el);
+        });
+      }
     }
+
   }
 
   async getPost() {
@@ -77,14 +86,12 @@ export class NewComponent implements OnInit {
       console.log("RESPONSE");
       console.log(response);
       this.jsonParse(JSON.parse(response[0].content));
-      title_new = response[0].title;
-      date_new = moment(parseInt(response[0].date))
-        .utcOffset("+0300")
-        .format(" DD.MM.YYYY");
-      this.post.push(title_new);
-      this.post.push(date_new);
-      console.log("post");
-      console.log(this.post[0]);
+      //   title_new = response[0].title;
+      // date_new = moment (parseInt(response[0].date)).utcOffset("+0300").format(' DD.MM.YYYY');
+      // this.post.push(title_new);
+      // this.post.push(date_new);
+      // console.log("post");
+      // console.log(this.post[0]);
     } catch (error) {
       console.log(error);
     }
@@ -101,30 +108,30 @@ export class NewComponent implements OnInit {
           html += `<p style="font-family: PT Astra Serif; font-style: normal; font-weight: normal; font-size: 20px; line-height: 24px; color: #000000;">${content.data.text}</p>`;
           break;
         case "delimiter":
-          html += "<hr />";
+          html += '<hr style="color: #944545;"/>';
           break;
         case "quote":
-          html += `<blockquote style="margin: 0; color: #231E28; padding: 30px 30px 30px 60px; border-left: 8px solid #CBDDE7; position: relative;font-family: 'Lato', sans-serif; font-weight: 300;"><p>${content.data.text}</p><cite>${content.data.caption}</cite></blockquote>`;
+          html += `<p style="color: #944545; font-style: italic">« ${content.data.text} » (${content.data.caption})</p>`;
           break;
         case "table":
-          html += "<table>";
+          html += '<table style="border-collapse: collapse;margin: 10px" >';
           for (let i = 0; i < content.data.content.length; i++) {
-            html += "<tr>";
+            html += '<tr style="border-style: solid; border-width: 1px 1px 1px 1px; border-color: #944545;">';
             content.data.content[i].forEach((k) => {
-              html += `<td>${k}</td>`;
+              html += `<td style="border-style: solid; border-width: 1px 1px 1px 1px; border-color: #944545;padding: 5px">${k}</td>`;
             });
             html += "</tr>";
           }
           html += "</table>";
           break;
         case "image":
-          html += `<div style="width:640px;text-align:center;"><img  src="${content.data.url}" title="${content.data.caption}"/><figcaption style="border-bottom: 2px solid darkgray;padding: 2px; text-align: center; text-transform: lowercase;">${content.data.caption}</figcaption></div>`;
+          html += `<div style=""><img  style=" width: 280px; height: 256px; border-radius: 2px; text-align:center;"src="${content.data.url}" title="${content.data.caption}"/><figcaption style="font-style: normal; font-weight: bold; font-size: 14px; line-height: 16px; text-align: right; color: #94624D;">${content.data.caption}</figcaption></div>`;
           break;
         case "embed":
           html += `<iframe width="${content.data.width}" height="${content.data.height}" src="${content.data.embed}" frameborder="0" allowfullscreen></iframe><figcaption style="width:580px;border-bottom: 2px solid darkgray;padding: 2px; text-align: center; text-transform: lowercase;">${content.data.caption}</figcaption>`;
           break;
         case "list":
-          html += "<ul>";
+          html += '<ul style="color: #944545">';
           content.data.items.forEach((li) => {
             html += `<li>${li}</li>`;
           });

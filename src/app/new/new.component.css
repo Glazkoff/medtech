@@ -1,7 +1,6 @@
 .block_new{
   margin-right: 72px;
   margin-left: 72px;
-
 }
 .card_block {
   background: #EEEEEE;
@@ -47,10 +46,21 @@
    line-height: 16px;
    color: #94624D;
  }
+#post_author{
+  font-family: PT Root UI Web;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  color: #94624D;
+}
 #post_title{
   font-style: normal;
   font-weight: bold;
   font-size: 36px;
   line-height: 38px;
   color: #000000;
+}
+#article_content a {
+  color: #0e9102;
 }
