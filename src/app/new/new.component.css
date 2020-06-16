@@ -30,7 +30,7 @@
   justify-content: space-between;
 }
 #deleteFavourite:focus{
-  overflow: none;
+  outline: none;
 }
 
 .card_img img{

@@ -31,6 +31,7 @@ export class NewComponent implements OnInit {
   async ngOnInit() {
     if (this.id) {
       const postsarr = await this.getPost();
+      // this.showBtnFavour = true;
       if (localStorage.getItem("token") !== null) {
         this.showBtnFavour = true;
         let response;

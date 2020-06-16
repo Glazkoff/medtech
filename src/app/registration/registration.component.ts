@@ -39,6 +39,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   async onRegistr() {
+     this.fieldRequired = true;
+     this.loginExist = true;
     if (this.myForm.invalid) {
       if (this.myForm.value.name == "") {
         this.fieldRequired = false;

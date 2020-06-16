@@ -36,6 +36,8 @@ export class AuthorizationComponent implements OnInit {
   }
 
   async onLogin() {
+    this.loginNotRight = true;
+    this.fieldRequired = true;
     if (this.myForm.invalid) {
       if (this.myForm.value.login == "") {
         this.fieldRequired = false;

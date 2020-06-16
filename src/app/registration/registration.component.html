@@ -31,7 +31,7 @@
             <div class="label">Логин <span>*</span></div>
             <div class="input-form" (click)="viewOldLogin();   loginExist=true; placeholderLogin='Введите логин'">
                 <input (keyup)="viewOldLogin();  loginExist=true; placeholderLogin='Введите логин'" type="text"  formControlName="login" class="form-control" [placeholder]="placeholderLogin" >
-                <small *ngIf="!loginExist">Данный логин уже существует!</small>
+                <small *ngIf="(!loginExist) && (fieldRequired)">Данный логин уже существует!</small>
                 <small *ngIf="(placeholderLogin=='') && (!fieldRequired)" >Данное поле обязательное!</small>
             </div>
             <div class="label">Пароль <span>*</span></div>
