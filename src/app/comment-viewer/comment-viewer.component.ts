@@ -40,7 +40,7 @@ export class CommentViewerComponent implements OnInit {
   async ngOnInit() {
     this.initForm();
     let commentsarr = await this.getComments();
-    let userData = jwt.read(localStorage.getItem("token")).claim;
+    // let userData = jwt.read(localStorage.getItem("token")).claim;
     if (Array.isArray(commentsarr)) {
       commentsarr.forEach((element) => {
         let el = {
