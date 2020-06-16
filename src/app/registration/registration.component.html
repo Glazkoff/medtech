@@ -5,7 +5,7 @@
         </div>
 
         <form [formGroup]="myForm" class="wrap-grid"> 
-            <div></div>
+            <div class="none-mobile"></div>
             <div class="wrap-flex2"> 
                 <h2 [routerLink]="['/authorization']">Вход</h2>
                 <h2 class="active">Регистрация</h2>
@@ -43,8 +43,8 @@
                     <img *ngIf="type=='text'" src="/assets/eye-outline.png" alt="Показать/спрятать пароль">
             </div>
             </div>
-            <div></div>
-            <div>
+            <div class="none-mobile"></div>
+            <div class="div-for-button">
                 <button class="btn" (click)="onRegistr()" >Регистрация</button>
                 <p class="message "><span>*</span> - обязательные поля</p>
             </div> 
