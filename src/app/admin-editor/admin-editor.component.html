@@ -18,6 +18,22 @@
       Загрузить файл
     </button>
     <input class="editor-input" type="text" name="" placeholder="Файл на сервере" [(ngModel)]="filepath" disabled />
+    <!-- <button class="editor-btn btn-normal" type="button" (click)="onSave()" *ngIf="this.data == undefined"
+      [disabled]="!filepath || !title">
+      Сохранить
+    </button>
+    <img [src]="env.baseUrl + '/uploads/'+ filepath" alt="" *ngIf="filepath" width="306" height="194">
+    <button class="editor-btn btn-info" type="button" (click)="onUpdate()" *ngIf="this.data !== undefined">
+      Обновить
+    </button>
+    <button class="editor-btn btn-danger" type="button" (click)="onDeleteAsk()">
+      Удалить
+    </button> -->
+  </div>
+  <div class="editor-wrap">
+    <div id="editorjs"></div>
+  </div>
+  <div class="editor-btn-wrap">
     <button class="editor-btn btn-normal" type="button" (click)="onSave()" *ngIf="this.data == undefined"
       [disabled]="!filepath || !title">
       Сохранить
@@ -29,8 +45,5 @@
     <button class="editor-btn btn-danger" type="button" (click)="onDeleteAsk()">
       Удалить
     </button>
-  </div>
-  <div class="editor-wrap">
-    <div id="editorjs"></div>
   </div>
 </div>

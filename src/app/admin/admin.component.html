@@ -1,18 +1,26 @@
-<div class="sidepanel">
-  <a class="admin-menu-point" [routerLink]="['/admin']" routerLinkActive="router-link-active"
-    [ngClass]="{'menu-point-active': path === ''}">Последние комментарии</a>
-  <a class="admin-menu-point" [routerLink]="['/admin', 'newarticle']" routerLinkActive="router-link-active"
-    [ngClass]="{'menu-point-active': path === 'newarticle'}">Создать
-    статью</a>
-  <a class="admin-menu-point" [routerLink]="['/admin', 'editarticle']" routerLinkActive="router-link-active" [ngClass]="{'menu-point-active': path ===
+<div class="admin-screen">
+  <div class="sidepanel">
+    <a class="admin-menu-point" [routerLink]="['/admin']" routerLinkActive="router-link-active"
+      [ngClass]="{'menu-point-active': path === ''}">Последние комментарии</a>
+    <a class="admin-menu-point" [routerLink]="['/admin', 'newarticle']" routerLinkActive="router-link-active"
+      [ngClass]="{'menu-point-active': path === 'newarticle'}">Создать
+      статью</a>
+    <a class="admin-menu-point" [routerLink]="['/admin', 'editarticle']" routerLinkActive="router-link-active"
+      [ngClass]="{'menu-point-active': path ===
       'editarticle'}">Редактировать
-    статью</a>
-</div>
-<div id="admin-wrap">
-  <div class="mainpanel">
-    <app-admin-comments *ngIf="path === ''"></app-admin-comments>
-    <app-admin-editor *ngIf="path === 'newarticle'"></app-admin-editor>
-    <app-admin-articles *ngIf="path === 'editarticle'" [path]="path">
-    </app-admin-articles>
+      статью</a>
+    <a class="admin-menu-point" [routerLink]="['/admin', 'editusers']" routerLinkActive="router-link-active" [ngClass]="{'menu-point-active': path ===
+      'editusers'}">Редактировать
+      пользователей</a>
+
+  </div>
+  <div id="admin-wrap">
+    <div class="mainpanel">
+      <app-admin-comments *ngIf="path === ''"></app-admin-comments>
+      <app-admin-editor *ngIf="path === 'newarticle'"></app-admin-editor>
+      <app-admin-articles *ngIf="path === 'editarticle'" [path]="path">
+      </app-admin-articles>
+      <app-admin-users *ngIf="path === 'editusers'"></app-admin-users>
+    </div>
   </div>
 </div>

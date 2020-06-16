@@ -1,26 +1,30 @@
-<div class="body">
-  <div class="logo_news">
-    <img src="../../assets/logo_news.png" alt="">
+  <h2 class="headers2">Избранное</h2>
+
+  <div *ngIf="notfound; else anotherBlock " class="padd">
+    <p>К сожалению, Вы еще ничего не добавили в избранное :( </p>
   </div>
-  <div class="block_news">
-
-    <div class="content">
-      <div class="content__item" *ngFor="let post of posts">
-        <a [routerLink]="['/new', post.id]">
-          <img [src]="env.baseUrl + '/uploads/'+post.main_image" alt="" *ngIf="post.main_image !== ''">
-          <img src="../../assets/example1.png" alt="" *ngIf="!post.main_image">
-          <div>
-            <span id="post_type">Автор: {{post.author}}</span>
-            <span id="post_date">{{post.date}}</span></div>
-          <br>
-          <div id="post_title">{{post.title}}</div></a>
-          <a (submit)="deleteFavourite()" id="deleteFavourite">Удалить из избранного</a>
-          <!-- <span id="post_duration">{{post.duration}}</span> -->
-          <!--      <div id="paragraph_content"+post.id>-->
-          <!--      </div>-->
-
+  
+  <ng-template #anotherBlock>
+    <div class="block_news">
+      <div class="content">
+        <div class="content__item" *ngFor="let post of posts">
+          <a [routerLink]="['/new', post.id]">
+            <img [src]="env.baseUrl + '/uploads/'+post.main_image" alt="" *ngIf="post.main_image !== ''">
+            <img src="../../assets/example1.png" alt="" *ngIf="!post.main_image">
+            <div>
+              <span id="post_type">Автор: {{post.author}}</span>
+              <span id="post_date">{{post.date}}</span></div>
+            <br>
+            <div id="post_title">{{post.title}}</div></a>
+            <button (click)="deleteFavourite(post.id)" id="deleteFavourite">Удалить из избранного</button>
+            <!-- <span id="post_duration">{{post.duration}}</span> -->
+            <!--      <div id="paragraph_content"+post.id>-->
+            <!--      </div>-->
+  
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </ng-template>
+  
+
 

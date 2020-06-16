@@ -7,6 +7,32 @@
   background: #EEEEEE;
   padding: 32px 36px;
 }
+
+#deleteFavourite {
+  /* margin-top: 2px;
+  margin-bottom: 5px; */
+  height: 40px;
+  cursor: pointer;
+  display: block;
+  /* width: 256px; */
+  background: #94624D;
+  border-radius: 2px;
+  font-family: PT Root UI Web;
+  font-style: normal;
+  font-weight: 700;
+  border: none;
+  font-size: 18px;
+  line-height: 16px;
+  color: #EDEEDF;
+}
+.flex{
+  display: flex;
+  justify-content: space-between;
+}
+#deleteFavourite:focus{
+  overflow: none;
+}
+
 .card_img img{
   width: 1011px;
   height: 144px;

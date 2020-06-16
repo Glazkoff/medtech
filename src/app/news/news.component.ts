@@ -12,6 +12,7 @@ import { environment } from "../../environments/environment";
 })
 export class NewsComponent implements OnInit {
   posts = [];
+  
   constructor(private api: BaseApiService) {}
   env = environment;
   async ngOnInit() {

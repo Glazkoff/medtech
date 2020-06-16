@@ -1,0 +1,48 @@
+<app-modal *ngIf="modal"
+  [title]="'Вы уверены, что хотите безвозвратно удалить пользователя #' + deleteUser.id_users + '?'"
+  (closeModal)="onCloseModal()">
+  <p>Вы не сможете восстановить изменения</p>
+  <div class="modal-btn-wrap">
+    <button class="editor-btn btn-danger" type="button" (click)="sendDeleteUser()">
+      Удалить пользователя
+    </button>
+  </div>
+</app-modal>
+<h2>Редактирвание пользователей</h2>
+<div class="loader-wrap" *ngIf="loading; else afterLoading">
+  <app-loader></app-loader>
+</div>
+<ng-template #afterLoading>
+  <div class="table-wrap">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>ID</th>
+          <th>Логин</th>
+          <th>Имя</th>
+          <th>Фамилия</th>
+          <th>Дата регистрации</th>
+          <th>Действия</th>
+        </tr>
+        <tr *ngFor="let user of users">
+          <td>{{user.id_users}}</td>
+          <td>{{user.login}}</td>
+          <td>{{user.firstname}}</td>
+          <td>{{user.surname}}</td>
+          <td>{{user.createdAt}}</td>
+          <td><button class="editor-btn btn-info" type="button" (click)="setAdminStatus(user)"
+              *ngIf="user.is_admin === null || user.is_admin === false">
+              Повысить до администратора
+            </button>
+            <button class="editor-btn btn-normal" type="button" (click)="unsetAdminStatus(user)"
+              *ngIf="(user.is_admin === true)">
+              Убрать права администратора
+            </button>
+            <br><button class="editor-btn btn-danger" type="button" (click)="onDeleteUser(user)">
+              Удалить
+            </button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>

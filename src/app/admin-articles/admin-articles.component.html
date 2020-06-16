@@ -3,21 +3,21 @@
   <app-loader></app-loader>
 </div>
 <ng-template #afterLoading>
-  <table *ngIf="path==='editarticle' && id===''" class="table">
-    <tbody>
-      <tr>
-        <th>ID</th>
-        <th>Заголовок</th>
-        <th>Дата</th>
-        <!-- <th>Длительность</th> -->
-      </tr>
-      <tr *ngFor="let post of posts" [routerLink]="[ '/admin', 'editarticle', post.id_materials]">
-        <td>{{post.id_materials}}</td>
-        <td>{{post.title}}</td>
-        <td>{{post.date}}</td>
-        <!-- <td>{{post.duration}}</td> -->
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-wrap" *ngIf="path==='editarticle' && id===''">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>ID</th>
+          <th>Заголовок</th>
+          <th>Дата</th>
+        </tr>
+        <tr *ngFor="let post of posts" [routerLink]="[ '/admin', 'editarticle', post.id_materials]">
+          <td>{{post.id_materials}}</td>
+          <td>{{post.title}}</td>
+          <td>{{post.date}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <app-admin-editor *ngIf="id!==''" class="table" [(data)]="data" [fromList]="true" [id]="id"></app-admin-editor>
 </ng-template>

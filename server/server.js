@@ -223,13 +223,53 @@ const Users = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
+    is_admin: {
+      type: Sequelize.BOOLEAN
+    }
   }, {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
 );
 
+// Модель UsersHasMaterials
+const UsersHasMaterials = sequelize.define("users_has_materials", {
+  //   // id_users_has_materials: {
+  //   //   type: Sequelize.INTEGER,
+  //   //   primaryKey: true,
+  //   //   autoIncrement: true,
+  //   //   allowNull: false
+  //   // },
+  //   id_users: {
+  //     type: Sequelize.INTEGER,
+  //     allowNull: false,
+  //   },
+  //   id_materials: {
+  //     type: Sequelize.INTEGER,
+  //     allowNull: false,
+  //   },
+  status: {
+    type: Sequelize.TEXT,
+    allowNull: true,
+  },
+}, {
+  charset: "UTF8",
+  collate: "utf8_unicode_ci",
+})
+
 // Реляции таблиц
+Users.belongsToMany(Materials, {
+  through: 'users_has_materials',
+  foreignKey: 'id_users',
+  otherKey: 'id_materials',
+  as: 'materials'
+});
+Materials.belongsToMany(Users, {
+  through: 'users_has_materials',
+  foreignKey: 'id_materials',
+  otherKey: 'id_users',
+  as: 'users'
+});
 Materials.hasMany(Comments, {
   onDelete: "cascade",
   foreignKey: "id_materials",
@@ -255,6 +295,7 @@ sequelize
   // Вариант для изменений в таблицах
   .sync({
     alter: true,
+    // force: process.env.PORT !== null
   })
   .then((result) => {
     console.log("[Sequelize] Всё ОК");
@@ -299,6 +340,116 @@ app.all("/news", (req, res) => {
 //   res.sendFile("index.html", { root: __dirname + "/../dist/medtech/" });
 // });
 
+// Получение избранных записей
+app.post("/api/favourite-materials/:id_materials", async (req, res) => {
+  try {
+    let decode = await jwt.decode(req.headers.authorization)
+    console.log(decode);
+    if (decode) {
+      let result = await UsersHasMaterials.create({
+        id_materials: req.params.id_materials,
+        id_users: decode.id_users
+      })
+      res.send(result)
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: error
+    })
+  }
+})
+
+// Получение избранных записей
+app.get("/api/favourite-materials", async (req, res) => {
+  try {
+    let decode = await jwt.decode(req.headers.authorization)
+    console.log(decode);
+    if (decode) {
+      let result = await Users.findAll({
+        where: {
+          id_users: decode.id_users
+        },
+        attributes: ['id_users'],
+        include: [{
+          model: Materials,
+          as: "materials",
+        }, ]
+      })
+      res.send(result)
+    } else {
+      res.status(401).send({
+        status: 401,
+        message: 'Ошибка расшифровки токена!'
+      })
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: error
+    })
+  }
+})
+
+// Получение избранных записей
+app.delete("/api/favourite-materials/:id_materials", async (req, res) => {
+  try {
+    let decode = await jwt.decode(req.headers.authorization)
+    console.log(decode);
+    if (decode) {
+      let result = await UsersHasMaterials.destroy({
+        where: {
+          id_materials: req.params.id_materials,
+          id_users: decode.id_users
+        }
+      })
+      res.send(result)
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: error
+    })
+  }
+})
+
+// Получение списка всех пользователей
+app.get("/api/users/all", async (req, res) => {
+  let result = await Users.findAll({
+    attributes: ['id_users', 'login', 'firstname', 'surname', 'createdAt', 'is_admin'],
+    order: [
+      ['createdAt', 'DESC'],
+      ['id_users', 'DESC'],
+    ],
+  });
+  res.status(200).send(result);
+})
+
+// Изменение прав администратора пользователя
+app.put("/api/users/setadmin/:id", async (req, res) => {
+  let result = await Users.update({
+    is_admin: req.body.is_admin
+  }, {
+    where: {
+      id_users: req.params.id
+    }
+  });
+  res.status(200).send(result);
+})
+
+// Удаление конкретного пользователя
+app.delete("/api/users/:id", async (req, res) => {
+  let result = await Users.destroy({
+    where: {
+      id_users: req.params.id
+    }
+  });
+  res.status(200).send(result);
+})
+
 // Удаление конкретного комментария
 app.delete("/api/comments/:id", async (req, res) => {
   let result = await Comments.destroy({
@@ -324,7 +475,9 @@ app.get("/api/comments/all", async (req, res) => {
       attributes: ['id_materials', 'title']
     }]
   });
-  res.send(comments);
+  setTimeout(() => {
+    res.send(comments);
+  }, 300);
 })
 
 // Отправка фото
@@ -390,7 +543,7 @@ app.post("/api/posts", async (req, res) => {
     console.log(error);
     res.status(500).send({
       status: 500,
-      message: "Ошибка сервера",
+      message: "Ошибка сервера: " + error,
     });
   }
 });
@@ -414,7 +567,7 @@ app.get("/api/posts", async (req, res) => {
     console.log(error);
     res.status(500).send({
       status: 500,
-      message: "Ошибка сервера",
+      message: "Ошибка сервера: " + error,
     });
   }
 });
@@ -534,6 +687,7 @@ app.post("/api/users", async (req, res) => {
             surname: user.surname,
             organization: user.organization,
             role: user.role,
+            is_admin: user.is_admin
           },
           CONFIG.SECRET, {
             expiresIn: 86400, // токен на 24 часа
@@ -591,6 +745,7 @@ app.post("/api/login", async (req, res) => {
             surname: existUser.surname,
             organization: existUser.organization,
             role: existUser.role,
+            is_admin: existUser.is_admin
           },
           CONFIG.SECRET, {
             expiresIn: 86400, // токен на 24 часа
