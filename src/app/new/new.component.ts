@@ -21,6 +21,7 @@ export class NewComponent implements OnInit {
   private subscription: Subscription;
   id: number;
   env = environment;
+  loading = false;
   constructor(
     private api: BaseApiService,
     private activateRoute: ActivatedRoute
@@ -31,6 +32,7 @@ export class NewComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.loading = true;
     if (this.id) {
       const postsarr = await this.getPost();
       // this.showBtnFavour = true;
@@ -74,7 +76,9 @@ export class NewComponent implements OnInit {
         });
       }
     }
-
+    if (!this.id) {
+  this.loading = false;
+}
   }
 
   async getPost() {
@@ -83,6 +87,7 @@ export class NewComponent implements OnInit {
     let date_new;
     try {
       response = await this.api.get("/posts/" + this.id);
+      this.loading = false;
       console.log("RESPONSE");
       console.log(response);
       this.jsonParse(JSON.parse(response[0].content));

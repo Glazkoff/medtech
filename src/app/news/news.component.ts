@@ -12,10 +12,11 @@ import { environment } from "../../environments/environment";
 })
 export class NewsComponent implements OnInit {
   posts = [];
-  
+  loading = false;
   constructor(private api: BaseApiService) {}
   env = environment;
   async ngOnInit() {
+    this.loading = true;
     let postsarr = await this.getPosts();
     if (Array.isArray(postsarr)) {
       postsarr.forEach((element) => {
@@ -53,6 +54,7 @@ export class NewsComponent implements OnInit {
     let response;
     try {
       response = await this.api.get("/posts");
+      this.loading = false;
       console.log("RESPONSE");
       console.log(response);
     } catch (error) {
