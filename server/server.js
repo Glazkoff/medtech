@@ -74,7 +74,8 @@ if (process.env.PORT) {
   sequelize = new Sequelize(
     dbConfig.PROD.DB,
     dbConfig.PROD.USER,
-    dbConfig.PROD.PASSWORD, {
+    dbConfig.PROD.PASSWORD,
+    {
       dialect: dbConfig.PROD.DIALECT,
       host: dbConfig.PROD.HOST,
       define: {
@@ -117,7 +118,8 @@ if (process.env.PORT) {
 
 // Модель Comments
 const Comments = sequelize.define(
-  "comments", {
+  "comments",
+  {
     id_comment: {
       type: Sequelize.INTEGER(11),
       autoIncrement: true,
@@ -142,14 +144,16 @@ const Comments = sequelize.define(
       type: Sequelize.INTEGER(11),
       allowNull: false,
     },
-  }, {
+  },
+  {
     timestamps: false,
   }
 );
 
 // Модель Materials
 const Materials = sequelize.define(
-  "materials", {
+  "materials",
+  {
     id_materials: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -184,7 +188,8 @@ const Materials = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-  }, {
+  },
+  {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
@@ -192,7 +197,8 @@ const Materials = sequelize.define(
 
 // Модель Users
 const Users = sequelize.define(
-  "users", {
+  "users",
+  {
     id_users: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -224,52 +230,76 @@ const Users = sequelize.define(
       allowNull: false,
     },
     is_admin: {
-      type: Sequelize.BOOLEAN
-    }
-  }, {
+      type: Sequelize.BOOLEAN,
+    },
+  },
+  {
     charset: "UTF8",
     collate: "utf8_unicode_ci",
   }
 );
 
 // Модель UsersHasMaterials
-const UsersHasMaterials = sequelize.define("users_has_materials", {
-  //   // id_users_has_materials: {
-  //   //   type: Sequelize.INTEGER,
-  //   //   primaryKey: true,
-  //   //   autoIncrement: true,
-  //   //   allowNull: false
-  //   // },
-  //   id_users: {
-  //     type: Sequelize.INTEGER,
-  //     allowNull: false,
-  //   },
-  //   id_materials: {
-  //     type: Sequelize.INTEGER,
-  //     allowNull: false,
-  //   },
-  status: {
-    type: Sequelize.TEXT,
-    allowNull: true,
+const UsersHasMaterials = sequelize.define(
+  "users_has_materials",
+  {
+    //   // id_users_has_materials: {
+    //   //   type: Sequelize.INTEGER,
+    //   //   primaryKey: true,
+    //   //   autoIncrement: true,
+    //   //   allowNull: false
+    //   // },
+    //   id_users: {
+    //     type: Sequelize.INTEGER,
+    //     allowNull: false,
+    //   },
+    //   id_materials: {
+    //     type: Sequelize.INTEGER,
+    //     allowNull: false,
+    //   },
+    status: {
+      type: Sequelize.TEXT,
+      allowNull: true,
+    },
   },
-}, {
-  charset: "UTF8",
-  collate: "utf8_unicode_ci",
-})
+  {
+    charset: "UTF8",
+    collate: "utf8_unicode_ci",
+  }
+);
 
 // Реляции таблиц
 Users.belongsToMany(Materials, {
-  through: 'users_has_materials',
-  foreignKey: 'id_users',
-  otherKey: 'id_materials',
-  as: 'materials'
+  through: UsersHasMaterials,
+  foreignKey: "id_users",
+  otherKey: "id_materials",
+  as: "materials",
+  onDelete: "cascade",
 });
 Materials.belongsToMany(Users, {
-  through: 'users_has_materials',
-  foreignKey: 'id_materials',
-  otherKey: 'id_users',
-  as: 'users'
+  through: UsersHasMaterials,
+  foreignKey: "id_materials",
+  otherKey: "id_users",
+  as: "users",
 });
+// Users.hasMany(UsersHasMaterials, {
+//   onDelete: "cascade",
+//   foreignKey: "id_users",
+//   as: "UsersHasMaterials",
+// });
+// UsersHasMaterials.belongsTo(Users, {
+//   foreignKey: "id_users",
+//   as: "User",
+// });
+// Materials.hasMany(UsersHasMaterials, {
+//   onDelete: "cascade",
+//   foreignKey: "id_materials",
+//   as: "UsersHasMaterials",
+// });
+// UsersHasMaterials.belongsTo(Materials, {
+//   foreignKey: "id_materials",
+//   as: "material",
+// });
 Materials.hasMany(Comments, {
   onDelete: "cascade",
   foreignKey: "id_materials",
@@ -343,163 +373,178 @@ app.all("/news", (req, res) => {
 // Получение избранных записей
 app.post("/api/favourite-materials/:id_materials", async (req, res) => {
   try {
-    let decode = await jwt.decode(req.headers.authorization)
+    let decode = await jwt.decode(req.headers.authorization);
     console.log(decode);
     if (decode) {
       let result = await UsersHasMaterials.create({
         id_materials: req.params.id_materials,
-        id_users: decode.id_users
-      })
-      res.send(result)
+        id_users: decode.id_users,
+      });
+      res.send(result);
     }
   } catch (error) {
     console.log(error);
     res.status(500).send({
       status: 500,
-      message: error
-    })
+      message: error,
+    });
   }
-})
+});
 
 // Получение избранных записей
 app.get("/api/favourite-materials", async (req, res) => {
   try {
-    let decode = await jwt.decode(req.headers.authorization)
+    let decode = await jwt.decode(req.headers.authorization);
     console.log(decode);
     if (decode) {
       let result = await Users.findAll({
         where: {
-          id_users: decode.id_users
+          id_users: decode.id_users,
         },
-        attributes: ['id_users'],
-        include: [{
-          model: Materials,
-          as: "materials",
-        }, ]
-      })
-      res.send(result)
+        attributes: ["id_users"],
+        include: [
+          {
+            model: Materials,
+            as: "materials",
+          },
+        ],
+      });
+      res.send(result);
     } else {
       res.status(401).send({
         status: 401,
-        message: 'Ошибка расшифровки токена!'
-      })
+        message: "Ошибка расшифровки токена!",
+      });
     }
   } catch (error) {
     console.log(error);
     res.status(500).send({
       status: 500,
-      message: error
-    })
+      message: error,
+    });
   }
-})
+});
 
 // Получение избранных записей
 app.delete("/api/favourite-materials/:id_materials", async (req, res) => {
   try {
-    let decode = await jwt.decode(req.headers.authorization)
+    let decode = await jwt.decode(req.headers.authorization);
     console.log(decode);
     if (decode) {
       let result = await UsersHasMaterials.destroy({
         where: {
           id_materials: req.params.id_materials,
-          id_users: decode.id_users
-        }
-      })
-      res.send(result)
+          id_users: decode.id_users,
+        },
+      });
+      res.send(result);
     }
   } catch (error) {
     console.log(error);
     res.status(500).send({
       status: 500,
-      message: error
-    })
+      message: error,
+    });
   }
-})
+});
 
 // Получение списка всех пользователей
 app.get("/api/users/all", async (req, res) => {
   let result = await Users.findAll({
-    attributes: ['id_users', 'login', 'firstname', 'surname', 'createdAt', 'is_admin'],
+    attributes: [
+      "id_users",
+      "login",
+      "firstname",
+      "surname",
+      "createdAt",
+      "is_admin",
+    ],
     order: [
-      ['createdAt', 'DESC'],
-      ['id_users', 'DESC'],
+      ["createdAt", "DESC"],
+      ["id_users", "DESC"],
     ],
   });
   res.status(200).send(result);
-})
+});
 
 // Изменение прав администратора пользователя
 app.put("/api/users/setadmin/:id", async (req, res) => {
-  let result = await Users.update({
-    is_admin: req.body.is_admin
-  }, {
-    where: {
-      id_users: req.params.id
+  let result = await Users.update(
+    {
+      is_admin: req.body.is_admin,
+    },
+    {
+      where: {
+        id_users: req.params.id,
+      },
     }
-  });
+  );
   res.status(200).send(result);
-})
+});
 
 // Удаление конкретного пользователя
 app.delete("/api/users/:id", async (req, res) => {
+  console.log("ID OF USER TO DELETE: " + req.params.id);
   let result = await Users.destroy({
     where: {
-      id_users: req.params.id
-    }
+      id_users: req.params.id,
+    },
   });
   res.status(200).send(result);
-})
+});
 
 // Удаление конкретного комментария
 app.delete("/api/comments/:id", async (req, res) => {
   let result = await Comments.destroy({
     where: {
-      id_comment: req.params.id
-    }
+      id_comment: req.params.id,
+    },
   });
   res.status(200).send({
     status: 200,
-    message: 'OK'
-  })
-})
+    message: "OK",
+  });
+});
 
 // Получение списка всех комментариев
 app.get("/api/comments/all", async (req, res) => {
   let comments = await Comments.findAll({
-    order: [
-      ['date_comment', 'DESC'],
+    order: [["date_comment", "DESC"]],
+    include: [
+      {
+        model: Materials,
+        as: "material",
+        attributes: ["id_materials", "title"],
+      },
     ],
-    include: [{
-      model: Materials,
-      as: 'material',
-      attributes: ['id_materials', 'title']
-    }]
   });
   setTimeout(() => {
     res.send(comments);
   }, 300);
-})
+});
 
 // Отправка фото
 app.get("/api/uploads/:filename", (req, res) => {
   if (req.params.filename) {
-    res.sendFile(path.join(__dirname, 'uploads', req.params.filename), function (err) {
-      if (err) {
-        console.log(err);
-        res.status(err.status).send({
-          status: err.status
-        });
-      } else {
-        console.log('Sent:', req.params.filename);
+    res.sendFile(
+      path.join(__dirname, "uploads", req.params.filename),
+      function (err) {
+        if (err) {
+          console.log(err);
+          res.status(err.status).send({
+            status: err.status,
+          });
+        } else {
+          console.log("Sent:", req.params.filename);
+        }
       }
-    })
+    );
   } else {
     res.status(400).send({
-      status: 400
+      status: 400,
     });
   }
-
-})
+});
 
 // Загрузка фото
 app.post("/api/posts/photos", upload.single("image"), async (req, res) => {
@@ -512,7 +557,7 @@ app.post("/api/posts/photos", upload.single("image"), async (req, res) => {
     console.log("Файл доступен!");
     return res.send({
       success: true,
-      filename: req.file.filename
+      filename: req.file.filename,
     });
   }
 });
@@ -522,13 +567,13 @@ app.post("/api/posts/photos", upload.single("image"), async (req, res) => {
 
 // Создание новостного поста
 app.post("/api/posts", async (req, res) => {
-  console.log('TOKEN DECODE', jwt.decode(req.headers.authorization));
+  console.log("TOKEN DECODE", jwt.decode(req.headers.authorization));
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл POST запрос для постов:");
   console.log(req.body);
   let result;
   try {
-    let decoded = await jwt.decode(req.headers.authorization)
+    let decoded = await jwt.decode(req.headers.authorization);
     result = await Materials.create({
       duration: req.body.duration,
       date: req.body.content.time,
@@ -536,7 +581,7 @@ app.post("/api/posts", async (req, res) => {
       title: req.body.title,
       content: JSON.stringify(req.body.content.blocks),
       main_image: req.body.main_image,
-      author: decoded.firstname + ' ' + decoded.surname
+      author: decoded.firstname + " " + decoded.surname,
     });
     res.send(result);
   } catch (error) {
@@ -605,17 +650,20 @@ app.put("/api/posts/:id", async (req, res) => {
   console.log(req.body);
   let result;
   try {
-    result = await Materials.update({
-      duration: req.body.duration,
-      date: req.body.content.time,
-      title: req.body.title,
-      content: JSON.stringify(req.body.content.blocks),
-      main_image: req.body.main_image
-    }, {
-      where: {
-        id_materials: req.params.id,
+    result = await Materials.update(
+      {
+        duration: req.body.duration,
+        date: req.body.content.time,
+        title: req.body.title,
+        content: JSON.stringify(req.body.content.blocks),
+        main_image: req.body.main_image,
       },
-    });
+      {
+        where: {
+          id_materials: req.params.id,
+        },
+      }
+    );
     res.send(result);
   } catch (error) {
     console.log(error);
@@ -681,15 +729,17 @@ app.post("/api/users", async (req, res) => {
           },
         });
         console.log("Созданный пользователь: ", user);
-        let token = await jwt.sign({
+        let token = await jwt.sign(
+          {
             id_users: user.id_users,
             firstname: user.firstname,
             surname: user.surname,
             organization: user.organization,
             role: user.role,
-            is_admin: user.is_admin
+            is_admin: user.is_admin,
           },
-          CONFIG.SECRET, {
+          CONFIG.SECRET,
+          {
             expiresIn: 86400, // токен на 24 часа
           }
         );
@@ -739,15 +789,17 @@ app.post("/api/login", async (req, res) => {
         //   message: "Неправильный логин или пароль",
         // });
       } else {
-        jwt.sign({
+        jwt.sign(
+          {
             id_users: existUser.id_users,
             firstname: existUser.firstname,
             surname: existUser.surname,
             organization: existUser.organization,
             role: existUser.role,
-            is_admin: existUser.is_admin
+            is_admin: existUser.is_admin,
           },
-          CONFIG.SECRET, {
+          CONFIG.SECRET,
+          {
             expiresIn: 86400, // токен на 24 часа
           },
           (err, token) => {
@@ -780,10 +832,12 @@ app.get("/api/comments/:id", async (req, res) => {
       where: {
         id_materials: req.params.id,
       },
-      include: [{
-        association: "user",
-        attributes: ["firstname", "surname"],
-      }, ],
+      include: [
+        {
+          association: "user",
+          attributes: ["firstname", "surname"],
+        },
+      ],
     });
     res.send(comments);
   } catch (error) {
