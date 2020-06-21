@@ -31,6 +31,8 @@ import { FavouritesComponent } from "./favourites/favourites.component";
 import { AdminCommentsComponent } from "./admin-comments/admin-comments.component";
 import { FileUploadModule } from "ng2-file-upload";
 import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +56,8 @@ import { AdminUsersComponent } from './admin-users/admin-users.component';
     FavouritesComponent,
     AdminCommentsComponent,
     AdminUsersComponent,
+    ProfileComponent,
+    ProfileEditComponent,
   ],
   imports: [
     BrowserModule,

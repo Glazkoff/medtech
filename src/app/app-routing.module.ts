@@ -10,6 +10,8 @@ import { NewComponent } from "./new/new.component";
 import { AuthGuard } from "./services/auth.guard";
 import { AuthAdminGuard } from "./services/auth-admin.guard";
 import { FavouritesComponent } from "./favourites/favourites.component";
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 const routes: Routes = [
   { path: "authorization", component: AuthorizationComponent },
   { path: "registration", component: RegistrationComponent },
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: "", component: NewsComponent },
   { path: "new/:id", component: NewComponent },
   { path: "favourites", component: FavouritesComponent,  canActivate: [AuthGuard] },
+  { path: "profile", component: ProfileComponent,  canActivate: [AuthGuard] },
+  { path: "profile-edit", component: ProfileEditComponent},
 ];
 
 @NgModule({

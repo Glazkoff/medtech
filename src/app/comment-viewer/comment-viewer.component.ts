@@ -45,7 +45,7 @@ export class CommentViewerComponent implements OnInit {
       commentsarr.forEach((element) => {
         let el = {
           id_comment: element.id_comment,
-          date_comment: moment (element.date_comment).utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
+          date_comment: moment (element.date_comment).locale('ru').utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
           text_comment: element.text_comment,
           id_materials: element.id_materials,
           author_id: element.author_id,

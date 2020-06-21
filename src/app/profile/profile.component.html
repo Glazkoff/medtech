@@ -1,0 +1,31 @@
+<div class="flex">
+    <div class="wrap-flex">
+        <img class= "img" src="/assets/midlogo.png" alt="Логотип" >
+        <h1>Настройки профиля</h1>
+    </div>
+
+    <form [formGroup]="myForm" class="wrap-grid"> 
+        <div class="label">Имя <span>*</span></div>
+        <div class="value">Настя</div>
+
+        <div class="label">Фамилия <span>*</span></div>
+        <div class="value">Настя</div>
+
+        <div class="label">Организация</div>
+        <div class="value">Настя</div>
+
+        <div class="label">Роль</div>
+        <div class="value">Настя</div>
+
+        <div class="label">Логин <span>*</span></div>
+         <div class="value">Настя</div>
+
+        <div class="label">Пароль <span>*</span></div>
+        <div class="value">Настя</div>
+
+        <div class="none-mobile"></div>
+        <div class="div-for-button">
+            <button class="btn" (click)="onEdit()" >Изменить</button>
+        </div> 
+    </form>
+</div>
