@@ -107,19 +107,19 @@ export class NewComponent implements OnInit {
     cont.forEach((content) => {
       switch (content.type) {
         case "header":
-          html += `<h${content.data.level} style="font-style: normal; font-weight: bold; font-size: 32px; line-height: 32px; color: #944545;">${content.data.text}</h${content.data.level}>`;
+          html += `<h${content.data.level} style="font-style: normal; font-weight: bold; font-size: 32px; line-height: 32px; color: #944545; margin-top: 0px; margin-bottom: 25px;">${content.data.text}</h${content.data.level}>`;
           break;
         case "paragraph":
-          html += `<p style="font-family: PT Astra Serif; font-style: normal; font-weight: normal; font-size: 20px; line-height: 24px; color: #000000;">${content.data.text}</p>`;
+          html += `<p style=" word-break: break-word; font-family: PT Astra Serif; font-style: normal; font-weight: normal; font-size: 20px; line-height: 24px; color: #000000;">${content.data.text}</p>`;
           break;
         case "delimiter":
           html += '<hr style="color: #944545;"/>';
           break;
         case "quote":
-          html += `<p style="color: #944545; font-style: italic">« ${content.data.text} » (${content.data.caption})</p>`;
+          html += `<span style="font-family: PT Astra Serif; font-size: 20px; line-height: 24px; color: #944545; font-style: italic">«${content.data.text}» (${content.data.caption})</span>`;
           break;
         case "table":
-          html += '<table style="border-collapse: collapse;margin: 10px" >';
+          html += '<table style="font-family: PT Astra Serif; font-size: 20px; border-collapse: collapse; margin: 10px; margin-left: 0px;" >';
           for (let i = 0; i < content.data.content.length; i++) {
             html += '<tr style="border-style: solid; border-width: 1px 1px 1px 1px; border-color: #944545;">';
             content.data.content[i].forEach((k) => {
@@ -136,9 +136,9 @@ export class NewComponent implements OnInit {
           html += `<iframe width="${content.data.width}" height="${content.data.height}" src="${content.data.embed}" frameborder="0" allowfullscreen></iframe><figcaption style="width:580px;border-bottom: 2px solid darkgray;padding: 2px; text-align: center; text-transform: lowercase;">${content.data.caption}</figcaption>`;
           break;
         case "list":
-          html += '<ul style="color: #944545">';
+          html += '<ul style="margin-left: 9px; padding-left: 0;">';
           content.data.items.forEach((li) => {
-            html += `<li>${li}</li>`;
+            html += `<li style="list-style: none; font-family: PT Astra Serif; font-style: normal; font-weight: normal; font-size: 20px; line-height: 24px; color: #000000;" > <span style="border-radius: 50%; background-color: #944545; height: 14px; width: 14px; margin-right: 7px; display: inline-block;"> </span>${li}</li>`;
           });
           html += "</ul>";
           break;

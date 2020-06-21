@@ -3,28 +3,42 @@
 </div>
 
 <div class="block_new">
+
   <div *ngFor="let post of posts">
-  <div class="flex">
-    <span id="post_title">{{post.title}}</span><br>
-    <div *ngIf="showBtnFavour">
-      <div *ngIf="favourOrNot; else deleteBlock">
-        <button id="deleteFavourite" (click)="addFavourite()">Добавить в избранное</button>
+  <div class="flex1">
+    <div class="flex">
+      <p id="post_title">{{post.title}}</p>
+      <div *ngIf="showBtnFavour">
+        <div *ngIf="favourOrNot; else deleteBlock">
+          <button id="deleteFavourite" (click)="addFavourite()">Добавить в избранное</button>
+        </div>
+        <ng-template #deleteBlock>
+          <button id="deleteFavourite" (click)="deleteFavourite()">Удалить из избранного</button>
+        </ng-template>
       </div>
-      <ng-template #deleteBlock>
-        <button id="deleteFavourite" (click)="deleteFavourite()">Удалить из избранного</button>
-      </ng-template>
+    </div>
+
+    <div class="block-author">
+      <span id="post_date">{{post.date}}</span>
+      <span id="point"> • </span>
+      <span id="post_author">Автор: {{post.author}}</span>
     </div>
   </div>
+    <div class="card_img">
+      <img [src]="env.baseUrl + '/uploads/'+post.main_image" alt="" *ngIf="post.main_image !== ''">
+      <img src="../../assets/example1.png" alt="" *ngIf="!post.main_image">
+    </div>
 
-  <span id="post_date">{{post.date}}</span>
-    <span id="post_author"> • Автор: {{post.author}}</span>
-    <div class="card_img"><img [src]="env.baseUrl + '/uploads/'+post.main_image" alt="" *ngIf="post.main_image !== ''">
-      <img src="../../assets/example1.png" alt="" *ngIf="!post.main_image"></div></div>
+  </div>
+
   <div class="card_block">
-
     <div id="article_content">
+
     </div>
   </div>
 </div>
-<app-comment-viewer></app-comment-viewer>
+
+<!-- <app-comment-viewer>
+
+</app-comment-viewer> -->
 
