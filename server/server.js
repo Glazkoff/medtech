@@ -825,6 +825,63 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+//Получение информации по конкретному пользователю
+app.get("/api/users/:id", async (req, res) => {
+  console.log(req.params.id);
+  let result;
+  try {
+    result = await Users.findAll({
+      where: {
+        id_users: req.params.id,
+      },
+    });
+    if (!result) {
+      res.status(404).send({
+        status: 404,
+        message: "Пользователь не найден",
+      });
+    } else {
+      res.send(result);
+    }
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера при получении информации по конкретному пользователю",
+    });
+    console.log(error);
+  }
+});
+
+//Редактирование информации о конкретном пользователе
+app.put("/api/users/:id", async (req, res) => {
+  console.log("PUT /");
+  console.log(req.body);
+  let result;
+  try {
+    result = await Users.update(
+      {
+        firstname: req.body.firstname,
+        surname: req.body.surname,
+        organization: req.body.organization,
+        role: req.body.role,
+        password: req.body.password,
+      },
+      {
+        where: {
+          id_users: req.params.id,
+        },
+      }
+    );
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 500,
+      message: "Ошибка сервера при получении информации по конкретному пользователю",
+    });
+  }
+});
+
 // Получение комментариев
 app.get("/api/comments/:id", async (req, res) => {
   try {
