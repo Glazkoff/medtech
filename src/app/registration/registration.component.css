@@ -67,20 +67,26 @@
 .wrap-flex2 h2:hover{
     color: #94624D;
 }
-
-.label{
-    font-family: PT Root UI Web;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 40px;
-    text-align: right;
-    color: #944545;
+.label {
+  text-align: right;
 }
-.label span{
-    font-size: 20px;
-    position: relative;
-    top: 4px;
+
+.label span,
+.label small {
+  font-family: PT Root UI Web;
+  font-style: normal;
+  position: relative;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 40px;
+  color: #944545;
+}
+
+.label small.req {
+  font-size: 20.5px;
+  position: absolute;
+  top: -7px;
+  right: -9px;
 }
 .form-control{
     width: 256px;
@@ -205,6 +211,15 @@
     margin-left: 3%;
   }
 
+  .label span,
+  .label small {
+    line-height: 25px;
+  }
+
+  .label small.req {
+    top: 1px;
+  }
+
   .input-form {
     box-sizing: border-box;
     width: 94%;
@@ -258,11 +273,12 @@
 
   .wrap-flex2 h2 {
     text-align: center;
-    font-size: 32px;
+    font-size: 25px;
+    
   }
 
   .wrap-flex2 h2.active {
-    font-size: 36px;
+    font-size: 28px;
   }
 
   .wrap-flex2 {
