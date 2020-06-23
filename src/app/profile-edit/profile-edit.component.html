@@ -1,0 +1,58 @@
+<!-- <div class="loader-wrap" *ngIf="loading">
+    <app-loader></app-loader>
+  </div> -->
+<div class="flex">
+    <div class="wrap-flex">
+        <img src="/assets/midlogo.png" alt="Логотип" >
+        <h1>Настройки профиля</h1>
+    </div>
+
+    <form [formGroup]="myForm" class="wrap-grid">  
+        <div class="label">Имя <span>*</span></div>
+        <div class="input-form">
+            <input type="text"  formControlName="name" class="form-control" >
+            <small *ngIf="(this.myForm.value.name == '') && (!fieldRequired)" >Данное поле обязательное!</small>
+        </div>
+        <div class="label">Фамилия <span>*</span></div>
+        <div class="input-form">
+            <input type="text"  formControlName="surname" class="form-control" required>
+            <small *ngIf="(this.myForm.value.surname == '') && (!fieldRequired)" >Данное поле обязательное!</small>
+        </div>
+        <div class="label">Организация</div>
+        <div class="input-form">
+            <input type="text" formControlName="organization" class="form-control">
+        </div>
+        <div class="label">Роль</div>
+        <div class="input-form">
+            <input type="text" formControlName="role" class="form-control">
+        </div>
+
+        <div class="label" >Логин <span>*</span></div>
+        <div class="value" *ngFor="let user of users.reverse()">{{user.login}}</div>
+
+        <!-- <div class="label">Пароль <span>*</span></div>
+        <div class="input-form" (click)=" placeholderPassword='Введите пароль'">
+            <input (keyup)=" placeholderPassword='Введите пароль'" [type]="type"  formControlName="password"  class="form-control" [placeholder]="placeholderPassword">
+            <small *ngIf="(placeholderPassword=='') && (!fieldRequired)" >Данное поле обязательное!</small>
+            <div class="icon insideField" (click)="onTogglePassword()">
+                <img *ngIf="type=='password'" src="/assets/eye.png" alt="Показать/спрятать пароль">
+                <img *ngIf="type=='text'" src="/assets/eye-outline.png" alt="Показать/спрятать пароль">
+        </div>
+        </div>
+        <div class="label">Подтвердите пароль <span>*</span></div>
+        <div class="input-form" (click)=" placeholderPasswordA='Повторите пароль'">
+            <input (keyup)=" placeholderPasswordA='Повторите пароль'" [type]="type"  formControlName="passwordA"  class="form-control" [placeholder]="placeholderPasswordA">
+            <small *ngIf="(placeholderPasswordA=='') && (!fieldRequired)" >Данное поле обязательное!</small>
+            <div class="icon insideField" (click)="onTogglePasswordAgain()">
+                <img *ngIf="type=='password'" src="/assets/eye.png" alt="Показать/спрятать пароль">
+                <img *ngIf="type=='text'" src="/assets/eye-outline.png" alt="Показать/спрятать пароль">
+        </div>
+        </div> -->
+    
+        <div class="none-mobile"></div>
+        <div class="div-for-button">
+            <button class="btn" (click)="onSave()" >Сохранить</button>
+            <p class="message "><span>*</span> - обязательные поля</p>
+        </div> 
+    </form>
+</div>

@@ -17,7 +17,8 @@
           <div *ngIf="iconOfMenu=='close'">
             <div class="dropdown-menu">
               <img src="/assets/menu-up.png" class="icon triangle">
-              <a class="dropdown-item" (click)="openDropdownMenu()">личный кабинет</a>
+              <a class="dropdown-item" (click)="openDropdownMenu()" [routerLink]="['/profile']"
+              routerLinkActive="active">личный кабинет</a>
               <a class="dropdown-item" (click)="openDropdownMenu()"  [routerLink]="['/favourites']"
                 routerLinkActive="active">избранное</a>
               <div class="devider-bottom"></div>

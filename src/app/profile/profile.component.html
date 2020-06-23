@@ -1,0 +1,28 @@
+<div class="flex">
+    <div class="wrap-flex">
+        <img class= "img" src="/assets/midlogo.png" alt="Логотип" >
+        <h1>Настройки профиля</h1>
+    </div>
+
+    <div class="wrap-grid" *ngFor="let user of users.reverse()"> 
+        <div class="label">Имя <span>*</span></div>
+        <div class="value">{{user.firstname}}</div>
+
+        <div class="label">Фамилия <span>*</span></div>
+        <div class="value">{{user.surname}}</div>
+
+        <div class="label">Организация</div>
+        <div class="value">{{user.organization}}</div>
+
+        <div class="label">Роль</div>
+        <div class="value">{{user.role}}</div>
+
+        <div class="label">Логин <span>*</span></div>
+        <div class="value">{{user.login}}</div>
+
+        <div class="none-mobile"></div>
+        <div class="div-for-button">
+            <button class="btn" (click)="onEdit()" >Изменить</button>
+        </div> 
+    </div>
+</div>

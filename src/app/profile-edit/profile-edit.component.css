@@ -9,7 +9,6 @@
     flex-direction: column;
 }
 .wrap-flex{
-    display: flex;
     width: 100%;
     margin-bottom: 62px;
 }
@@ -17,10 +16,10 @@
 .wrap-flex img{
     width: 176px;
     height: 129px;
+    margin-left: 190px;
 }
 .wrap-flex h1{
-    margin: 0;
-    margin-left: 27px;
+    margin-left: 110px;
     margin-top: 21px;
     font-family: PT Astra Sans;
     font-style: normal;
@@ -33,7 +32,7 @@
 .wrap-grid{
     display: grid;
     width: 100%;
-    grid-template-rows: 56px 40px 40px 40px 40px 40px 40px 80px;
+    grid-template-rows: 40px 40px 40px 40px 40px 80px;
     grid-template-columns: 176px 352px;
     grid-row-gap: 8px;
     grid-column-gap: 27px;
@@ -67,27 +66,32 @@
 .wrap-flex2 h2:hover{
     color: #94624D;
 }
-.label {
-  text-align: right;
+
+.label{
+    font-family: PT Root UI Web;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: right;
+    color: #944545;
+}
+.label span{
+    font-size: 20px;
+    position: relative;
+    top: 4px;
 }
 
-.label span,
-.label small {
-  font-family: PT Root UI Web;
-  font-style: normal;
-  position: relative;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 40px;
-  color: #944545;
+.value{
+    font-family:  PT Astra Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 43px;
+    text-align: left;
+    color:rgba(0, 0, 0, 0.5);;
 }
 
-.label small.req {
-  font-size: 20.5px;
-  position: absolute;
-  top: -7px;
-  right: -9px;
-}
 .form-control{
     width: 256px;
     padding: 12px 8px;
@@ -101,11 +105,12 @@
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
     -o-border-radius: 2px;
-    font-family: PT Astra Sans;
+    font-family:  PT Astra Sans;
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
-    color: #000000;
+    font-size: 18px;
+    text-align: left;
+    color:rgba(0, 0, 0, 0.5);;
 }
 
 .form-control:focus{
@@ -198,7 +203,7 @@
   }
 
   .wrap-grid {
-    grid-template-rows: 56px 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 80px;
+    grid-template-rows: 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 80px;
     grid-template-columns: 100%;
     grid-row-gap: 8px;
     grid-column-gap: 0;
@@ -209,15 +214,6 @@
     text-align-last: left;
     line-height: 18px;
     margin-left: 3%;
-  }
-
-  .label span,
-  .label small {
-    line-height: 25px;
-  }
-
-  .label small.req {
-    top: 1px;
   }
 
   .input-form {
@@ -273,12 +269,11 @@
 
   .wrap-flex2 h2 {
     text-align: center;
-    font-size: 25px;
-    
+    font-size: 32px;
   }
 
   .wrap-flex2 h2.active {
-    font-size: 28px;
+    font-size: 36px;
   }
 
   .wrap-flex2 {
@@ -287,7 +282,7 @@
   }
 
   .wrap-grid {
-       grid-template-rows: 80px 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 80px;
+       grid-template-rows: 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 80px;
   }
 
 

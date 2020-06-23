@@ -1,7 +1,7 @@
 <h1 class="title-com">Комментарии</h1>
 <form class="form-com" [formGroup]="myFirstReactiveForm"(submit)="onSave()">
-  <input *ngIf="flag" class= "input-com" type="text" id="comment" formControlName="comment" placeholderComment="Ваш комментарий" [placeholder]="placeholderComment"/>
-  <input *ngIf="!flag" class= "input-com" type="text" id="comment" formControlName="comment" placeholderComment="Ваш комментарий" [placeholder]="placeholderComment" disabled/>
+  <textarea *ngIf="flag" class= "input-com" type="text" id="comment" formControlName="comment" placeholderComment="Ваш комментарий" [placeholder]="placeholderComment"></textarea>
+  <textarea *ngIf="!flag" class= "input-com" type="text" id="comment" formControlName="comment" placeholderComment="Ваш комментарий" [placeholder]="placeholderComment" disabled></textarea>
   <small *ngIf="!flag && (placeholderComment=='')" class="dangerous">Авторизируйтесь, чтобы оставить комментарий</small>
   <!-- <div>
   <re-captcha (resolved)="resolved($event)"
@@ -11,7 +11,9 @@
   </div> -->
   <input class="btn-com" type="submit"  value="Отправить">
 </form>
+
 <div class="comment" *ngFor="let comment of comments.reverse()">
+  <div class="comment-blok">
   <div class="header-com">
     <div class="user-com">
   <!-- <div class="image-for-user-com"></div> -->
@@ -20,6 +22,7 @@
   <p class="time-com">{{comment.date_comment }}</p>
 </div>
   <p class="text-com">{{comment.text_comment}}</p>
+</div>
 </div>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>

@@ -7,7 +7,7 @@
 }
 /* стили формы */
 .form-com{
-    margin: 0 0 1.5rem 4.5rem;
+    margin: 0 0 1rem 4.5rem;
     width: 47.5rem;
     height: 7.5rem;
     background: #EEEEEE;
@@ -60,15 +60,28 @@
     width: 45.7rem;
     margin: 0.7rem 0 0 0.5rem;
     border: none;
+    resize: none;
 }
 .input-com:focus{
     outline: none;
+}
+.input-com::placeholder{
+    font-family: PT Astra Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
 }
 
 
 /* стили вывода комментариев */
 .comment{
-    margin: 1rem 0 1rem 6rem;
+    min-height: 10rem;
+    padding-bottom: 1rem; 
+}
+.comment-blok{
+    margin: 0 0 0 6rem;
     min-height: 10rem;
     width: 44.5rem;
     background: #EEEEEE;
@@ -117,7 +130,7 @@
     color: #94624D;
 }
 
-.text-com{
+.text-com {
     font-family: PT Astra Sans;
     font-style: normal;
     font-weight: normal;
@@ -125,6 +138,11 @@
     line-height: 16px;
     margin: 0rem 11rem 0 1.5rem;
     padding-bottom: 1rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
 }
 
 @media (max-width: 420px) {
@@ -163,7 +181,7 @@
         margin: 0.7rem 0 0 0.5rem;
     }
       /* Вывод комментариев */
-    .comment{
+    .comment-blok{
         margin: 0 auto;
         width: 18rem;
         min-height: 6.5rem;
@@ -206,7 +224,7 @@
     .text-com{
         font-size: 12px;
         line-height: 12px;
-        margin: -1rem 11rem 0 1rem;
+        margin: -1rem 5rem 0 1rem;
         padding-bottom: 1rem;
     }
 }
