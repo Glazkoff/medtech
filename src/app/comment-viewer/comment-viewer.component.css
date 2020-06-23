@@ -60,6 +60,7 @@
     width: 45.7rem;
     margin: 0.7rem 0 0 0.5rem;
     border: none;
+    resize: none;
 }
 .input-com:focus{
     outline: none;
@@ -71,7 +72,6 @@
     font-size: 14px;
     line-height: 16px;
     color: #000000;
-    transform: translateY(-10px);
 }
 
 
