@@ -38,6 +38,7 @@
   width: 306px;
   height: 194px;
   border-radius: 2px 2px 0px 0px;
+  object-fit: cover;
 
 }
 .content__item:nth-child(5n+1) {
@@ -118,13 +119,14 @@ width: 674px;
   .content {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(auto-fill, 1fr);
-    grid-template-rows: repeat(auto-fill,  1fr);
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    grid-template-rows: repeat(auto-fill,  minmax(10rem, 1fr));
     justify-content: center;
   }
   .content__item:nth-child(n) {
        grid-column: span 2;
        grid-row: span 2;
+    justify-content: center;
      }
   .block_news{
     margin-left: 20px;

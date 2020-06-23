@@ -1,9 +1,9 @@
-<div class="loader-wrap" *ngIf="loading">
-  <app-loader></app-loader>
-</div>
+
 
 <div class="block_new">
-
+  <div class="loader-wrap" *ngIf="loading">
+    <app-loader></app-loader>
+  </div>
   <div *ngFor="let post of posts">
   <div class="flex1">
     <div class="flex">
