@@ -13,44 +13,44 @@ export class ProfileEditComponent implements OnInit {
   
   @Input() user;
   users = [];
-  type = "password";
-  typeA = "password";
+  // type = "password";
+  // typeA = "password";
   myForm: FormGroup;
   values = "";
   memory;
   fieldRequired = true;
   loginExist = true;
   tryForLogin = "";
-  placeholderPassword='Введите пароль';
-  placeholderPasswordA='Повторите пароль';
+  // placeholderPassword='Введите пароль';
+  // placeholderPasswordA='Повторите пароль';
   userData = jwt_decode(localStorage.getItem("token"));
-  valueName = this.userData.firstname;
-  valueSurname = this.userData.surname;
-  valueOrganization = this.userData.organization;
-  valueRole = this.userData.role;
+  loading = false;
 
   constructor(private api: BaseApiService, private router: Router) {}
 
   async ngOnInit() {
-      this.myForm = new FormGroup({
-      name: new FormControl(this.valueName, [Validators.required]),
-      surname: new FormControl(this.valueSurname, [Validators.required]),
-      organization: new FormControl(this.userData.organization, []),
-      role: new FormControl(this.valueRole, []),
-      password: new FormControl("", [Validators.required]),
-      passwordA: new FormControl("", [Validators.required]),
-    });
-
     let arr = await this.getInfoUser();
       arr.forEach((element) => {
         let el = {
           id_users: element.id_users,
           name: element.firstname,
+          surname: element.surname,
+          organization: element.organization,
+          role: element.role,
           login: element.login,
         };
         this.users.push(el);
      });
-
+      this.myForm = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      surname: new FormControl('', [Validators.required]),
+      organization: new FormControl('', []),
+      role: new FormControl('', []),
+      // password: new FormControl("", [Validators.required]),
+      // passwordA: new FormControl("", [Validators.required]),
+    });
+    this.loading = true;
+    
   }
   
 
@@ -59,8 +59,10 @@ export class ProfileEditComponent implements OnInit {
     let response;
     try {
       response = await this.api.get(`/users/${id}`);
+      console.log ("fffffffff");
       console.log("RESPONSE");
       console.log(response);
+      this.loading = false;
     } catch (error) {
       console.log(error);
     }
@@ -78,29 +80,28 @@ export class ProfileEditComponent implements OnInit {
         this.fieldRequired = false;
       }
 
-      if (this.myForm.value.password == "") {
-        this.fieldRequired = false;
-        this.placeholderPassword = '';
-      }
-      if (this.myForm.value.passwordA == "") {
-        this.fieldRequired = false;
-        this.placeholderPasswordA = '';
-        console.log("АААААААА");
-      }
+      // if (this.myForm.value.password == "") {
+      //   this.fieldRequired = false;
+      //   this.placeholderPassword = '';
+      // }
+      // if (this.myForm.value.passwordA == "") {
+      //   this.fieldRequired = false;
+      //   this.placeholderPasswordA = '';
+      //   console.log("АААААААА");
+      // }
     } else {
-      if (this.myForm.value.password == this.myForm.value.passwordA){
-    
+        
         this.fieldRequired = true;
   
         let infoAboutUser;
         infoAboutUser = {
           name: this.myForm.value.name,
           surname: this.myForm.value.surname,
-          password: this.myForm.value.password,
+          // password: this.myForm.value.password,
           organization: this.myForm.value.organization,
           role: this.myForm.value.role,
         };
-        this.type = "password";
+        // this.type = "password";
         console.log(infoAboutUser);
         try {
           let registartionRes = await this.api.put(
@@ -111,19 +112,16 @@ export class ProfileEditComponent implements OnInit {
         } catch (error) {
           console.log(error);
         }
-      } else{
-
-      }
       }
   }
 
-  onTogglePassword() {
-    this.type = this.type == "password" ? "text" : "password";
-  }
+  // onTogglePassword() {
+  //   this.type = this.type == "password" ? "text" : "password";
+  // }
 
-  onTogglePasswordAgain() {
-    this.typeA = this.typeA == "password" ? "text" : "password";
-  }
+  // onTogglePasswordAgain() {
+  //   this.typeA = this.typeA == "password" ? "text" : "password";
+  // }
   
 }
 

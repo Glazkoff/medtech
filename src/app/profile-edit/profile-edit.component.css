@@ -32,7 +32,7 @@
 .wrap-grid{
     display: grid;
     width: 100%;
-    grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 80px;
+    grid-template-rows: 40px 40px 40px 40px 40px 80px;
     grid-template-columns: 176px 352px;
     grid-row-gap: 8px;
     grid-column-gap: 27px;
@@ -203,7 +203,7 @@
   }
 
   .wrap-grid {
-    grid-template-rows:  20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 80px;
+    grid-template-rows: 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 80px;
     grid-template-columns: 100%;
     grid-row-gap: 8px;
     grid-column-gap: 0;
@@ -282,7 +282,7 @@
   }
 
   .wrap-grid {
-       grid-template-rows: 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 80px;
+       grid-template-rows: 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 80px;
   }
 
 

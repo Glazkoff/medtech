@@ -1,3 +1,6 @@
+<!-- <div class="loader-wrap" *ngIf="loading">
+    <app-loader></app-loader>
+  </div> -->
 <div class="flex">
     <div class="wrap-flex">
         <img src="/assets/midlogo.png" alt="Логотип" >
@@ -11,8 +14,8 @@
             <small *ngIf="(this.myForm.value.name == '') && (!fieldRequired)" >Данное поле обязательное!</small>
         </div>
         <div class="label">Фамилия <span>*</span></div>
-        <div (click)="placeholderSurname='Введите фамилию'"  class="input-form">
-            <input (keyup)="placeholderSurname='Введите фамилию'" type="text"  formControlName="surname" class="form-control" required>
+        <div class="input-form">
+            <input type="text"  formControlName="surname" class="form-control" required>
             <small *ngIf="(this.myForm.value.surname == '') && (!fieldRequired)" >Данное поле обязательное!</small>
         </div>
         <div class="label">Организация</div>
@@ -27,7 +30,7 @@
         <div class="label" >Логин <span>*</span></div>
         <div class="value" *ngFor="let user of users.reverse()">{{user.login}}</div>
 
-        <div class="label">Пароль <span>*</span></div>
+        <!-- <div class="label">Пароль <span>*</span></div>
         <div class="input-form" (click)=" placeholderPassword='Введите пароль'">
             <input (keyup)=" placeholderPassword='Введите пароль'" [type]="type"  formControlName="password"  class="form-control" [placeholder]="placeholderPassword">
             <small *ngIf="(placeholderPassword=='') && (!fieldRequired)" >Данное поле обязательное!</small>
@@ -44,7 +47,7 @@
                 <img *ngIf="type=='password'" src="/assets/eye.png" alt="Показать/спрятать пароль">
                 <img *ngIf="type=='text'" src="/assets/eye-outline.png" alt="Показать/спрятать пароль">
         </div>
-        </div>
+        </div> -->
     
         <div class="none-mobile"></div>
         <div class="div-for-button">
