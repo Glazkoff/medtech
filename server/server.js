@@ -890,7 +890,6 @@ app.put("/api/users/:id", async (req, res) => {
         surname: req.body.surname,
         organization: req.body.organization,
         role: req.body.role,
-        password: req.body.password,
       },
       {
         where: {

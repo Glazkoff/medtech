@@ -25,10 +25,32 @@ export class ProfileEditComponent implements OnInit {
   // placeholderPasswordA='Повторите пароль';
   userData = jwt_decode(localStorage.getItem("token"));
   loading = false;
+  Res;
 
   constructor(private api: BaseApiService, private router: Router) {}
 
   async ngOnInit() {
+    // let arr = await this.getInfoUser();
+    //   arr.forEach((element) => {
+    //     let el = {
+    //       id_users: element.id_users,
+    //       name: element.firstname,
+    //       surname: element.surname,
+    //       organization: element.organization,
+    //       role: element.role,
+    //       login: element.login,
+    //     };
+    //     this.users.push(el);
+    //  });
+      this.myForm = new FormGroup({
+      name: new FormControl(this.userData.firstname, [Validators.required]),
+      surname: new FormControl(this.userData.surname, [Validators.required]),
+      organization: new FormControl(this.userData.organization, []),
+      role: new FormControl(this.userData.role, []),
+      // password: new FormControl("", [Validators.required]),
+      // passwordA: new FormControl("", [Validators.required]),
+    });
+    // this.loading = true;
     let arr = await this.getInfoUser();
       arr.forEach((element) => {
         let el = {
@@ -41,16 +63,6 @@ export class ProfileEditComponent implements OnInit {
         };
         this.users.push(el);
      });
-      this.myForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      surname: new FormControl('', [Validators.required]),
-      organization: new FormControl('', []),
-      role: new FormControl('', []),
-      // password: new FormControl("", [Validators.required]),
-      // passwordA: new FormControl("", [Validators.required]),
-    });
-    this.loading = true;
-    
   }
   
 
@@ -95,7 +107,7 @@ export class ProfileEditComponent implements OnInit {
   
         let infoAboutUser;
         infoAboutUser = {
-          name: this.myForm.value.name,
+          firstname: this.myForm.value.name,
           surname: this.myForm.value.surname,
           // password: this.myForm.value.password,
           organization: this.myForm.value.organization,
@@ -104,10 +116,12 @@ export class ProfileEditComponent implements OnInit {
         // this.type = "password";
         console.log(infoAboutUser);
         try {
-          let registartionRes = await this.api.put(
+          this.Res = await this.api.put(
             JSON.stringify(infoAboutUser),
             `/users/ ${id}`
           );
+          console.log("xxxxxxx");
+          console.log(this.Res);
           this.router.navigate(["/profile"]);
         } catch (error) {
           console.log(error);
