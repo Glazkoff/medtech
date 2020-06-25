@@ -36,6 +36,9 @@ let upload = multer({
   storage: storage,
 });
 
+// Генерируемая соль для шифрования
+let salt = bcrypt.genSaltSync(10);
+
 // Промежуточный обработчик для сжатия gzip
 app.use(compression());
 
@@ -335,9 +338,31 @@ sequelize.afterConnect((connect) => {
   connect.query("SET NAMES UTF8", (res) => {
     console.log("Set names", res);
   });
+  Users.findOne({
+    where: {
+      login: "nglazkov",
+    },
+  }).then((res) => {
+    console.log(res.dataValues);
+    if (JSON.stringify(res.dataValues) === "{}") {
+      bcrypt.hash("nglazkov", salt, async (err, encrypted) => {
+        if (err) {
+          console.log(err);
+        }
+        let result = await Users.create({
+          login: "nglazkov",
+          password: encrypted,
+          firstname: "Никита",
+          surname: "Глазков",
+          organization: "Команда разработчиков",
+          role: "Разработчик",
+          is_admin: true,
+        });
+        console.log("ADMIN", result);
+      });
+    }
+  });
 });
-
-let salt = bcrypt.genSaltSync(10);
 
 //***********************************/
 //*** Ниже пишется только API!!!! ***/
@@ -846,7 +871,8 @@ app.get("/api/users/:id", async (req, res) => {
   } catch (error) {
     res.status(500).send({
       status: 500,
-      message: "Ошибка сервера при получении информации по конкретному пользователю",
+      message:
+        "Ошибка сервера при получении информации по конкретному пользователю",
     });
     console.log(error);
   }
@@ -877,7 +903,8 @@ app.put("/api/users/:id", async (req, res) => {
     console.log(error);
     res.status(500).send({
       status: 500,
-      message: "Ошибка сервера при получении информации по конкретному пользователю",
+      message:
+        "Ошибка сервера при получении информации по конкретному пользователю",
     });
   }
 });
