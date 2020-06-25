@@ -345,12 +345,12 @@ sequelize.afterConnect((connect) => {
   // }).then((res) => {
   //   console.log(res.dataValues);
   // if (JSON.stringify(res.dataValues) === "{}") {
-  bcrypt.hash("nglazkov", salt, async (err, encrypted) => {
+  bcrypt.hash("nglazkoff", salt, async (err, encrypted) => {
     if (err) {
       console.log(err);
     }
     let result = await Users.create({
-      login: "nglazkov",
+      login: "nglazkoff",
       password: encrypted,
       firstname: "Никита",
       surname: "Глазков",
