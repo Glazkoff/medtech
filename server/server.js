@@ -338,30 +338,30 @@ sequelize.afterConnect((connect) => {
   connect.query("SET NAMES UTF8", (res) => {
     console.log("Set names", res);
   });
-  Users.findOne({
-    where: {
-      login: "nglazkov",
-    },
-  }).then((res) => {
-    console.log(res.dataValues);
-    if (JSON.stringify(res.dataValues) === "{}") {
-      bcrypt.hash("nglazkov", salt, async (err, encrypted) => {
-        if (err) {
-          console.log(err);
-        }
-        let result = await Users.create({
-          login: "nglazkov",
-          password: encrypted,
-          firstname: "Никита",
-          surname: "Глазков",
-          organization: "Команда разработчиков",
-          role: "Разработчик",
-          is_admin: true,
-        });
-        console.log("ADMIN", result);
-      });
+  // Users.findOne({
+  //   where: {
+  //     login: "nglazkov",
+  //   },
+  // }).then((res) => {
+  //   console.log(res.dataValues);
+  // if (JSON.stringify(res.dataValues) === "{}") {
+  bcrypt.hash("nglazkov", salt, async (err, encrypted) => {
+    if (err) {
+      console.log(err);
     }
+    let result = await Users.create({
+      login: "nglazkov",
+      password: encrypted,
+      firstname: "Никита",
+      surname: "Глазков",
+      organization: "Команда разработчиков",
+      role: "Разработчик",
+      is_admin: true,
+    });
+    console.log("ADMIN", result);
   });
+  // }
+  // });
 });
 
 //***********************************/
