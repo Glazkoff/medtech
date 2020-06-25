@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router, CanActivate } from "@angular/router";
-import jwt from "jwt-client";
-
+import * as jwt_decode from "jwt-decode";
 @Injectable()
 export class AuthAdminGuard implements CanActivate {
   constructor(private router: Router) {}
@@ -9,7 +8,7 @@ export class AuthAdminGuard implements CanActivate {
   canActivate() {
     let token = localStorage.getItem("token");
     if (token) {
-      let userData = jwt.read(token).claim;
+      let userData = jwt_decode(token);
       if (userData.is_admin) {
         return true;
       } else {
