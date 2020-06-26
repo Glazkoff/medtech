@@ -7,6 +7,8 @@ h2 {
 
 .table-wrap {
   padding-bottom: 1rem;
+  max-width: 100vw;
+  overflow-x: auto;
 }
 
 .editor-btn {

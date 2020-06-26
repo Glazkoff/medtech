@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { BaseApiService } from "../services/base-api.service";
 import { ActivatedRoute } from "@angular/router";
 import { switchMap } from "rxjs/operators";
+import * as moment from "moment";
 
 @Component({
   selector: "app-admin-articles",
@@ -31,6 +32,9 @@ export class AdminArticlesComponent implements OnInit {
           // tslint:disable-next-line: no-string-literal
           for (let index = 0; index < resp["length"]; index++) {
             console.log(resp[index]);
+            resp[index].createdAt = moment(resp[index].createdAt)
+              .utcOffset("+0300")
+              .format(" DD.MM.YYYY");
             this.posts.push(resp[index]);
           }
         }
