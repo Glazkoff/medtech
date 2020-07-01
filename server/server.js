@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const dbConfig = require("./db.config.js");
 const jwt = require("jsonwebtoken");
+const jwt_decode = require("jwt-decode");
 const bcrypt = require("bcrypt");
 const CONFIG = require("./secret.config.js");
 const morgan = require("morgan");
@@ -398,7 +399,8 @@ app.all("/news", (req, res) => {
 // Получение избранных записей
 app.post("/api/favourite-materials/:id_materials", async (req, res) => {
   try {
-    let decode = await jwt.decode(req.headers.authorization);
+    console.log("СДЕЛАТЬ ИЗБРАННЫМ");
+    let decode = await jwt_decode(req.headers.authorization);
     console.log(decode);
     if (decode) {
       let result = await UsersHasMaterials.create({
@@ -419,7 +421,8 @@ app.post("/api/favourite-materials/:id_materials", async (req, res) => {
 // Получение избранных записей
 app.get("/api/favourite-materials", async (req, res) => {
   try {
-    let decode = await jwt.decode(req.headers.authorization);
+    console.log("ПОЛУЧИТЬ ВСЕ ИЗБРАННЫЕ");
+    let decode = await jwt_decode(req.headers.authorization);
     console.log(decode);
     if (decode) {
       let result = await Users.findAll({
@@ -434,6 +437,8 @@ app.get("/api/favourite-materials", async (req, res) => {
           },
         ],
       });
+      // console.log(result);
+      
       res.send(result);
     } else {
       res.status(401).send({
@@ -453,7 +458,8 @@ app.get("/api/favourite-materials", async (req, res) => {
 // Получение избранных записей
 app.delete("/api/favourite-materials/:id_materials", async (req, res) => {
   try {
-    let decode = await jwt.decode(req.headers.authorization);
+    console.log("УДАЛИТЬ ИЗ ИЗБРАННОГО");
+    let decode = await jwt_decode(req.headers.authorization);
     console.log(decode);
     if (decode) {
       let result = await UsersHasMaterials.destroy({
@@ -462,9 +468,13 @@ app.delete("/api/favourite-materials/:id_materials", async (req, res) => {
           id_users: decode.id_users,
         },
       });
-      res.send(result);
+      console.log("мы удалили");
+      let myRes = `${result}`
+      console.log(myRes);
+      res.send(myRes);
     }
-  } catch (error) {
+  } catch (error) { 
+    console.log("мы не  удалили");
     console.log(error);
     res.status(500).send({
       status: 500,
@@ -592,13 +602,13 @@ app.post("/api/posts/photos", upload.single("image"), async (req, res) => {
 
 // Создание новостного поста
 app.post("/api/posts", async (req, res) => {
-  console.log("TOKEN DECODE", jwt.decode(req.headers.authorization));
+  console.log("TOKEN DECODE", jwt_decode(req.headers.authorization));
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл POST запрос для постов:");
   console.log(req.body);
   let result;
   try {
-    let decoded = await jwt.decode(req.headers.authorization);
+    let decoded = await jwt_decode(req.headers.authorization);
     result = await Materials.create({
       duration: req.body.duration,
       date: req.body.content.time,
