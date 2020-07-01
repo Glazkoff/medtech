@@ -79,7 +79,8 @@ export class CommentViewerComponent implements OnInit {
         author_id: userData.id_users,
         text_comment: this.myFirstReactiveForm.value.comment,
         id_materials: this.id,
-        date_comment: this.now.utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
+        // date_comment: this.now.utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
+        date_comment: moment (this.now).locale('ru').utcOffset("+0300").format(' DD MMMM YYYY, HH:mm'),
       };
       comment_add = {
         author_id: userData.id_users,
