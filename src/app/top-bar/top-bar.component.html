@@ -18,7 +18,7 @@
             <div class="dropdown-menu">
               <img src="/assets/menu-up.png" class="icon triangle">
               <a class="dropdown-item" (click)="openDropdownMenu()" [routerLink]="['/profile']"
-              routerLinkActive="active">личный кабинет</a>
+              routerLinkActive="active">профиль</a>
               <a class="dropdown-item" (click)="openDropdownMenu()"  [routerLink]="['/favourites']"
                 routerLinkActive="active">избранное</a>
               <div class="devider-bottom"></div>
@@ -54,7 +54,8 @@
 
 
 <div [ngClass]="{'open': mobileMenu==true}" class="mobile-menu">
-  <a class="dropdown-item" (click)="mobileMenu=false">личный кабинет</a>
+  <a class="dropdown-item" (click)="mobileMenu=false" [routerLink]="['/profile']"
+    routerLinkActive="active">профиль</a>
   <a class="dropdown-item" [routerLink]="['/favourites']" routerLinkActive="active"
      (click)="mobileMenu=false">избранное</a>
   <a class="dropdown-item" (click)="onLogOut(); mobileMenu=false">выйти</a>

@@ -459,6 +459,7 @@ app.get("/api/favourite-materials", async (req, res) => {
 app.delete("/api/favourite-materials/:id_materials", async (req, res) => {
   try {
     console.log("УДАЛИТЬ ИЗ ИЗБРАННОГО");
+    console.log(req.headers.authorization);
     let decode = await jwt_decode(req.headers.authorization);
     console.log(decode);
     if (decode) {

@@ -14,6 +14,7 @@ export class RegistrationComponent implements OnInit {
   type = "password";
   myForm: FormGroup;
   values = "";
+  loading = false;
   memory;
   fieldRequired = true;
   loginExist = true;
@@ -62,7 +63,7 @@ export class RegistrationComponent implements OnInit {
     } else {
       this.fieldRequired = true;
       this.loginExist = true;
-
+      this.loading = true;
       let infoAboutNewUser;
       infoAboutNewUser = {
         name: this.myForm.value.name,
@@ -90,8 +91,10 @@ export class RegistrationComponent implements OnInit {
           } catch (error) {
             console.log(error);
           }
+          this.loading = false;
           this.router.navigate(["/"]);
         } else {
+          this.loading = false;
           this.memory = this.myForm.value.login;
           // console.log(this.memory);
           this.myForm.patchValue({ login: "" });
@@ -99,6 +102,7 @@ export class RegistrationComponent implements OnInit {
           this.loginExist = false;
         }
       } catch (error) {
+        this.loading = false;
         console.log(error);
       }
     }

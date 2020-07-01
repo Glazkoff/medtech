@@ -12,6 +12,7 @@ import * as jwt_decode from "jwt-decode";
 })
 export class AuthorizationComponent implements OnInit {
   loginNotRight = true;
+  loading = false
   type = "password";
   myForm: FormGroup;
   placeholderLogin = "Введите логин";
@@ -29,6 +30,7 @@ export class AuthorizationComponent implements OnInit {
   constructor(private api: BaseApiService, private router: Router) {}
 
   ngOnInit() {
+    this.loading = false;
     this.myForm = new FormGroup({
       login: new FormControl("", [Validators.required]),
       password: new FormControl("", [Validators.required]),
@@ -48,6 +50,7 @@ export class AuthorizationComponent implements OnInit {
         this.placeholderPassword = "";
       }
     } else {
+      this.loading = true;
       this.fieldRequired = true;
       // console.log("it was a click, wow");
       let infoAboutUser;
@@ -67,19 +70,21 @@ export class AuthorizationComponent implements OnInit {
           // let userData = await jwt.read(response["token"]);
           
           // userData = userData.claim;
-          console.log("UserData ", userData);
+          // console.log("UserData ", userData);
           localStorage.setItem("userName", userData.firstname);
           localStorage.setItem("userSurname", userData.surname);
           
           this.router.navigate(["/"]);
-        } else {
-        }
+        } 
+        this.loading = false;
         this.loginNotRight = true;
         this.type = "password";
         this.placeholderLogin = "Введите логин";
         this.placeholderPassword = "Введите пароль";
         this.fieldRequired = true;
+        
       } catch (error) {
+        this.loading = false;
         console.log(error);
         this.myForm.patchValue({ login: "", password: "" });
         this.placeholderLogin = "";
