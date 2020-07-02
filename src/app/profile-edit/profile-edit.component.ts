@@ -25,28 +25,16 @@ export class ProfileEditComponent implements OnInit {
   // placeholderPasswordA='Повторите пароль';
   userData = jwt_decode(localStorage.getItem("token"));
   loading = false;
-  Res;
+
 
   constructor(private api: BaseApiService, private router: Router) {}
 
   async ngOnInit() {
-    // let arr = await this.getInfoUser();
-    //   arr.forEach((element) => {
-    //     let el = {
-    //       id_users: element.id_users,
-    //       name: element.firstname,
-    //       surname: element.surname,
-    //       organization: element.organization,
-    //       role: element.role,
-    //       login: element.login,
-    //     };
-    //     this.users.push(el);
-    //  });
       this.myForm = new FormGroup({
-      name: new FormControl(this.userData.firstname, [Validators.required]),
-      surname: new FormControl(this.userData.surname, [Validators.required]),
-      organization: new FormControl(this.userData.organization, []),
-      role: new FormControl(this.userData.role, []),
+      name: new FormControl(localStorage.getItem("userName"), [Validators.required]),
+      surname: new FormControl(localStorage.getItem("userSurname"), [Validators.required]),
+      organization: new FormControl(localStorage.getItem("userOrganization"), []),
+      role: new FormControl(localStorage.getItem("userRole"), []),
       // password: new FormControl("", [Validators.required]),
       // passwordA: new FormControl("", [Validators.required]),
     });
@@ -116,12 +104,19 @@ export class ProfileEditComponent implements OnInit {
         // this.type = "password";
         console.log(infoAboutUser);
         try {
-          this.Res = await this.api.put(
+          let Res = await this.api.put(
             JSON.stringify(infoAboutUser),
-            `/users/ ${id}`
-          );
-          console.log("xxxxxxx");
-          console.log(this.Res);
+            `/users/ ${id}`);
+            try { 
+              localStorage.setItem("userName", infoAboutUser.firstname);
+              localStorage.setItem("userSurname", infoAboutUser.surname);
+              localStorage.setItem("userOrganization", infoAboutUser.organization);
+              localStorage.setItem("userRole", infoAboutUser.role);
+              console.log("xxxxxxx");
+              this.router.navigate(["/profile"]);
+            } catch (error) {
+              console.log(error);
+            }
           this.router.navigate(["/profile"]);
         } catch (error) {
           console.log(error);

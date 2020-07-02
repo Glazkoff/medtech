@@ -879,6 +879,7 @@ app.get("/api/users/:id", async (req, res) => {
     } else {
       res.send(result);
     }
+    
   } catch (error) {
     res.status(500).send({
       status: 500,
