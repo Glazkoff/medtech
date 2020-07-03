@@ -1,3 +1,8 @@
+.block-form{
+    margin: 0;
+    padding: 0;
+    padding-bottom: 88px;
+}
 .title-com{
     font-style: normal;
     font-weight: bold;
@@ -49,7 +54,6 @@
     text-align: left;
     display: block;
     position: absolute;
-    width: 100%;
     margin-top: -3.7rem;
     margin-left: 0.6rem;
 }

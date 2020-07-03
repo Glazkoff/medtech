@@ -38,35 +38,6 @@
     grid-column-gap: 27px;
 }
 
-.wrap-flex2{
-    display: flex;
-    margin-bottom: 18px;
-}
-
-.wrap-flex2 h2 {
-    margin: 0;
-    outline: none;
-    font-family: PT Root UI Web;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 36px;
-    line-height: 38px;
-    color: #747474; 
-    cursor: pointer;
-}
-.wrap-flex2 h2:first-child{
-    margin-right: 59px;
-}
-.wrap-flex2 h2.active{
-    color: #000000;
-}
-.wrap-flex2 h2.active:hover{
-    color: #000000;
-}
-.wrap-flex2 h2:hover{
-    color: #94624D;
-}
-
 .label{
     font-family: PT Root UI Web;
     font-style: normal;
@@ -197,6 +168,9 @@
     align-items: center;
     margin-bottom: 40px;
   }
+  .wrap-flex img{
+    align-items: center;
+}
 
   .none-mobile {
     display: none;
@@ -215,7 +189,9 @@
     line-height: 18px;
     margin-left: 3%;
   }
-
+  .value{
+    margin-left: 3%;
+  }
   .input-form {
     box-sizing: border-box;
     width: 94%;
@@ -242,48 +218,10 @@
     padding-top: 20px;
     padding-bottom: 40px;
   }
-
-  .wrap-flex2 {
-    width: 94%;
-    margin-left: 3%;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-right: 3%;
-  }
-
-  .wrap-flex2 h2:first-child {
-    margin-right: 0;
-    padding-right: 20px;
-  }
-
 }
-
-@media (max-width: 335px) {
-  .wrap-flex h1 {
-    word-break: break-word;
-  }
-
-  .wrap-flex2 h2:first-child {
-    padding-right: 0px;
-  }
-
-  .wrap-flex2 h2 {
-    text-align: center;
-    font-size: 32px;
-  }
-
-  .wrap-flex2 h2.active {
-    font-size: 36px;
-  }
-
-  .wrap-flex2 {
-    flex-direction: column-reverse !important;
-    margin-bottom: 0;
-  }
-
-  .wrap-grid {
-       grid-template-rows: 20px 40px 20px 40px 20px 40px 20px 40px 20px 40px 80px;
-  }
-
-
+@media (max-width: 600px) {
+  .wrap-flex img{
+  padding-left: 50%;
+  margin-left: -88px;
+}
 }
