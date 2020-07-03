@@ -38,7 +38,7 @@ export class ProfileEditComponent implements OnInit {
       // password: new FormControl("", [Validators.required]),
       // passwordA: new FormControl("", [Validators.required]),
     });
-    // this.loading = true;
+    
     let arr = await this.getInfoUser();
       arr.forEach((element) => {
         let el = {
@@ -50,7 +50,7 @@ export class ProfileEditComponent implements OnInit {
           login: element.login,
         };
         this.users.push(el);
-     });
+     }); 
   }
   
 
@@ -58,6 +58,7 @@ export class ProfileEditComponent implements OnInit {
     let id = this.userData.id_users;
     let response;
     try {
+      this.loading = true;
       response = await this.api.get(`/users/${id}`);
       console.log ("fffffffff");
       console.log("RESPONSE");
@@ -67,6 +68,7 @@ export class ProfileEditComponent implements OnInit {
       console.log(error);
     }
     return response;
+    
   }
 
   async onSave() {
@@ -92,7 +94,7 @@ export class ProfileEditComponent implements OnInit {
     } else {
         
         this.fieldRequired = true;
-  
+        this.loading = true;
         let infoAboutUser;
         infoAboutUser = {
           firstname: this.myForm.value.name,
@@ -117,6 +119,7 @@ export class ProfileEditComponent implements OnInit {
             } catch (error) {
               console.log(error);
             }
+            this.loading = false;
           this.router.navigate(["/profile"]);
         } catch (error) {
           console.log(error);

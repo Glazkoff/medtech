@@ -1,4 +1,8 @@
-<div class="flex">
+<div class="loader-wrap" *ngIf="loading; else afterLoading">
+    <app-loader></app-loader>
+  </div>
+  <ng-template #afterLoading>
+<div class="flex" >
     <div class="wrap-flex">
         <img class= "img" src="/assets/midlogo.png" alt="Логотип" >
         <h1>Настройки профиля</h1>
@@ -26,3 +30,4 @@
         </div> 
     </div>
 </div>
+</ng-template>

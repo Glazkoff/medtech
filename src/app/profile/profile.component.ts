@@ -12,6 +12,7 @@ export class ProfileComponent implements OnInit {
 
   @Input() user;
   users = [];
+  loading = false;
   constructor(private api: BaseApiService, private router: Router) { }
 
   async ngOnInit() {
@@ -38,9 +39,11 @@ export class ProfileComponent implements OnInit {
       response = await this.api.get(`/users/${id}`);
       console.log("RESPONSE");
       console.log(response);
+      this.loading = true;
     } catch (error) {
       console.log(error);
     }
+    this.loading = false;
     return response;
   }
 

@@ -1,6 +1,7 @@
-<!-- <div class="loader-wrap" *ngIf="loading">
+<div class="loader-wrap" *ngIf="loading; else afterLoading">
     <app-loader></app-loader>
-  </div> -->
+  </div>
+  <ng-template #afterLoading>
 <div class="flex">
     <div class="wrap-flex">
         <img src="/assets/midlogo.png" alt="Логотип" >
@@ -56,3 +57,4 @@
         </div> 
     </form>
 </div>
+</ng-template>
