@@ -148,7 +148,42 @@
     -ms-hyphens: auto;
     hyphens: auto;
 }
+@media (max-width: 950px) {
+.block-form{
+    width: 94%
+}
+/* стили формы */
+.form-com{
+    margin: 0 0 1rem 10%;
+    width: 90%;
+}
 
+.btn-com{
+    margin-top: 0.5rem;
+    margin-left: 75%;
+    width: 20%;
+    min-width: 15%;
+    height: 2rem;
+    font-size: 12px;
+}
+.dangerous{
+    margin-top: -3.7rem;
+    margin-left: 0.6rem;
+}
+
+.input-com{
+    height: 3.2rem;
+    width: 90%;
+    margin: 0.7rem 0 0 0.5rem;
+}
+
+/* стили вывода комментариев */
+.comment-blok{
+    margin: 0 5% 0 20%;
+    min-height: 10rem;
+    width: 75%;
+}
+}
 @media (max-width: 420px) {
     .title-com{
         font-size: 22px;
@@ -169,13 +204,13 @@
         margin-top: 0.1rem;
         margin-left: 13.6rem;
         width: 4rem;
-        height: 1.5rem;
+        height: 1.1rem;
         font-size: 10px;
     }
       
     .dangerous{
         width: 15rem;
-        margin-top: -1.4rem;
+        margin-top: -2.4rem;
         margin-left: 0.5rem;
     }
     
