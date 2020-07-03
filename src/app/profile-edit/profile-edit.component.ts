@@ -30,6 +30,8 @@ export class ProfileEditComponent implements OnInit {
   constructor(private api: BaseApiService, private router: Router) {}
 
   async ngOnInit() {
+    localStorage.setItem("userOrganization", this.userData.organization);
+    localStorage.setItem("userRole", this.userData.role);
       this.myForm = new FormGroup({
       name: new FormControl(localStorage.getItem("userName"), [Validators.required]),
       surname: new FormControl(localStorage.getItem("userSurname"), [Validators.required]),
