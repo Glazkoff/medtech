@@ -149,6 +149,7 @@ export class NewComponent implements OnInit {
       }
     });
     console.log("html: ", html);
+    console.log("html: ",  document.getElementById("article_content"));
     document.getElementById("article_content").innerHTML = html;
   }
 
