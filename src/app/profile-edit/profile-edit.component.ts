@@ -24,14 +24,17 @@ export class ProfileEditComponent implements OnInit {
   // placeholderPassword='Введите пароль';
   // placeholderPasswordA='Повторите пароль';
   userData = jwt_decode(localStorage.getItem("token"));
+  // userOrganization = localStorage.setItem("userOrganization", this.userData.organization);
+  // userRole = localStorage.setItem("userRole", this.userData.role);
   loading = false;
 
 
   constructor(private api: BaseApiService, private router: Router) {}
 
   async ngOnInit() {
-    localStorage.setItem("userOrganization", this.userData.organization);
-    localStorage.setItem("userRole", this.userData.role);
+    console.log(localStorage.getItem("userName"));
+    console.log(localStorage.getItem("userOrganization"));
+    
       this.myForm = new FormGroup({
       name: new FormControl(localStorage.getItem("userName"), [Validators.required]),
       surname: new FormControl(localStorage.getItem("userSurname"), [Validators.required]),
@@ -62,9 +65,9 @@ export class ProfileEditComponent implements OnInit {
     try {
       this.loading = true;
       response = await this.api.get(`/users/${id}`);
-      console.log ("fffffffff");
-      console.log("RESPONSE");
-      console.log(response);
+      // console.log ("fffffffff");
+      // console.log("RESPONSE");
+      // console.log(response);
       this.loading = false;
     } catch (error) {
       console.log(error);
@@ -116,8 +119,8 @@ export class ProfileEditComponent implements OnInit {
               localStorage.setItem("userSurname", infoAboutUser.surname);
               localStorage.setItem("userOrganization", infoAboutUser.organization);
               localStorage.setItem("userRole", infoAboutUser.role);
-              console.log("xxxxxxx");
-              this.router.navigate(["/profile"]);
+              // console.log("xxxxxxx");
+              // this.router.navigate(["/profile"]);
             } catch (error) {
               console.log(error);
             }

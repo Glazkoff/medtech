@@ -73,6 +73,8 @@ export class AuthorizationComponent implements OnInit {
           // console.log("UserData ", userData);
           localStorage.setItem("userName", userData.firstname);
           localStorage.setItem("userSurname", userData.surname);
+          localStorage.setItem("userOrganization", userData.organization);
+          localStorage.setItem("userRole", userData.role);
           
           this.router.navigate(["/"]);
         } 
