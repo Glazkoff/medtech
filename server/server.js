@@ -339,30 +339,32 @@ sequelize.afterConnect((connect) => {
   connect.query("SET NAMES UTF8", (res) => {
     console.log("Set names", res);
   });
-  // Users.findOne({
-  //   where: {
-  //     login: "nglazkov",
-  //   },
-  // }).then((res) => {
-  //   console.log(res.dataValues);
-  // if (JSON.stringify(res.dataValues) === "{}") {
-  bcrypt.hash("nglazkoff", salt, async (err, encrypted) => {
-    if (err) {
-      console.log(err);
-    }
-    let result = await Users.create({
-      login: "nglazkoff",
-      password: encrypted,
-      firstname: "Никита",
-      surname: "Глазков",
-      organization: "Команда разработчиков",
-      role: "Разработчик",
-      is_admin: true,
+  try {
+    Users.findOne({
+      where: {
+        login: "nglazkoff",
+      },
+    }).then((res) => {
+      if (res === null) {
+        bcrypt.hash("nglazkoff", salt, async (err, encrypted) => {
+          if (err) {
+            console.log(err);
+          }
+          let result = await Users.create({
+            login: "nglazkoff",
+            password: encrypted,
+            firstname: "Никита",
+            surname: "Глазков",
+            organization: "Команда разработчиков",
+            role: "Разработчик",
+            is_admin: true,
+          });
+        });
+      }
     });
-    console.log("ADMIN", result);
-  });
-  // }
-  // });
+  } catch (error) {
+    console.log("ERROR: " + error);
+  }
 });
 
 //***********************************/
@@ -438,7 +440,7 @@ app.get("/api/favourite-materials", async (req, res) => {
         ],
       });
       // console.log(result);
-      
+
       res.send(result);
     } else {
       res.status(401).send({
@@ -470,11 +472,11 @@ app.delete("/api/favourite-materials/:id_materials", async (req, res) => {
         },
       });
       console.log("мы удалили");
-      let myRes = `${result}`
+      let myRes = `${result}`;
       console.log(myRes);
       res.send(myRes);
     }
-  } catch (error) { 
+  } catch (error) {
     console.log("мы не  удалили");
     console.log(error);
     res.status(500).send({
@@ -879,7 +881,6 @@ app.get("/api/users/:id", async (req, res) => {
     } else {
       res.send(result);
     }
-    
   } catch (error) {
     res.status(500).send({
       status: 500,
