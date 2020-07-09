@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {NewGet} from "../add/new.get";
 import {BaseApiService} from "../services/base-api.service";
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {Subscription} from 'rxjs';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
-import { AppService} from "../services/app.service";
 import * as moment from "moment";
 import {environment} from "../../environments/environment";
 
@@ -35,20 +31,16 @@ export class NewComponent implements OnInit {
     this.loading = true;
     if (this.id) {
       const postsarr = await this.getPost();
-      // this.showBtnFavour = true;
       if (localStorage.getItem("token") !== null) {
         this.showBtnFavour = true;
         let response;
         try {
           response = await this.api.get(`/favourite-materials`);
           let all = response[0].materials;
-          console.log(all);
 
           let index = all.findIndex((el) => {
             return el.id_materials == this.id;
           });
-          console.log("index");
-          console.log(index);
           if (index == -1) {
             this.favourOrNot = true;
           } else this.favourOrNot = false;
@@ -66,7 +58,6 @@ export class NewComponent implements OnInit {
             date: moment(parseInt(element.date))
               .utcOffset("+0300")
               .format(" DD.MM.YYYY"),
-            // duration: element.duration,
             type: element.type,
             content: element.content,
             main_image: element.main_image,
@@ -83,20 +74,10 @@ export class NewComponent implements OnInit {
 
   async getPost() {
     let response;
-    let title_new;
-    let date_new;
     try {
       response = await this.api.get("/posts/" + this.id);
       this.loading = false;
-      console.log("RESPONSE");
-      console.log(response);
       this.jsonParse(JSON.parse(response[0].content));
-      //   title_new = response[0].title;
-      // date_new = moment (parseInt(response[0].date)).utcOffset("+0300").format(' DD.MM.YYYY');
-      // this.post.push(title_new);
-      // this.post.push(date_new);
-      // console.log("post");
-      // console.log(this.post[0]);
     } catch (error) {
       console.log(error);
     }
@@ -143,20 +124,14 @@ export class NewComponent implements OnInit {
           html += "</ul>";
           break;
         default:
-          console.log("Unknown block type", content.type);
-          console.log(content);
           break;
       }
     });
-    console.log("html: ", html);
-    console.log("html: ",  document.getElementById("article_content"));
     document.getElementById("article_content").innerHTML = html;
   }
 
   async deleteFavourite() {
-    console.log("Зашли в функцию удаления статьи из избранного");
     try {
-      console.log("Отправили запрос на удаление статьи из избранного");
       let result = await this.api
         .delete(`/favourite-materials/${this.id}`)
         .subscribe();
@@ -167,9 +142,7 @@ export class NewComponent implements OnInit {
   }
 
   async addFavourite() {
-    console.log("Зашли в функцию добавление статьи в избранное");
     try {
-      console.log("Отправили запрос на добавление статьи в избранное");
       let result = await this.api.post([], `/favourite-materials/${this.id}`);
       this.favourOrNot = false;
     } catch (error) {
